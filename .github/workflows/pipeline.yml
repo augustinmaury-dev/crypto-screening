@@ -26,7 +26,7 @@ jobs:
       - name: Run pipeline complet
         run: |
           cd scripts
-          python run_pipeline.py
+          python run_pipeline.py --no-cg-detail
         env:
           PYTHONIOENCODING: utf-8
 
