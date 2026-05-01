@@ -1,0 +1,43 @@
+name: Crypto Screening Pipeline
+
+on:
+  schedule:
+    # Tous les jours à 7h00 UTC (9h00 Paris heure d'été)
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+    # Permet de déclencher manuellement depuis l'interface GitHub
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # nécessaire pour git push
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # historique complet pour les diffs
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run pipeline complet
+        run: |
+          cd scripts
+          python run_pipeline.py
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: Commit et push des résultats
+        run: |
+          git config user.name  "crypto-bot"
+          git config user.email "crypto-bot@github.com"
+          git add data/computed/scores.csv
+          git add data/history/
+          git add data/learning/
+          git add report.md
+          git diff --staged --quiet || git commit -m "Pipeline $(date -u +%Y-%m-%d) — scores mis à jour"
+          git push
