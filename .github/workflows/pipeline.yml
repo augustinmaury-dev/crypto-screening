@@ -5,19 +5,18 @@ on:
     # Tous les jours à 7h00 UTC (9h00 Paris heure d'été)
     - cron: '0 7 * * *'
   workflow_dispatch:
-    # Permet de déclencher manuellement depuis l'interface GitHub
 
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # nécessaire pour git push
+      contents: write
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # historique complet pour les diffs
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -35,9 +34,7 @@ jobs:
         run: |
           git config user.name  "crypto-bot"
           git config user.email "crypto-bot@github.com"
-          git add data/computed/scores.csv
-          git add data/history/
-          git add data/learning/
-          git add report.md
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/augustinmaury-dev/crypto-screening.git
+          git add data/computed/scores.csv data/history/ data/learning/ report.md
           git diff --staged --quiet || git commit -m "Pipeline $(date -u +%Y-%m-%d) — scores mis à jour"
           git push
