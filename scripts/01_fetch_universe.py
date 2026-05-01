@@ -4,14 +4,14 @@ log = setup_logger("01_universe")
 
 def fetch():
     log.info("Fetch exchangeInfo...")
-    info = http_get("https://api.binance.com/api/v3/exchangeInfo")
+    info = http_get("https://data-api.binance.vision/api/v3/exchangeInfo")
     pairs = [s for s in info["symbols"]
              if s["quoteAsset"] == "USDT" and s["status"] == "TRADING"
              and not s["symbol"].endswith(("UPUSDT", "DOWNUSDT", "BULLUSDT", "BEARUSDT"))]
     log.info(f"{len(pairs)} paires USDT actives")
 
     log.info("Fetch ticker 24h...")
-    tickers = http_get("https://api.binance.com/api/v3/ticker/24hr")
+    tickers = http_get("https://data-api.binance.vision/api/v3/ticker/24hr")
     by_sym = {t["symbol"]: t for t in tickers}
 
     universe = []

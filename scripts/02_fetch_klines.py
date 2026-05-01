@@ -4,7 +4,7 @@ import sys, time
 log = setup_logger("02_klines")
 
 def fetch_klines(symbol: str, interval: str, limit: int):
-    return http_get("https://api.binance.com/api/v3/klines",
+    return http_get("https://data-api.binance.vision/api/v3/klines",
                     {"symbol": symbol, "interval": interval, "limit": limit})
 
 def fetch_for_symbols(symbols: list[str], force: bool = False):
