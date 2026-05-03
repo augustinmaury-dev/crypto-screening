@@ -230,8 +230,19 @@ def predict_bull_prob_7d(s_mom, s_sig, s_risk, rsi, vol_ratio, catalyst_score) -
     p += min(10, catalyst_score * 1.5)
     return int(clamp(round(p), 20, 80))  # plafonné 20–80 : on n'est jamais certain
 
+def _load_tvl() -> dict:
+    """Charge tvl.json généré par 11_fetch_defi.py."""
+    try:
+        p = COMPUTED / "tvl.json"
+        if p.exists():
+            return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    return {}
+
 def run():
     catalysts = _load_catalysts()
+    tvl_map   = _load_tvl()
     universe  = _unwrap(cache_get("binance",    "universe",          24))    or []
     indicators= _unwrap(cache_get("binance",    "indicators",        24))    or []
     cg_map    = _unwrap(cache_get("coingecko",  "binance_to_cg_map", 24*7)) or {}
@@ -282,6 +293,23 @@ def run():
 
         suspect = is_suspect(tier_, enrich, age_days)
         stablecoin = is_stablecoin(ind.get("vol_30d_annualized"), ind.get("drawdown_90d"), sym)
+
+        # ── Tokenomics (depuis CoinGecko markets) ──
+        market_cap        = (m or {}).get("market_cap")
+        fdv               = (m or {}).get("fully_diluted_valuation")
+        circulating_supply= (m or {}).get("circulating_supply")
+        total_supply      = (m or {}).get("total_supply")
+        max_supply        = (m or {}).get("max_supply")
+        # ratio circulation : % de l'offre totale en circulation (dilution)
+        circ_ratio = None
+        if circulating_supply and total_supply and total_supply > 0:
+            circ_ratio = round(circulating_supply / total_supply * 100, 1)
+
+        # ── TVL (depuis DefiLlama) ──
+        tvl_data = tvl_map.get(sym, {})
+        tvl      = tvl_data.get("tvl")
+        tvl_fmt  = tvl_data.get("tvl_fmt")
+        tvl_change_7d = tvl_data.get("change_7d")
 
         # ── Catalyseurs ──
         cats_data = catalysts.get("by_symbol", {}).get(sym, {})
@@ -338,6 +366,17 @@ def run():
             "vol_spike_ratio": vol_spike,
             # Prédiction
             "bull_prob_7d": bull_prob_7d,
+            # Tokenomics
+            "market_cap": market_cap,
+            "fdv": fdv,
+            "circulating_supply": circulating_supply,
+            "total_supply": total_supply,
+            "max_supply": max_supply,
+            "circ_ratio_pct": circ_ratio,
+            # TVL DefiLlama
+            "tvl": tvl,
+            "tvl_fmt": tvl_fmt,
+            "tvl_change_7d": tvl_change_7d,
         })
     # Stablecoins triés en bas — ils ne doivent pas polluer le classement principal
     rows.sort(key=lambda r: (1 if r["stablecoin"] else 0, -r["score"], r["tier"]))

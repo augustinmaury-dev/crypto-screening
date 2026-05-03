@@ -105,6 +105,14 @@ def main():
                 except Exception as e: log.warning(f"enrich {s}: {e}")
         log.info(f"Project enrich : {ok_e}/{len(syms)}")
 
+    # --- 11 TVL DefiLlama (optionnel, pas bloquant) ---
+    if not args.skip_fetch:
+        try:
+            defi = importlib.import_module("11_fetch_defi")
+            step("fetch_defi_tvl", lambda: defi.run(syms))
+        except Exception as e:
+            log.warning(f"11_fetch_defi ignoré : {e}")
+
     # --- 05 Indicateurs techniques ---
     ind = importlib.import_module("05_compute_indicators")
     step("compute_indicators", lambda: ind.run(syms))
@@ -128,6 +136,10 @@ def main():
     # --- 08 Apprentissage adaptatif des patterns ---
     lrn = importlib.import_module("08_learn")
     step("learn", lrn.run)
+
+    # --- 12 Historique des scores (30 derniers jours) ---
+    hist = importlib.import_module("12_build_history")
+    step("build_history", hist.run)
 
     # Purge raw > 30j
     try:
