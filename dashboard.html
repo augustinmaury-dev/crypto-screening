@@ -192,7 +192,8 @@ section.block h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;col
 const NUM = new Set(['score','score_solidity','score_momentum','score_risk','score_antiscam','score_signal','explosion_score',
   'rsi_14','macd_hist','ma_50','ma_200','ma_20','vol_30d_ann','drawdown_90d','dist_to_high_90d',
   'vol_ratio_vs_med90','corr_btc_90d','price','vol_24h_usd','change_24h_pct','age_days',
-  'rank_mcap','bull_signals','bear_signals','n_red_flags','support_90d','resistance_90d']);
+  'rank_mcap','bull_signals','bear_signals','n_red_flags','support_90d','resistance_90d',
+  'catalyst_score','trending_rank','vol_spike_ratio','bull_prob_7d']);
 
 const BULLISH = new Set(['breakout_30d','rsi_bullish_divergence','golden_cross','macd_bullish_cross',
   'double_bottom_90d','bull_flag','uptrend','support_bounce','hammer_4h','bullish_engulfing_4h','morning_star_4h']);
@@ -213,6 +214,7 @@ const PAT_FR = {
 };
 
 let ROWS=[], FILTERED=[], SORT={col:'score',dir:-1}, SELECTED=null;
+let CATALYSTS={fear_greed:{},trending:[],vol_spikes:[],by_symbol:{}};
 
 // Poids adaptatifs — valeurs par défaut (v1.2) pour l'affichage.
 // Les vraies valeurs calibrées sont calculées par le pipeline Python (08_learn.py)
@@ -289,8 +291,10 @@ function renderList(){
     const d24=+r.change_24h_pct;
     const d24s=isFinite(d24)?(d24>=0?`<span class="pos">+${d24.toFixed(1)}%</span>`:`<span class="neg">${d24.toFixed(1)}%</span>`):'—';
     const susp=r.suspect==='True'?'⚠️ ':''
+    const catBadge=(+r.catalyst_score>=5)?`<span style="font-size:9px;background:#bc8cff22;color:#bc8cff;border-radius:8px;padding:1px 5px;margin-left:3px" title="Catalyseurs détectés">⚡</span>`:'';
+    const trendBadge=(+r.trending_rank)?`<span style="font-size:9px;background:#f0883e22;color:#f0883e;border-radius:8px;padding:1px 5px;margin-left:2px" title="Trending #${r.trending_rank} CoinGecko">🔥</span>`:'';
     return `<tr class="${sel}" data-i="${i}">
-      <td><b>${susp}${r.symbol.replace('USDT','')}</b></td>
+      <td><b>${susp}${r.symbol.replace('USDT','')}</b>${catBadge}${trendBadge}</td>
       <td><span style="font-size:10px;color:${r.tier==='Etabli'?'#3fb950':r.tier==='Mid'?'#58a6ff':'#d29922'}">${r.tier}</span></td>
       <td><b style="color:${scoreColor(r.score)}">${(+r.score).toFixed(1)}</b></td>
       <td><span style="color:${biasC};font-size:11px">${r.bias||'—'}</span></td>
@@ -445,6 +449,59 @@ function renderDetail(r){
       </div>
       ${reasons.length?`<div style="font-size:11px;color:var(--muted);line-height:1.7">${reasons.slice(0,5).map(r=>`✓ ${r.trim()}`).join('<br>')}</div>`
         :'<div style="font-size:11px;color:var(--muted)">Ressemblance avec le profil historique des tokens pré-explosion.</div>'}
+    </div>`;
+  })()}
+
+  <!-- PRÉDICTION -->
+  ${(()=>{
+    const prob=+r.bull_prob_7d||0;
+    if(!prob)return'';
+    const probC=prob>=60?'#3fb950':prob>=45?'#d29922':'#f85149';
+    const probLbl=prob>=65?'Biais haussier':prob>=55?'Légèrement haussier':prob>=45?'Neutre':prob>=35?'Légèrement baissier':'Biais baissier';
+    const expl=+r.explosion_score||0;
+    const explPct=Math.min(100,Math.round(expl/15*100));
+    const explC=expl>=9?'#f85149':expl>=6?'#d29922':'#58a6ff';
+    return`<div class="score-axes" style="margin-bottom:16px">
+      <h3>📈 Prédiction <span style="font-size:10px;color:var(--muted);font-weight:400">— indicatif, pas un conseil financier</span></h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px">
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px">Probabilité haussière 7j</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="flex:1;background:#21262d;border-radius:6px;height:12px;overflow:hidden">
+              <div style="height:100%;width:${prob}%;background:linear-gradient(90deg,${probC}88,${probC});border-radius:6px;transition:.3s"></div>
+            </div>
+            <span style="font-size:18px;font-weight:700;color:${probC};width:40px;text-align:right">${prob}%</span>
+          </div>
+          <div style="font-size:11px;color:${probC};margin-top:4px">${probLbl}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:3px">Basé sur momentum, signal directionnel, RSI et catalyseurs détectés</div>
+        </div>
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px">Potentiel explosion 30j</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="flex:1;background:#21262d;border-radius:6px;height:12px;overflow:hidden">
+              <div style="height:100%;width:${explPct}%;background:linear-gradient(90deg,${explC}88,${explC});border-radius:6px;transition:.3s"></div>
+            </div>
+            <span style="font-size:18px;font-weight:700;color:${explC};width:40px;text-align:right">${explPct}%</span>
+          </div>
+          <div style="font-size:11px;color:${explC};margin-top:4px">${expl>=9?'🔥 Profil fort':expl>=6?'⚡ Profil modéré':expl>=4?'👀 À surveiller':'Profil faible'}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:3px">Ressemblance avec les tokens qui ont fait +40% historiquement</div>
+        </div>
+      </div>
+    </div>`;
+  })()}
+
+  <!-- CATALYSEURS -->
+  ${(()=>{
+    const flags=(r.catalyst_flags||'').split('|').filter(Boolean);
+    const cs=+r.catalyst_score||0;
+    if(!flags.length&&!cs)return'';
+    const tr=+r.trending_rank||0;
+    const vs=+r.vol_spike_ratio||0;
+    return`<div class="score-axes" style="border-color:#bc8cff44;margin-bottom:16px">
+      <h3 style="color:#bc8cff">⚡ Catalyseurs détectés <span style="font-size:10px;font-weight:400;color:var(--muted)">score +${cs}/20</span></h3>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+        ${flags.map(f=>`<span style="background:#21262d;border:1px solid #bc8cff44;border-radius:12px;padding:4px 10px;font-size:11px;color:var(--text)">${f}</span>`).join('')}
+      </div>
     </div>`;
   })()}
 
@@ -604,6 +661,8 @@ function computeMarketSignal(rows){
         <span style="color:var(--muted)">RSI BTC : <b style="color:${rsiColor(btc?btc.rsi_14:50)}">${btcRSI}</b></span>
         <span style="color:var(--muted)">DD90 BTC : <b>${btcDD}</b></span>
         <span style="color:var(--muted)">Breadth : <b style="color:${pctBull>=40?'#3fb950':pctBull<=25?'#f85149':'#d29922'}">${pctBull}% haussiers</b> (${nBull}▲ / ${nBear}▼)</span>
+        ${CATALYSTS.fear_greed&&CATALYSTS.fear_greed.value!=null?`<span style="color:var(--muted)">Fear & Greed : <b style="color:${CATALYSTS.fear_greed.value<=25?'#f85149':CATALYSTS.fear_greed.value<=40?'#d29922':CATALYSTS.fear_greed.value<=60?'#8b949e':CATALYSTS.fear_greed.value<=75?'#d29922':'#3fb950'}">${CATALYSTS.fear_greed.value} — ${CATALYSTS.fear_greed.classification_fr||CATALYSTS.fear_greed.classification}</b></span>`:''}
+        ${CATALYSTS.trending&&CATALYSTS.trending.length?`<span style="color:var(--muted)">🔥 Trending : <b style="color:#f0883e">${CATALYSTS.trending.slice(0,3).map(t=>t.symbol).join(', ')}</b></span>`:''}
       </div>
     </div>`;
 }
@@ -622,8 +681,12 @@ function loadCSVText(txt, label){
 }
 
 function autoLoad(){
-  // Sur GitHub Pages ou tout serveur HTTP : charge scores.csv automatiquement
-  if(window.location.protocol==='file:') return; // local file: on attend le picker
+  if(window.location.protocol==='file:') return;
+  // Charge catalysts.json en parallèle
+  fetch('data/computed/catalysts.json')
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{if(d)CATALYSTS=d;})
+    .catch(()=>{});
   const url='data/computed/scores.csv';
   document.getElementById('meta').textContent='Chargement des données…';
   fetch(url)

@@ -196,7 +196,42 @@ def _unwrap(x):
     if x is None: return None
     return x.get("data", x) if isinstance(x, dict) and "data" in x else x
 
+def _load_catalysts() -> dict:
+    """Charge catalysts.json généré par 10_fetch_catalysts.py."""
+    try:
+        p = COMPUTED / "catalysts.json"
+        if p.exists():
+            return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    return {}
+
+def predict_bull_prob_7d(s_mom, s_sig, s_risk, rsi, vol_ratio, catalyst_score) -> int:
+    """Probabilité haussière sur 7 jours — 0 à 100 %.
+    Basée sur les sous-scores calibrés + catalyseurs détectés.
+    Affichée avec une marge d'incertitude explicite dans le dashboard.
+    """
+    # Base 50 % (incertitude maximale)
+    p = 50.0
+    # Momentum : fort momentum → +15 max
+    p += (s_mom - 50) * 0.30
+    # Signal directionnel : biais bull/bear → +12 max
+    p += (s_sig - 50) * 0.24
+    # Risque : risque élevé pénalise → ±8
+    p += (s_risk - 50) * 0.16
+    # RSI : surachat / survente
+    if rsi is not None:
+        if rsi > 75:  p -= 8
+        elif rsi < 30: p += 6
+        elif 45 <= rsi <= 65: p += 3
+    # Volume anormal positif
+    if vol_ratio and vol_ratio > 2.0: p += 4
+    # Catalyseurs externes
+    p += min(10, catalyst_score * 1.5)
+    return int(clamp(round(p), 20, 80))  # plafonné 20–80 : on n'est jamais certain
+
 def run():
+    catalysts = _load_catalysts()
     universe  = _unwrap(cache_get("binance",    "universe",          24))    or []
     indicators= _unwrap(cache_get("binance",    "indicators",        24))    or []
     cg_map    = _unwrap(cache_get("coingecko",  "binance_to_cg_map", 24*7)) or {}
@@ -248,6 +283,25 @@ def run():
         suspect = is_suspect(tier_, enrich, age_days)
         stablecoin = is_stablecoin(ind.get("vol_30d_annualized"), ind.get("drawdown_90d"), sym)
 
+        # ── Catalyseurs ──
+        cats_data = catalysts.get("by_symbol", {}).get(sym, {})
+        from importlib import import_module as _im
+        try:
+            _cat_mod = _im("10_fetch_catalysts")
+            catalyst_score = _cat_mod.compute_catalyst_score(cats_data)
+        except Exception:
+            catalyst_score = 0
+        catalyst_flags = "|".join((cats_data.get("flags") or [])[:5])
+        trending_rank  = cats_data.get("trending_rank")
+        vol_spike      = cats_data.get("vol_spike")
+
+        # ── Prédiction ──
+        bull_prob_7d = predict_bull_prob_7d(
+            s_mom, s_sig, s_risk,
+            ind.get("rsi_14"), ind.get("vol_ratio_vs_med90"),
+            catalyst_score
+        )
+
         rows.append({
             "symbol": sym, "base": u["base"], "tier": tier_, "rank_mcap": rank,
             "price": u["price"], "vol_24h_usd": u["volume_24h_quote"],
@@ -277,6 +331,13 @@ def run():
             "suspect": suspect,
             "stablecoin": stablecoin,
             "categories": "|".join(((enrich or {}).get("categories") or [])[:5]),
+            # Catalyseurs
+            "catalyst_score":  catalyst_score,
+            "catalyst_flags":  catalyst_flags,
+            "trending_rank":   trending_rank,
+            "vol_spike_ratio": vol_spike,
+            # Prédiction
+            "bull_prob_7d": bull_prob_7d,
         })
     # Stablecoins triés en bas — ils ne doivent pas polluer le classement principal
     rows.sort(key=lambda r: (1 if r["stablecoin"] else 0, -r["score"], r["tier"]))

@@ -109,7 +109,11 @@ def main():
     ind = importlib.import_module("05_compute_indicators")
     step("compute_indicators", lambda: ind.run(syms))
 
-    # --- 06 Scoring ---
+    # --- 10 Catalyseurs (Fear&Greed, Trending, Volume spikes, GitHub spikes) ---
+    cat = importlib.import_module("10_fetch_catalysts")
+    step("fetch_catalysts", cat.run)
+
+    # --- 06 Scoring (lit catalysts.json produit à l'étape 10) ---
     sc = importlib.import_module("06_score")
     step("score", sc.run)
 
