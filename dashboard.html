@@ -885,19 +885,22 @@ function loadCSVText(txt, label){
 function autoLoad(){
   if(window.location.protocol==='file:') return;
 
+  // Cache-busting : force le navigateur/CDN à charger la version fraîche
+  const t = Date.now();
+
   // Charge les fichiers JSON annexes en parallèle
-  fetch('data/computed/catalysts.json')
+  fetch(`data/computed/catalysts.json?t=${t}`)
     .then(r=>r.ok?r.json():null)
     .then(d=>{if(d){CATALYSTS=d;}})
     .catch(()=>{});
 
-  fetch('data/computed/score_history.json')
+  fetch(`data/computed/score_history.json?t=${t}`)
     .then(r=>r.ok?r.json():null)
     .then(d=>{if(d){HISTORY=d; if(SELECTED)renderDetail(SELECTED);}})
     .catch(()=>{});
 
   document.getElementById('meta').textContent='Chargement des données…';
-  fetch('data/computed/scores.csv')
+  fetch(`data/computed/scores.csv?t=${t}`)
     .then(r=>{
       if(!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.text();
@@ -961,12 +964,4 @@ document.addEventListener('keydown',e=>{
   if(!SELECTED)return;
   const idx=FILTERED.findIndex(x=>x.symbol===SELECTED.symbol);
   if(e.key==='ArrowDown'&&idx<FILTERED.length-1){SELECTED=FILTERED[idx+1];renderList();renderDetail(SELECTED);e.preventDefault();}
-  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList();renderDetail(SELECTED);e.preventDefault();}
-});
-
-// Init
-updateWatchlistCount();
-autoLoad();
-</script>
-</body>
-</html>
+  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList

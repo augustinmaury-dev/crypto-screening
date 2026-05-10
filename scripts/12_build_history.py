@@ -1,51 +1,44 @@
-"""Compile l'historique des scores sur 30 jours.
-
-Lit tous les fichiers data/history/scores_YYYY-MM-DD.csv
-et produit data/computed/score_history.json :
-{
-  "dates": ["2024-01-01", ...],   // 30 derniers jours disponibles
-  "tokens": {
-    "BTCUSDT": {
-      "scores":  [72, 75, 71, ...],   // score par date (None si absent)
-      "ranks":   [1, 1, 2, ...],
-      "prices":  [42000, 43000, ...]  // prix de clôture si dispo
-    },
-    ...
-  }
-}
+"""Compile l historique des scores sur 30 jours.
+Produit data/computed/score_history.json.
 """
 from __future__ import annotations
-import csv, json, os
+import csv, json
 from pathlib import Path
-from datetime import date, timedelta
-from common import COMPUTED, setup_logger
+from datetime import date
+from common import COMPUTED, HISTORY, setup_logger
 
 log = setup_logger("12_history")
+HISTORY_DIR = HISTORY
+OUT_FILE = COMPUTED / "score_history.json"
+DAYS = 30
 
-HISTORY_DIR = Path(__file__).parent.parent / "data" / "history"
-OUT_FILE    = COMPUTED / "score_history.json"
-DAYS        = 30
 
-
-def _available_dates() -> list[str]:
-    """Retourne les dates disponibles dans data/history/ (tri croissant)."""
+def _available_dates():
     if not HISTORY_DIR.exists():
+        log.warning(f"Dossier history introuvable : {HISTORY_DIR}")
         return []
     dates = []
     for f in HISTORY_DIR.glob("scores_*.csv"):
-        stem = f.stem  # "scores_2024-01-15"
-        d = stem.replace("scores_", "")
+        d = f.stem.replace("scores_", "")
         try:
             date.fromisoformat(d)
             dates.append(d)
+            continue
         except ValueError:
             pass
-    return sorted(dates)[-DAYS:]
+        try:
+            if len(d) == 8:
+                date(int(d[0:4]), int(d[4:6]), int(d[6:8]))
+                dates.append(d)
+        except (ValueError, IndexError):
+            pass
+    result = sorted(dates)[-DAYS:]
+    log.info(f"Dates disponibles : {len(result)}")
+    return result
 
 
-def _read_day(csv_path: Path) -> dict[str, dict]:
-    """Lit un CSV de scores et retourne {symbol: {score, rank, price}}."""
-    result: dict[str, dict] = {}
+def _read_day(csv_path):
+    result = {}
     try:
         with open(csv_path, encoding="utf-8", newline="") as f:
             reader = csv.DictReader(f)
@@ -61,57 +54,39 @@ def _read_day(csv_path: Path) -> dict[str, dict]:
                     price = float(row.get("price", 0) or 0)
                 except (ValueError, TypeError):
                     price = 0.0
-                result[sym] = {
-                    "score": score,
-                    "rank":  i,
-                    "price": round(price, 6) if price else None,
-                }
+                result[sym] = {"score": score, "rank": i, "price": round(price, 6) if price else None}
     except Exception as e:
-        log.warning(f"Lecture {csv_path.name} échouée : {e}")
+        log.warning(f"Lecture {csv_path.name} echouee : {e}")
     return result
 
 
-def run() -> dict:
+def run():
     log.info("=== Build score history ===")
-
+    log.info(f"HISTORY_DIR = {HISTORY_DIR}")
     dates = _available_dates()
     if not dates:
-        log.warning("Aucun fichier historique trouvé dans data/history/")
-        # Créer un fichier vide valide quand même
+        log.warning("Aucun fichier historique trouve")
         empty = {"dates": [], "tokens": {}}
         OUT_FILE.write_text(json.dumps(empty, ensure_ascii=False), encoding="utf-8")
         return empty
-
-    log.info(f"Dates disponibles : {len(dates)} ({dates[0]} → {dates[-1]})")
-
-    # Collecte toutes les données par date
-    day_data: dict[str, dict[str, dict]] = {}
-    all_symbols: set[str] = set()
+    log.info(f"Periode : {dates[0]} -> {dates[-1]} ({len(dates)} jours)")
+    day_data = {}
+    all_symbols = set()
     for d in dates:
         path = HISTORY_DIR / f"scores_{d}.csv"
         data = _read_day(path)
         day_data[d] = data
         all_symbols.update(data.keys())
-
-    # Construit la structure par token
-    tokens: dict[str, dict] = {}
+    tokens = {}
     for sym in sorted(all_symbols):
         scores, ranks, prices = [], [], []
         for d in dates:
             row = day_data.get(d, {}).get(sym)
             scores.append(row["score"] if row else None)
-            ranks.append(row["rank"]  if row else None)
+            ranks.append(row["rank"] if row else None)
             prices.append(row["price"] if row else None)
-
-        # Inclure seulement si au moins 2 points de données
-        non_null = sum(1 for s in scores if s is not None)
-        if non_null >= 2:
-            tokens[sym] = {
-                "scores": scores,
-                "ranks":  ranks,
-                "prices": prices,
-            }
-
+        if sum(1 for s in scores if s is not None) >= 2:
+            tokens[sym] = {"scores": scores, "ranks": ranks, "prices": prices}
     result = {"dates": dates, "tokens": tokens}
     OUT_FILE.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
     log.info(f"score_history.json ecrit — {len(dates)} dates, {len(tokens)} tokens")
