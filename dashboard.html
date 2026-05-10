@@ -964,4 +964,12 @@ document.addEventListener('keydown',e=>{
   if(!SELECTED)return;
   const idx=FILTERED.findIndex(x=>x.symbol===SELECTED.symbol);
   if(e.key==='ArrowDown'&&idx<FILTERED.length-1){SELECTED=FILTERED[idx+1];renderList();renderDetail(SELECTED);e.preventDefault();}
-  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList
+  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList();renderDetail(SELECTED);e.preventDefault();}
+});
+
+// Init
+updateWatchlistCount();
+autoLoad();
+</script>
+</body>
+</html>
