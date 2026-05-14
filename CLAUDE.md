@@ -90,26 +90,28 @@ SCORE = 0.20 × Solidité + 0.30 × Momentum + 0.15 × Signal + 0.15 × Risque/Q
 
 ---
 
-## État actuel du projet (09/05/2026)
+## État actuel du projet (14/05/2026)
 
 ### ✅ Ce qui fonctionne
 - Pipeline GitHub Actions tourne **quotidiennement** et commit ses résultats automatiquement
 - Système de scoring multi-axes opérationnel
 - Dashboard HTML avec historique 30j, TVL DefiLlama, tokenomics, watchlist, graphique de prix
-- Système d'apprentissage des poids (formula_weights, pattern_weights) actif
+- Système d'apprentissage des poids (formula_weights, pattern_weights) actif — **outcomes.csv opérationnel depuis le 11/05 (2886 observations)**
 - Détection de catalyseurs externes (script 10)
 - Intégration TVL DefiLlama (script 11)
 
-### 🔴 Problèmes connus (identifiés dans auto_review_20260501.md)
-1. **`double_bottom_90d` sur-détecté** (~43% des tokens) — seuils à resserrer (`tol=0.02 → 0.015`, séparation min `10 → 15 jours`)
-2. **Stablecoins dans le classement** — filtre `is_stablecoin()` présent mais parfois contourné selon la version du code
-3. **Contradictions MACD** sur certains tokens (croisements bull+bear simultanés) — code corrigé mais anciens rapports affectés
-4. **`outcomes.csv` absent** — le système d'apprentissage n'a pas encore de données de performance réelle pour s'auto-calibrer
+### ✅ Corrections appliquées le 14/05/2026 (issues auto_review_20260511.md)
+- **P1** — `06_score.py` : `DEAD_WEIGHT_THRESHOLD = 0.15` dans `score_signal()` — neutralise `breakout_30d`, `support_bounce`, `rsi_bullish_divergence` (contra-indicateurs à poids ≤ 0.1)
+- **P2** — `05_compute_indicators.py` : `pat_double_bottom()` — reprise 10%→15% + filtre MA20 de confirmation (réduction ~29%→~15% des tokens touchés)
+- **P3** — `06_score.py` : `is_stablecoin()` — ajout EURUSDT, EURIUSDT, AEURUSDT, BFUSDUSDT, USD1USDT, UUSDT + seuils vol/dd relâchés (0.03→0.08, 0.02→0.05)
+- **P4** — `pattern_weights.json` : `hammer_4h` et `bearish_engulfing_4h` → poids 0.1 (0% et 25% hit rate sur 4 obs chacun)
 
 ### 🟡 Améliorations identifiées mais non implementées
-- Resserrer les seuils `double_bottom_90d` (voir auto_review_20260501.md pour le code exact)
-- Créer le système `outcomes.csv` pour mesurer la performance prédictive réelle des patterns
+- Multiplicateur macro global : utiliser le signal marché (-2/+10) pour réduire l'influence des patterns haussiers en régime baissier
 - Ajouter l'Inde comme univers secondaire (hors scope actuel)
+
+### 🔴 Problèmes connus résiduels
+- Contradictions MACD sur certains tokens (croisements bull+bear simultanés) — anciens rapports affectés
 
 ---
 
@@ -140,5 +142,4 @@ git push origin main
 
 ## Contexte de la collaboration
 - Cette conversation Cowork est **dédiée au projet crypto**
-- Les autres sujets (portfolio boursier, analyses sectorielles) sont traités dans d'autres conversations
-- Augustin a aussi un portfolio d'actions Tech/IA/Semis, un PEA (MSCI World, DAX, Grèce, Japon TOPIX), des cryptos, et de l'immobilier via LaPremiereBrique — mais cela ne concerne pas cette conversation
+- Les autres sujet

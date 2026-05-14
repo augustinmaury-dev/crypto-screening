@@ -128,8 +128,12 @@ def score_signal(patterns: list, bull_signals, bear_signals):
     - score < 50 → biais baissier pondéré
     """
     weights = _load_pattern_weights()
-    w_bull = sum(weights.get(p, 1.0) for p in patterns if p in _BULLISH_SET)
-    w_bear = sum(weights.get(p, 1.0) for p in patterns if p in _BEARISH_SET)
+    # P1 — Neutraliser les contra-indicateurs au plancher : poids ≤ 0.15 ignorés.
+    # breakout_30d (11.4%), support_bounce (17.6%), rsi_bullish_divergence (20%)
+    # ont un poids à 0.1 mais contribuaient encore positivement au score.
+    DEAD_WEIGHT_THRESHOLD = 0.15
+    w_bull = sum(weights.get(p, 1.0) for p in patterns if p in _BULLISH_SET and weights.get(p, 1.0) > DEAD_WEIGHT_THRESHOLD)
+    w_bear = sum(weights.get(p, 1.0) for p in patterns if p in _BEARISH_SET and weights.get(p, 1.0) > DEAD_WEIGHT_THRESHOLD)
     total = w_bull + w_bear
     if total == 0:
         return 50
@@ -170,16 +174,21 @@ def is_stablecoin(vol_30d, drawdown_90d, symbol=""):
     """Détecte les stablecoins : volatilité annualisée < 3% ET drawdown 90j < 2%.
     Ils sont retirés du classement principal (biais artificiel sur les métriques de risque).
     """
-    # Stablecoins connus par nom
+    # Stablecoins connus par nom (USD + P3 : ajout EUR-pegged)
     known = {"USDEUSDT", "RLUSDUSDT", "FDUSDUSDT", "USDCUSDT", "BUSDUSDT",
              "USDTUSDT", "DAIUSDT", "FRAXUSDT", "TUSDUSDT", "USDDUSDT",
              "SUSDUSDT", "USTUSDT", "EURCUSDT", "PYUSDUSDT", "USDPUSDT",
-             "AEUSDUSDT", "XUSDUSDT", "CUSDUSDT"}
+             "AEUSDUSDT", "XUSDUSDT", "CUSDUSDT",
+             # P3 — stablecoins EUR non filtrés (polluaient top Speculative/Mid)
+             "EURUSDT", "EURIUSDT", "AEURUSDT",
+             # P3 — autres quasi-stables détectés (avg |return| < 0.2%)
+             "BFUSDUSDT", "USD1USDT", "UUSDT"}
     if symbol in known:
         return True
-    # Détection par métriques : très faible vol + très faible drawdown
+    # Détection par métriques — seuils relâchés pour capter les EUR-pegged
+    # (vol légèrement > USD-pegged mais drawdown quasi nul)
     if vol_30d is not None and drawdown_90d is not None:
-        return vol_30d < 0.03 and drawdown_90d < 0.02
+        return vol_30d < 0.08 and drawdown_90d < 0.05
     return False
 
 def is_suspect(tier_, enrich, age_days):
@@ -379,21 +388,4 @@ def run():
             "tvl_change_7d": tvl_change_7d,
         })
     # Stablecoins triés en bas — ils ne doivent pas polluer le classement principal
-    rows.sort(key=lambda r: (1 if r["stablecoin"] else 0, -r["score"], r["tier"]))
-    # Fichier principal unique (écrasé à chaque run)
-    out_path = COMPUTED / "scores.csv"
-    if rows:
-        with out_path.open("w", encoding="utf-8", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-            w.writeheader(); w.writerows(rows)
-    log.info(f"Scoring terminé : {len(rows)} tokens → {out_path}")
-    # Snapshot daté dans history/ pour le système d'apprentissage (08_learn.py)
-    from common import HISTORY
-    HISTORY.mkdir(exist_ok=True)
-    hist_path = HISTORY / f"scores_{TODAY}.csv"
-    if rows:
-        hist_path.write_text(out_path.read_text(encoding="utf-8"), encoding="utf-8")
-    return rows
-
-if __name__ == "__main__":
-    run()
+    rows.sort(key=lambda r: (1 if r["stablecoin"] else 0, -r["score"], r[

@@ -186,9 +186,10 @@ def pat_ma_cross(ma50_ser, ma200_ser):
     return golden, death
 
 def pat_double_bottom(lows, closes, tol=0.02, window=90):
-    """Double fond : deux creux proches (±2%) séparés par une reprise ≥10%.
-    Critères resserrés v1.3 : tol 3%→2%, reprise 5%→10%, swing order 5→7,
-    séparation minimale de 10 bougies entre les deux creux.
+    """Double fond : deux creux proches (±2%) séparés par une reprise ≥15%.
+    Critères resserrés v1.4 : reprise 10%→15%, + filtre MA20 de confirmation.
+    P2 — réduction du taux de déclenchement (~29%→~15%) et du bruit (41.4% hit).
+    Critères v1.3 : tol 3%→2%, swing order 5→7, séparation min 10 bougies.
     """
     if len(lows) < window: return False
     w = lows[-window:]
@@ -201,9 +202,12 @@ def pat_double_bottom(lows, closes, tol=0.02, window=90):
     if l1 == 0: return False
     same_level = abs(l1 - l2) / l1 < tol
     mid_high = max(w[i1:i2+1]) if i2 > i1 else 0
-    recovery = (mid_high - min(l1, l2)) / min(l1, l2) > 0.10  # 5%→10%
+    recovery = (mid_high - min(l1, l2)) / min(l1, l2) > 0.15  # 10%→15%
     above = closes[-1] > min(l1, l2) * (1 + tol)
-    return same_level and recovery and above
+    # P2 — filtre MA20 : le prix doit être au-dessus de la MA20 pour confirmer le rebond
+    ma20 = sum(closes[-20:]) / 20 if len(closes) >= 20 else closes[-1]
+    above_ma = closes[-1] > ma20
+    return same_level and recovery and above and above_ma
 
 def pat_double_top(highs, closes, tol=0.02, window=90):
     """Double sommet : deux sommets proches (±2%) séparés par un repli ≥10%.
@@ -497,12 +501,4 @@ def run(symbols: list[str]):
             log.warning(f"Indicateurs fail {s}: {e}")
         if i % 50 == 0: log.info(f"  indicators: {i}/{len(symbols)}")
     cache_put("binance", "indicators", out)
-    log.info(f"Indicateurs calcules pour {len(out)}/{len(symbols)} tokens")
-    return out
-
-if __name__ == "__main__":
-    universe = cache_get("binance", "universe", max_age_hours=24)
-    universe = universe.get("data", universe) if isinstance(universe, dict) else universe
-    syms = [u["symbol"] for u in universe]
-    if len(sys.argv) > 1: syms = syms[:int(sys.argv[1])]
-    run(syms)
+    log.info(f"Indicateurs calcules pour {len(out)}/{len(symbols)} token
