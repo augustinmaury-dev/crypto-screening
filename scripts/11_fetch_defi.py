@@ -55,7 +55,7 @@ MANUAL_MAP: dict[str, str] = {
 
 def fetch_protocols() -> list:
     """Télécharge la liste complète des protocoles DefiLlama."""
-    cached = cache_get("defillama", "protocols", ttl_hours=24)
+    cached = cache_get("defillama", "protocols", max_age_hours=24)
     if cached:
         data = cached.get("data", cached) if isinstance(cached, dict) else cached
         if data:

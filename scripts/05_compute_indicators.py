@@ -501,4 +501,12 @@ def run(symbols: list[str]):
             log.warning(f"Indicateurs fail {s}: {e}")
         if i % 50 == 0: log.info(f"  indicators: {i}/{len(symbols)}")
     cache_put("binance", "indicators", out)
-    log.info(f"Indicateurs calcules pour {len(out)}/{len(symbols)} token
+    log.info(f"Indicateurs calcules pour {len(out)}/{len(symbols)} tokens")
+    return out
+
+if __name__ == "__main__":
+    universe = cache_get("binance", "universe", max_age_hours=24)
+    universe = universe.get("data", universe) if isinstance(universe, dict) else universe
+    syms = [u["symbol"] for u in universe]
+    if len(sys.argv) > 1: syms = syms[:int(sys.argv[1])]
+    run(syms)
