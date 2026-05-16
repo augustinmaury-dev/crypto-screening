@@ -388,4 +388,21 @@ def run():
             "tvl_change_7d": tvl_change_7d,
         })
     # Stablecoins triés en bas — ils ne doivent pas polluer le classement principal
-    rows.sort(key=lambda r: (1 if r["stablecoin"] else 0, -r["score"], r[
+    rows.sort(key=lambda r: (1 if r["stablecoin"] else 0, -r["score"], r["tier"]))
+    # Fichier principal unique (écrasé à chaque run)
+    out_path = COMPUTED / "scores.csv"
+    if rows:
+        with out_path.open("w", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            w.writeheader(); w.writerows(rows)
+    log.info(f"Scoring terminé : {len(rows)} tokens → {out_path}")
+    # Snapshot daté dans history/ pour le système d'apprentissage (08_learn.py)
+    from common import HISTORY
+    HISTORY.mkdir(exist_ok=True)
+    hist_path = HISTORY / f"scores_{TODAY}.csv"
+    if rows:
+        hist_path.write_text(out_path.read_text(encoding="utf-8"), encoding="utf-8")
+    return rows
+
+if __name__ == "__main__":
+    run()
