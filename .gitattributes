@@ -1,0 +1,8 @@
+# Forcer LF pour tous les fichiers texte — évite les troncatures Dropbox/CRLF au commit
+* text=auto eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.csv text eol=lf
+*.html text eol=lf
+*.yml text eol=lf
