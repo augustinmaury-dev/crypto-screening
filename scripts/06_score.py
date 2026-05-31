@@ -114,7 +114,92 @@ def score_risk(vol_30, dd_90, dist_90, corr_btc):
     else: s_c = 70
     return 0.35*s_v + 0.30*s_dd + 0.15*s_dist + 0.20*s_c
 
-def score_signal(patterns: list, bull_signals, bear_signals):
+def compute_market_regime(indicators: list) -> float:
+    """Calcule le score de régime macro (-10 à +10) depuis les indicateurs du jour.
+
+    Composantes (identiques au signal marché du rapport) :
+      BTC vs MAs, RSI BTC, drawdown BTC, breadth (% tokens haussiers),
+      structures tendance (uptrend vs downtrend), volume BTC.
+
+    Sauvegarde dans data/computed/market_regime.json pour le dashboard.
+    Retourne 0.0 si données insuffisantes (neutre = pas de biais).
+    """
+    try:
+        btc = next((x for x in indicators if isinstance(x, dict) and x.get("symbol") == "BTCUSDT"), None)
+        score = 0.0
+
+        if btc:
+            price, ma50, ma200 = btc.get("price"), btc.get("ma_50"), btc.get("ma_200")
+            if price and ma50 and ma200:
+                if price > ma50 > ma200:   score += 2
+                elif price > ma50:         score += 1
+                elif price < ma50 < ma200: score -= 2
+                else:                      score -= 1
+
+            rsi = btc.get("rsi_14")
+            if rsi:
+                if rsi > 60:   score += 1
+                elif rsi < 40: score -= 1
+
+            dd = btc.get("drawdown_90d")
+            if dd is not None:
+                if dd < 0.15:  score += 1
+                elif dd > 0.40: score -= 1
+
+            vol = btc.get("vol_ratio_vs_med90")
+            if vol is not None:
+                if vol > 1.5:  score += 1
+                elif vol < 0.5: score -= 1
+
+        # Breadth et structures sur l'ensemble de l'univers
+        valid = [x for x in indicators if isinstance(x, dict) and x.get("patterns") is not None]
+        if valid:
+            n = len(valid)
+            uptrend_n   = sum(1 for x in valid if "uptrend"   in (x.get("patterns") or []))
+            downtrend_n = sum(1 for x in valid if "downtrend" in (x.get("patterns") or []))
+            breadth     = uptrend_n / n
+
+            if breadth > 0.40:   score += 1
+            elif breadth < 0.25: score -= 1
+
+            if downtrend_n > uptrend_n * 1.5: score -= 1
+            elif uptrend_n > downtrend_n * 1.5: score += 1
+
+        regime = float(max(-10.0, min(10.0, score)))
+
+        # Sauvegarde pour le dashboard
+        try:
+            regime_data = {"score": regime, "date": str(TODAY), "components": {
+                "btc_vs_mas": score, "breadth_pct": round(breadth * 100, 1) if valid else None
+            }}
+            (COMPUTED / "market_regime.json").write_text(
+                json.dumps(regime_data, ensure_ascii=False), encoding="utf-8"
+            )
+        except Exception:
+            pass
+
+        return regime
+    except Exception:
+        return 0.0
+
+
+def _regime_multipliers(regime_score: float) -> tuple:
+    """Multiplicateurs bull/bear selon le régime de marché.
+
+    Design : jamais plus de ±30% d'ajustement — le système reste toujours
+    sensible aux retournements de tendance, même en fort marché baissier.
+
+    regime -10 → bull ×0.70, bear ×1.30  (atténuation max)
+    regime   0 → bull ×1.00, bear ×1.00  (neutre, aucun biais)
+    regime +10 → bull ×1.30, bear ×0.70  (amplification bull max)
+    """
+    factor = regime_score / 10.0   # -1.0 à +1.0
+    bull_mult = 1.0 + factor * 0.30
+    bear_mult = 1.0 - factor * 0.30
+    return bull_mult, bear_mult
+
+
+def score_signal(patterns: list, bull_signals, bear_signals, regime_score: float = 0.0):
     """Score directionnel pondéré par les poids adaptatifs (apprentissage quotidien).
 
     Chaque pattern a un poids initialement à 1.0, ajusté chaque jour par 08_learn.py
@@ -123,17 +208,24 @@ def score_signal(patterns: list, bull_signals, bear_signals):
       - hit_rate 50% → poids ~1.0 (bruit, neutre)
       - hit_rate 25% → poids ~0.1 (signal contre-productif)
 
+    Le multiplicateur de régime (±30% max) atténue les signaux bull en marché
+    baissier sans jamais les éteindre — le système reste prêt au retournement.
+
     - score > 50 → biais haussier pondéré
     - score = 50 → neutre (pas de signal ou contradictoire)
     - score < 50 → biais baissier pondéré
     """
     weights = _load_pattern_weights()
     # P1 — Neutraliser les contra-indicateurs au plancher : poids ≤ 0.15 ignorés.
-    # breakout_30d (11.4%), support_bounce (17.6%), rsi_bullish_divergence (20%)
-    # ont un poids à 0.1 mais contribuaient encore positivement au score.
     DEAD_WEIGHT_THRESHOLD = 0.15
     w_bull = sum(weights.get(p, 1.0) for p in patterns if p in _BULLISH_SET and weights.get(p, 1.0) > DEAD_WEIGHT_THRESHOLD)
     w_bear = sum(weights.get(p, 1.0) for p in patterns if p in _BEARISH_SET and weights.get(p, 1.0) > DEAD_WEIGHT_THRESHOLD)
+
+    # Multiplicateur de régime macro — ajustement contextuel doux
+    bull_mult, bear_mult = _regime_multipliers(regime_score)
+    w_bull *= bull_mult
+    w_bear *= bear_mult
+
     total = w_bull + w_bear
     if total == 0:
         return 50
@@ -261,6 +353,11 @@ def run():
     ind_by_sym   = {x["symbol"]: x for x in indicators if isinstance(x, dict)}
     uni_by_sym   = {u["symbol"]: u for u in universe   if isinstance(u, dict)}
 
+    # Régime macro — calculé une fois pour tout l'univers
+    regime_score = compute_market_regime(indicators)
+    bull_m, bear_m = _regime_multipliers(regime_score)
+    log.info(f"Régime macro : {regime_score:+.1f}/10 → bull ×{bull_m:.2f}, bear ×{bear_m:.2f}")
+
     rows = []
     from datetime import datetime, timezone
     now = datetime.now(timezone.utc)
@@ -291,7 +388,7 @@ def run():
         s_mom = score_momentum(ind["price"], ind["ma_50"], ind["ma_200"], ind["rsi_14"], ind["vol_ratio_vs_med90"])
         s_risk = score_risk(ind["vol_30d_annualized"], ind["drawdown_90d"], ind["distance_to_90d_high"], ind["corr_btc_90d"])
         s_anti = score_antiscam(u["volume_24h_quote"], None, team_score, n_rf)
-        s_sig = score_signal(ind.get("patterns", []), ind.get("bull_signals", 0), ind.get("bear_signals", 0))
+        s_sig = score_signal(ind.get("patterns", []), ind.get("bull_signals", 0), ind.get("bear_signals", 0), regime_score)
         # Poids lus depuis formula_weights.json (appris) ou défauts si pas encore de données
         fw = _load_formula_weights()
         score = round(
@@ -402,7 +499,4 @@ def run():
     hist_path = HISTORY / f"scores_{TODAY}.csv"
     if rows:
         hist_path.write_text(out_path.read_text(encoding="utf-8"), encoding="utf-8")
-    return rows
-
-if __name__ == "__main__":
-    run()
+    return r
