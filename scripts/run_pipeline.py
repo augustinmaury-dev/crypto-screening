@@ -129,6 +129,10 @@ def main():
     expl = importlib.import_module("09_explosion_screen")
     step("explosion_screen", expl.run)
 
+    # --- 09b Score Explosif — modele separe sans biais fondamental ---
+    expl2 = importlib.import_module("09b_score_explosive")
+    step("score_explosive", expl2.run)
+
     # --- 07 Report ---
     rep = importlib.import_module("07_report")
     step("report", rep.main)
@@ -150,10 +154,4 @@ def main():
     elapsed = time.time() - t0
     if ERRORS:
         log.warning(f"Pipeline termine avec {len(ERRORS)} erreur(s) en {elapsed:.1f}s")
-        for e in ERRORS:
-            log.warning(e[:400])
-    else:
-        log.info(f"=== Pipeline done in {elapsed:.1f}s - aucune erreur ===")
-
-if __name__ == "__main__":
-    main()
+        for e 

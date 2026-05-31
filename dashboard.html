@@ -136,11 +136,23 @@ section.block h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;col
 
 <div id="marketSignal" style="display:none;padding:10px 16px;background:var(--card);border-bottom:2px solid;flex-shrink:0"></div>
 
+<div id="explosiveSection" style="display:none;padding:16px;max-width:900px;margin:0 auto">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <h2 style="font-size:18px;margin:0">💥 Tokens Explosifs</h2>
+    <span id="explosiveDate" style="font-size:11px;color:var(--muted)"></span>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:16px;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px">
+    ⚠️ Pas un conseil financier. Ce classement identifie les tokens avec un <b>profil technique pré-explosion</b> : momentum en accélération, volume anormal, signaux haussiers. La solidité fondamentale n'est <b>pas</b> prise en compte ici — ces tokens sont souvent spéculatifs et à haut risque.
+  </p>
+  <div id="explosiveList"></div>
+</div>
+
 <div id="app">
   <div id="sidebar">
     <div id="filters">
       <div class="row">
         <button id="watchlistBtn" title="Afficher mes favoris">⭐ Watchlist (<span id="watchlistCount">0</span>)</button>
+        <button id="explosiveBtn" title="Mode Tokens Explosifs" style="background:var(--card);border:1px solid var(--border);border-radius:5px;padding:4px 10px;font-size:12px;white-space:nowrap;transition:.15s">💥 Explosifs</button>
         <input id="search" placeholder="🔍 Symbol ou catégorie..." style="flex:1"/>
       </div>
       <div class="row">
@@ -222,6 +234,8 @@ let ROWS=[], FILTERED=[], SORT={col:'score',dir:-1}, SELECTED=null;
 let CATALYSTS={fear_greed:{},trending:[],vol_spikes:[],by_symbol:{}};
 let HISTORY={dates:[],tokens:{}};
 let WATCHLIST_MODE = false;
+let EXPLOSIVE_DATA={date:'',tokens:[]};
+let EXPLOSIVE_MODE = false;
 let FORMULA_WEIGHTS={solidity:0.20,momentum:0.30,signal:0.15,risk:0.15,antiscam:0.20,_learned:false,_n_pairs:0,_blend:0};
 let PAT_WEIGHTS={};
 
@@ -894,6 +908,11 @@ function autoLoad(){
     .then(d=>{if(d){CATALYSTS=d;}})
     .catch(()=>{});
 
+  fetch(`data/computed/top_explosive.json?t=${t}`)
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{if(d){EXPLOSIVE_DATA=d; if(EXPLOSIVE_MODE) renderExplosive();}})
+    .catch(()=>{});
+
   fetch(`data/computed/score_history.json?t=${t}`)
     .then(r=>r.ok?r.json():null)
     .then(d=>{if(d){HISTORY=d; if(SELECTED)renderDetail(SELECTED);}})
@@ -934,42 +953,6 @@ document.getElementById('watchlistBtn').onclick=()=>{
   applyFilters();
 };
 
-['search','fTier','fBias','fSuspect','fStable','fExplosion','fScore'].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el){el.oninput=applyFilters; el.onchange=applyFilters;}
-});
-
-document.getElementById('resetBtn').onclick=()=>{
-  ['search','fScore'].forEach(id=>document.getElementById(id).value='');
-  ['fTier','fBias','fSuspect','fExplosion'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.value='';
-  });
-  const fs=document.getElementById('fStable'); if(fs) fs.value='no';
-  WATCHLIST_MODE=false;
-  document.getElementById('watchlistBtn').classList.remove('active');
-  applyFilters();
-};
-
-document.querySelectorAll('th[data-col]').forEach(th=>{
-  th.onclick=()=>{
-    const c=th.dataset.col;
-    if(SORT.col===c) SORT.dir*=-1; else SORT={col:c,dir:NUM.has(c)?-1:1};
-    document.querySelectorAll('th').forEach(t=>t.classList.remove('asc','desc'));
-    th.classList.add(SORT.dir>0?'asc':'desc');
-    applyFilters();
-  };
-});
-
-document.addEventListener('keydown',e=>{
-  if(!SELECTED)return;
-  const idx=FILTERED.findIndex(x=>x.symbol===SELECTED.symbol);
-  if(e.key==='ArrowDown'&&idx<FILTERED.length-1){SELECTED=FILTERED[idx+1];renderList();renderDetail(SELECTED);e.preventDefault();}
-  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList();renderDetail(SELECTED);e.preventDefault();}
-});
-
-// Init
-updateWatchlistCount();
-autoLoad();
-</script>
-</body>
-</html>
+document.getElementById('explosiveBtn').onclick=()=>{
+  EXPLOSIVE_MODE=!EXPLOSIVE_MODE;
+ 
