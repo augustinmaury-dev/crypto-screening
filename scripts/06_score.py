@@ -184,44 +184,59 @@ def compute_market_regime(indicators: list) -> float:
 
 
 def _regime_multipliers(regime_score: float) -> tuple:
-    """Multiplicateurs bull/bear selon le régime de marché.
+    """Multiplicateurs bull/bear asymétriques selon le régime de marché.
 
-    Design : jamais plus de ±30% d'ajustement — le système reste toujours
-    sensible aux retournements de tendance, même en fort marché baissier.
+    Asymétrie intentionnelle :
+      - Marché baissier : bull réduit MAX -15% (préserve la sensibilité au retournement)
+      - Marché haussier : bull amplifié MAX +40% (récompense le changement de tendance)
+      - Bear : réduit MAX -30% en marché baissier, amplifié MAX +15% en haussier
 
-    regime -10 → bull ×0.70, bear ×1.30  (atténuation max)
-    regime   0 → bull ×1.00, bear ×1.00  (neutre, aucun biais)
-    regime +10 → bull ×1.30, bear ×0.70  (amplification bull max)
+    regime -10 → bull x0.85, bear x1.30
+    regime   0 → bull x1.00, bear x1.00  (neutre)
+    regime +10 → bull x1.40, bear x0.85
     """
     factor = regime_score / 10.0   # -1.0 à +1.0
-    bull_mult = 1.0 + factor * 0.30
-    bear_mult = 1.0 - factor * 0.30
+    if factor >= 0:
+        # Marché haussier : amplifier bull fortement, réduire bear légèrement
+        bull_mult = 1.0 + factor * 0.40
+        bear_mult = 1.0 - factor * 0.15
+    else:
+        # Marché baissier : réduire bull doucement, amplifier bear normalement
+        bull_mult = 1.0 + factor * 0.15   # factor négatif → réduction max 15%
+        bear_mult = 1.0 - factor * 0.30   # factor négatif → amplification max 30%
     return bull_mult, bear_mult
 
 
 def score_signal(patterns: list, bull_signals, bear_signals, regime_score: float = 0.0):
-    """Score directionnel pondéré par les poids adaptatifs (apprentissage quotidien).
+    """Score directionnel pondéré par les poids adaptatifs + régime macro.
 
-    Chaque pattern a un poids initialement à 1.0, ajusté chaque jour par 08_learn.py
-    selon son taux de bonne prédiction sur 14 jours :
-      - hit_rate 75% → poids ~2.0 (signal fiable)
-      - hit_rate 50% → poids ~1.0 (bruit, neutre)
-      - hit_rate 25% → poids ~0.1 (signal contre-productif)
+    Chaque pattern a un poids ajusté quotidiennement par 08_learn.py selon
+    son taux de bonne prédiction sur 14 jours.
 
-    Le multiplicateur de régime (±30% max) atténue les signaux bull en marché
-    baissier sans jamais les éteindre — le système reste prêt au retournement.
+    Multiplicateur de régime ASYMÉTRIQUE :
+      - Baissier : bull signals -15% max → le système reste prêt au retournement
+      - Haussier : bull signals +40% max → réactive les patterns dormants
+      - Le seuil DEAD_WEIGHT s'abaisse en marché haussier pour réveiller
+        les patterns bull qui ont appris en période baissière
 
     - score > 50 → biais haussier pondéré
-    - score = 50 → neutre (pas de signal ou contradictoire)
+    - score = 50 → neutre
     - score < 50 → biais baissier pondéré
     """
     weights = _load_pattern_weights()
-    # P1 — Neutraliser les contra-indicateurs au plancher : poids ≤ 0.15 ignorés.
-    DEAD_WEIGHT_THRESHOLD = 0.15
+    # Seuil adaptatif : en marché haussier, abaisser pour réactiver les patterns
+    # bull dormants (ex: macd_bullish_cross à 0.1 redevient actif à +5/10)
+    if regime_score >= 5:
+        DEAD_WEIGHT_THRESHOLD = 0.08   # réactive patterns à poids 0.1
+    elif regime_score >= 2:
+        DEAD_WEIGHT_THRESHOLD = 0.12
+    else:
+        DEAD_WEIGHT_THRESHOLD = 0.15   # défaut (marché baissier ou neutre)
+
     w_bull = sum(weights.get(p, 1.0) for p in patterns if p in _BULLISH_SET and weights.get(p, 1.0) > DEAD_WEIGHT_THRESHOLD)
     w_bear = sum(weights.get(p, 1.0) for p in patterns if p in _BEARISH_SET and weights.get(p, 1.0) > DEAD_WEIGHT_THRESHOLD)
 
-    # Multiplicateur de régime macro — ajustement contextuel doux
+    # Multiplicateur asymétrique
     bull_mult, bear_mult = _regime_multipliers(regime_score)
     w_bull *= bull_mult
     w_bear *= bear_mult
