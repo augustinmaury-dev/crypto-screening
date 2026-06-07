@@ -1048,4 +1048,21 @@ document.querySelectorAll('th[data-col]').forEach(th=>{
     const c=th.dataset.col;
     if(SORT.col===c) SORT.dir*=-1; else SORT={col:c,dir:NUM.has(c)?-1:1};
     document.querySelectorAll('th').forEach(t=>t.classList.remove('asc','desc'));
-    th.classList.add(SORT.dir>0
+    th.classList.add(SORT.dir>0?'asc':'desc');
+    applyFilters();
+  };
+});
+
+document.addEventListener('keydown',e=>{
+  if(!SELECTED)return;
+  const idx=FILTERED.findIndex(x=>x.symbol===SELECTED.symbol);
+  if(e.key==='ArrowDown'&&idx<FILTERED.length-1){SELECTED=FILTERED[idx+1];renderList();renderDetail(SELECTED);e.preventDefault();}
+  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList();renderDetail(SELECTED);e.preventDefault();}
+});
+
+// Init
+updateWatchlistCount();
+autoLoad();
+</script>
+</body>
+</html>
