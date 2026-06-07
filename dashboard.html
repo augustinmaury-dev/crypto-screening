@@ -136,8 +136,9 @@ section.block h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;col
 
 <div id="marketSignal" style="display:none;padding:10px 16px;background:var(--card);border-bottom:2px solid;flex-shrink:0"></div>
 
-<div id="explosiveSection" style="display:none;padding:16px;max-width:900px;margin:0 auto">
+<div id="explosiveSection" style="display:none;padding:16px;max-width:900px;margin:0 auto;overflow-y:auto;flex:1">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <button id="explosiveBackBtn" style="background:var(--card);border:1px solid var(--border);border-radius:5px;padding:5px 12px;font-size:12px;cursor:pointer" onclick="document.getElementById('explosiveBtn').click()">← Retour</button>
     <h2 style="font-size:18px;margin:0">💥 Tokens Explosifs</h2>
     <span id="explosiveDate" style="font-size:11px;color:var(--muted)"></span>
   </div>
@@ -980,7 +981,7 @@ function renderExplosive(){
   const patBadge = p => `<span style="font-size:10px;background:#21262d;border:1px solid #30363d;border-radius:4px;padding:1px 5px;margin:1px;display:inline-block">${p.replace(/_/g,' ')}</span>`;
 
   el.innerHTML = tokens.length === 0
-    ? '<p style="color:var(--muted);padding:20px">Aucun token explosif détecté (données pas encore chargées ou pipeline en cours).</p>'
+    ? '<div style="padding:30px;text-align:center;color:var(--muted)"><div style="font-size:32px;margin-bottom:12px">⏳</div><div style="font-size:14px;margin-bottom:8px">Données pas encore disponibles</div><div style="font-size:12px">Le modèle explosif tourne depuis aujourd\'hui — les résultats apparaîtront après le prochain pipeline (9h Paris).</div></div>'
     : tokens.map((r,i) => {
       const bullPats = r.patterns_bull ? r.patterns_bull.split('|').filter(Boolean) : [];
       const bearPats = r.patterns_bear ? r.patterns_bear.split('|').filter(Boolean) : [];
@@ -1047,21 +1048,4 @@ document.querySelectorAll('th[data-col]').forEach(th=>{
     const c=th.dataset.col;
     if(SORT.col===c) SORT.dir*=-1; else SORT={col:c,dir:NUM.has(c)?-1:1};
     document.querySelectorAll('th').forEach(t=>t.classList.remove('asc','desc'));
-    th.classList.add(SORT.dir>0?'asc':'desc');
-    applyFilters();
-  };
-});
-
-document.addEventListener('keydown',e=>{
-  if(!SELECTED)return;
-  const idx=FILTERED.findIndex(x=>x.symbol===SELECTED.symbol);
-  if(e.key==='ArrowDown'&&idx<FILTERED.length-1){SELECTED=FILTERED[idx+1];renderList();renderDetail(SELECTED);e.preventDefault();}
-  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList();renderDetail(SELECTED);e.preventDefault();}
-});
-
-// Init
-updateWatchlistCount();
-autoLoad();
-</script>
-</body>
-</html>
+    th.classList.add(SORT.dir>0
