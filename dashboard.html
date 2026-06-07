@@ -955,4 +955,113 @@ document.getElementById('watchlistBtn').onclick=()=>{
 
 document.getElementById('explosiveBtn').onclick=()=>{
   EXPLOSIVE_MODE=!EXPLOSIVE_MODE;
- 
+  document.getElementById('explosiveBtn').classList.toggle('active', EXPLOSIVE_MODE);
+  document.getElementById('explosiveBtn').style.borderColor = EXPLOSIVE_MODE ? '#f0883e' : '';
+  document.getElementById('explosiveBtn').style.color = EXPLOSIVE_MODE ? '#f0883e' : '';
+  if(EXPLOSIVE_MODE){
+    document.getElementById('sidebar').style.display='none';
+    document.getElementById('explosiveSection').style.display='block';
+    renderExplosive();
+  } else {
+    document.getElementById('sidebar').style.display='';
+    document.getElementById('explosiveSection').style.display='none';
+  }
+};
+
+function renderExplosive(){
+  const tokens = EXPLOSIVE_DATA.tokens || [];
+  const date   = EXPLOSIVE_DATA.date   || '';
+  const el = document.getElementById('explosiveList');
+  if(!el) return;
+
+  const tierColor = t => t==='Etabli'?'#3fb950':t==='Mid'?'#58a6ff':'#d29922';
+  const fmt = v => v==null?'—':v>1e9?`$${(v/1e9).toFixed(1)}B`:v>1e6?`$${(v/1e6).toFixed(0)}M`:v>1e3?`$${(v/1e3).toFixed(0)}K`:`$${v}`;
+  const pct  = v => v==null?'—':`${v>0?'+':''}${(+v).toFixed(1)}%`;
+  const patBadge = p => `<span style="font-size:10px;background:#21262d;border:1px solid #30363d;border-radius:4px;padding:1px 5px;margin:1px;display:inline-block">${p.replace(/_/g,' ')}</span>`;
+
+  el.innerHTML = tokens.length === 0
+    ? '<p style="color:var(--muted);padding:20px">Aucun token explosif détecté (données pas encore chargées ou pipeline en cours).</p>'
+    : tokens.map((r,i) => {
+      const bullPats = r.patterns_bull ? r.patterns_bull.split('|').filter(Boolean) : [];
+      const bearPats = r.patterns_bear ? r.patterns_bear.split('|').filter(Boolean) : [];
+      const volBar = Math.min(100, ((r.vol_ratio||0)/3)*100);
+      return `<div style="background:var(--card);border:1px solid ${i<3?'#f0883e33':'var(--border)'};border-radius:8px;padding:12px 16px;margin-bottom:10px;${i<3?'box-shadow:0 0 8px #f0883e22':''}">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span style="font-size:18px;font-weight:700;color:#f0883e;min-width:28px">${i+1}</span>
+          <span style="font-weight:700;font-size:15px">${r.symbol.replace('USDT','')}</span>
+          <span style="font-size:11px;color:${tierColor(r.tier)};border:1px solid;border-color:${tierColor(r.tier)};border-radius:4px;padding:1px 6px">${r.tier}</span>
+          <span style="margin-left:auto;font-size:20px;font-weight:800;color:#f0883e">${(+r.score_explosif).toFixed(1)}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px;font-size:11px">
+          <div style="background:#21262d;border-radius:4px;padding:6px;text-align:center">
+            <div style="color:var(--muted)">Momentum</div>
+            <div style="font-weight:700;color:#58a6ff">${(+r.score_momentum).toFixed(0)}</div>
+          </div>
+          <div style="background:#21262d;border-radius:4px;padding:6px;text-align:center">
+            <div style="color:var(--muted)">Signal</div>
+            <div style="font-weight:700;color:#3fb950">${(+r.score_signal).toFixed(0)}</div>
+          </div>
+          <div style="background:#21262d;border-radius:4px;padding:6px;text-align:center">
+            <div style="color:var(--muted)">RSI</div>
+            <div style="font-weight:700;color:${r.rsi_14>70?'#f85149':r.rsi_14<40?'#58a6ff':'#e6edf3'}">${r.rsi_14?r.rsi_14.toFixed(0):'—'}</div>
+          </div>
+          <div style="background:#21262d;border-radius:4px;padding:6px;text-align:center">
+            <div style="color:var(--muted)">Vol ratio</div>
+            <div style="font-weight:700;color:${(r.vol_ratio||0)>2?'#f0883e':'#e6edf3'}">${r.vol_ratio?(+r.vol_ratio).toFixed(1)+'×':'—'}</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">
+          Prix : <b style="color:#e6edf3">${r.price}</b> &nbsp;
+          Δ24h : <b style="color:${(r.change_24h_pct||0)>0?'#3fb950':'#f85149'}">${pct(r.change_24h_pct)}</b> &nbsp;
+          Vol : <b style="color:#e6edf3">${fmt(r.vol_24h_usd)}</b>
+          ${r.trending_rank!=null?`&nbsp; 🔥 Trending #${r.trending_rank}`:''}
+        </div>
+        <div style="margin-top:6px">
+          ${bullPats.map(p=>`<span style="font-size:10px;background:#0d3b2e;border:1px solid #3fb950;border-radius:4px;padding:1px 5px;margin:1px;display:inline-block;color:#3fb950">${p.replace(/_/g,' ')}</span>`).join('')}
+          ${bearPats.map(p=>`<span style="font-size:10px;background:#3d1515;border:1px solid #f85149;border-radius:4px;padding:1px 5px;margin:1px;display:inline-block;color:#f85149">${p.replace(/_/g,' ')}</span>`).join('')}
+        </div>
+      </div>`;
+    }).join('');
+
+  document.getElementById('explosiveDate').textContent = date ? `Données du ${date}` : '';
+}
+
+['search','fTier','fBias','fSuspect','fStable','fExplosion','fScore'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el){el.oninput=applyFilters; el.onchange=applyFilters;}
+});
+
+document.getElementById('resetBtn').onclick=()=>{
+  ['search','fScore'].forEach(id=>document.getElementById(id).value='');
+  ['fTier','fBias','fSuspect','fExplosion'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  const fs=document.getElementById('fStable'); if(fs) fs.value='no';
+  WATCHLIST_MODE=false;
+  document.getElementById('watchlistBtn').classList.remove('active');
+  applyFilters();
+};
+
+document.querySelectorAll('th[data-col]').forEach(th=>{
+  th.onclick=()=>{
+    const c=th.dataset.col;
+    if(SORT.col===c) SORT.dir*=-1; else SORT={col:c,dir:NUM.has(c)?-1:1};
+    document.querySelectorAll('th').forEach(t=>t.classList.remove('asc','desc'));
+    th.classList.add(SORT.dir>0?'asc':'desc');
+    applyFilters();
+  };
+});
+
+document.addEventListener('keydown',e=>{
+  if(!SELECTED)return;
+  const idx=FILTERED.findIndex(x=>x.symbol===SELECTED.symbol);
+  if(e.key==='ArrowDown'&&idx<FILTERED.length-1){SELECTED=FILTERED[idx+1];renderList();renderDetail(SELECTED);e.preventDefault();}
+  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList();renderDetail(SELECTED);e.preventDefault();}
+});
+
+// Init
+updateWatchlistCount();
+autoLoad();
+</script>
+</body>
+</html>

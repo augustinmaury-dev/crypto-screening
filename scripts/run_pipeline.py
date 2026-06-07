@@ -154,4 +154,10 @@ def main():
     elapsed = time.time() - t0
     if ERRORS:
         log.warning(f"Pipeline termine avec {len(ERRORS)} erreur(s) en {elapsed:.1f}s")
-        for e 
+        for e in ERRORS:
+            log.warning(e[:400])
+    else:
+        log.info(f"=== Pipeline done in {elapsed:.1f}s - aucune erreur ===")
+
+if __name__ == "__main__":
+    main()
