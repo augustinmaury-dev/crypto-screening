@@ -317,9 +317,11 @@ def run():
     LEARNING.mkdir(parents=True, exist_ok=True)
 
     # Charge le CSV de scores pour avoir tier, patterns, etc.
-    scores_path = COMPUTED / f"scores_{TODAY}.csv"
+    # Note : 06_score.py écrit data/computed/scores.csv (sans date) et
+    #        data/history/scores_{TODAY}.csv — on lit le fichier principal.
+    scores_path = COMPUTED / "scores.csv"
     if not scores_path.exists():
-        log.warning(f"Pas de CSV de scores {TODAY} — explosion screen ignore")
+        log.warning("Pas de scores.csv dans computed — explosion screen ignore")
         return
 
     with open(scores_path, encoding="utf-8") as f:
@@ -407,6 +409,7 @@ def run():
         PAT_DEFAULTS = {
             "breakout_30d": 2.0, "golden_cross": 2.0, "bull_flag": 2.0,
             "double_bottom_90d": 1.5, "macd_bullish_cross": 1.5,
+            "squeeze_breakout": 2.5,    # signal précoce fort : dormant → réveil + volume
             "uptrend": 1.0, "support_bounce": 1.0,
             "bullish_engulfing_4h": 0.8, "morning_star_4h": 0.8,
             "rsi_bullish_divergence": 1.2,

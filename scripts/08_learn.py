@@ -25,7 +25,7 @@ BULLISH_PATS = {
     "breakout_30d", "rsi_bullish_divergence", "golden_cross",
     "macd_bullish_cross", "double_bottom_90d", "bull_flag",
     "uptrend", "support_bounce", "hammer_4h", "bullish_engulfing_4h",
-    "morning_star_4h",
+    "morning_star_4h", "squeeze_breakout",
 }
 BEARISH_PATS = {
     "breakdown_30d", "rsi_bearish_divergence", "death_cross",

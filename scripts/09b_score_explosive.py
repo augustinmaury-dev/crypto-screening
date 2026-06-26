@@ -32,7 +32,7 @@ _BULLISH_PATTERNS = {
     "breakout_30d", "golden_cross", "macd_bullish_cross",
     "double_bottom_90d", "bull_flag", "uptrend",
     "support_bounce", "bullish_engulfing_4h", "morning_star_4h",
-    "hammer_4h", "rsi_bullish_divergence",
+    "hammer_4h", "rsi_bullish_divergence", "squeeze_breakout",
 }
 _BEARISH_PATTERNS = {
     "breakdown_30d", "death_cross", "macd_bearish_cross",

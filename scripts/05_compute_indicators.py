@@ -306,6 +306,51 @@ def pat_resistance_test(closes, highs, window=90, tol=0.02):
     near_res = abs(closes[-1] - res_lvl) / res_lvl < tol
     return near_res
 
+def pat_squeeze_breakout(closes, vols, squeeze_days=14):
+    """Sortie de compression de volatilité (squeeze breakout).
+
+    Phase compression (squeeze_days jours précédents) :
+      Prix dans un range étroit : (max-min) / médiane < 15%.
+      Typique des altcoins dormants avant un move majeur (profil ALLO, ATM).
+
+    Phase étincelle (bougie actuelle) :
+      • Prix ≥ 98% du haut de la zone de compression (sortie par le haut)
+      • Volume ≥ 1.5× médiane 30j (volume qui s'éveille)
+      • Momentum haussier court terme : close[-1] > close[-3]
+
+    Capture le premier jour de réveil d'un token calme — avant que le move
+    soit visible dans le score_momentum ou le RSI.
+    """
+    if len(closes) < squeeze_days + 3 or len(vols) < 30:
+        return False
+
+    # Zone de compression = les squeeze_days bougies AVANT la dernière
+    sq = closes[-(squeeze_days + 1):-1]
+    if len(sq) < squeeze_days // 2:
+        return False
+
+    sq_med = sorted(sq)[len(sq) // 2]
+    if sq_med == 0:
+        return False
+    sq_max = max(sq)
+    sq_min = min(sq)
+
+    # 1. Range étroit (< 15% de la médiane)
+    if (sq_max - sq_min) / sq_med >= 0.15:
+        return False
+
+    # 2. Cassure par le haut (prix actuel ≥ 98% du max de la compression)
+    if closes[-1] < sq_max * 0.98:
+        return False
+
+    # 3. Volume spike (≥ 1.5× médiane 30j)
+    med_vol = sorted(vols[-30:])[15]
+    if not med_vol or vols[-1] < med_vol * 1.5:
+        return False
+
+    # 4. Momentum positif court terme
+    return closes[-1] > closes[-3]
+
 # ─────────────────────────── patterns sur bougies 4h ──────────────────────
 
 def candle_patterns_4h(opens4, closes4, highs4, lows4, n=20):
@@ -377,7 +422,7 @@ BULLISH_SIGNALS = {
     "breakout_30d", "rsi_bullish_divergence", "golden_cross",
     "macd_bullish_cross", "double_bottom_90d", "bull_flag",
     "uptrend", "support_bounce", "hammer_4h", "bullish_engulfing_4h",
-    "morning_star_4h",
+    "morning_star_4h", "squeeze_breakout",
 }
 BEARISH_SIGNALS = {
     "breakdown_30d", "rsi_bearish_divergence", "death_cross",
@@ -457,6 +502,7 @@ def compute_for_symbol(symbol: str, btc_closes: list):
     if pat_bear_flag(closes, highs, lows, vols): patterns.append("bear_flag")
     if pat_support_bounce(closes, lows):         patterns.append("support_bounce")
     if pat_resistance_test(closes, highs):       patterns.append("resistance_test")
+    if pat_squeeze_breakout(closes, vols):       patterns.append("squeeze_breakout")
     if trend: patterns.append(trend)
 
     # Patterns 4h
