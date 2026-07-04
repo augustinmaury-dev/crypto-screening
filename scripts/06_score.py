@@ -322,6 +322,66 @@ def _load_catalysts() -> dict:
         pass
     return {}
 
+def compute_exit_risk(rsi, vol_ratio, dist_to_high, patterns: list, macd_hist) -> tuple:
+    """Score de risque de retournement / signal de sortie (0–10).
+
+    Indique quand un token qu'on détient commence à montrer des signes
+    d'épuisement haussier et qu'il faut envisager de sortir.
+
+    Composantes :
+      RSI surachat      : > 72 → +2, > 80 → +4
+      Volume qui sèche  : vol_ratio < 0.6 après un move → +2
+      Proche résistance : distance au plus haut 90j < 5% → +2
+      Patterns baissiers: divergence RSI, étoile filante, MACD cross, double top → +2 chacun (max +4)
+      MACD hist < 0     : momentum qui retourne → +1
+
+    Résultat :
+      0–3  → OK, pas de signal
+      4–6  → ⚠️ À surveiller
+      7+   → 🔴 Signal de sortie
+    """
+    risk = 0
+    reasons = []
+
+    # RSI surachat
+    if rsi is not None:
+        if rsi > 80:
+            risk += 4; reasons.append(f"RSI {rsi:.0f} (surachat extrême)")
+        elif rsi > 72:
+            risk += 2; reasons.append(f"RSI {rsi:.0f} (surachat)")
+
+    # Volume qui sèche — signe d'épuisement du move
+    if vol_ratio is not None and vol_ratio < 0.6:
+        risk += 2; reasons.append(f"Volume ×{vol_ratio:.1f} (épuisement)")
+
+    # Prix proche du plus haut 90j (résistance majeure)
+    if dist_to_high is not None and dist_to_high < 0.05:
+        risk += 2; reasons.append("Près du plus haut 90j (résistance)")
+
+    # Patterns baissiers (max +4 au total)
+    BEARISH_EXIT = [
+        ("rsi_bearish_divergence", "Divergence RSI baissière"),
+        ("double_top_90d",         "Double sommet"),
+        ("shooting_star_4h",       "Étoile filante 4h"),
+        ("evening_star_4h",        "Étoile du soir 4h"),
+        ("bearish_engulfing_4h",   "Engloutissement baissier 4h"),
+        ("macd_bearish_cross",     "MACD cross baissier"),
+    ]
+    pat_added = 0
+    for pat, label in BEARISH_EXIT:
+        if pat in patterns and pat_added < 4:
+            risk += 2; pat_added += 2
+            reasons.append(label)
+
+    # MACD histogram négatif (momentum qui retourne)
+    if macd_hist is not None and macd_hist < 0:
+        risk += 1
+
+    risk = min(10, risk)
+    label = "🔴 Sortie" if risk >= 7 else ("⚠️ Surveiller" if risk >= 4 else "")
+    return risk, label, "|".join(reasons[:3])
+
+
 def predict_bull_prob_7d(s_mom, s_sig, s_risk, rsi, vol_ratio, catalyst_score) -> int:
     """Probabilité haussière sur 7 jours — 0 à 100 %.
     Basée sur les sous-scores calibrés + catalyseurs détectés.
@@ -451,6 +511,15 @@ def run():
             catalyst_score
         )
 
+        # ── Risque de sortie ──
+        exit_risk, exit_label, exit_reasons = compute_exit_risk(
+            ind.get("rsi_14"),
+            ind.get("vol_ratio_vs_med90"),
+            ind.get("distance_to_90d_high"),
+            ind.get("patterns", []),
+            ind.get("macd_hist"),
+        )
+
         rows.append({
             "symbol": sym, "base": u["base"], "tier": tier_, "rank_mcap": rank,
             "price": u["price"], "vol_24h_usd": u["volume_24h_quote"],
@@ -487,6 +556,10 @@ def run():
             "vol_spike_ratio": vol_spike,
             # Prédiction
             "bull_prob_7d": bull_prob_7d,
+            # Risque de sortie
+            "exit_risk": exit_risk,
+            "exit_label": exit_label,
+            "exit_reasons": exit_reasons,
             # Tokenomics
             "market_cap": market_cap,
             "fdv": fdv,

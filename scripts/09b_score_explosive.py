@@ -154,6 +154,43 @@ def score_catalysts_expl(catalyst_score, vol_spike, trending_rank) -> float:
     return _clamp(s)
 
 
+def compute_exit_risk_expl(rsi, vol_ratio, dist_to_high, patterns: list, macd_hist) -> tuple:
+    """Signal de sortie pour les tokens en portefeuille (0–10).
+
+    Quand un token explosif qu'on détient commence à s'épuiser :
+      RSI > 72      → +2, > 80 → +4
+      Volume < 0.6  → +2 (épuisement du move)
+      Près du haut  → +2 (résistance 90j)
+      Patterns bear → +2 chacun (max +4)
+      MACD hist < 0 → +1
+
+    0–3 = OK | 4–6 = ⚠️ Surveiller | 7+ = 🔴 Sortie
+    """
+    risk = 0
+    reasons = []
+    if rsi is not None:
+        if rsi > 80:   risk += 4; reasons.append(f"RSI {rsi:.0f} extrême")
+        elif rsi > 72: risk += 2; reasons.append(f"RSI {rsi:.0f} surachat")
+    if vol_ratio is not None and vol_ratio < 0.6:
+        risk += 2; reasons.append(f"Volume ×{vol_ratio:.1f} épuisé")
+    if dist_to_high is not None and dist_to_high < 0.05:
+        risk += 2; reasons.append("Près résistance 90j")
+    BEARISH_EXIT = [
+        ("rsi_bearish_divergence","Div RSI"),("double_top_90d","Double sommet"),
+        ("shooting_star_4h","Étoile filante"),("evening_star_4h","Étoile soir"),
+        ("bearish_engulfing_4h","Engloutissement"),("macd_bearish_cross","MACD bear"),
+    ]
+    pat_added = 0
+    for pat, label in BEARISH_EXIT:
+        if pat in patterns and pat_added < 4:
+            risk += 2; pat_added += 2; reasons.append(label)
+    if macd_hist is not None and macd_hist < 0:
+        risk += 1
+    risk = min(10, risk)
+    label = "🔴 Sortie" if risk >= 7 else ("⚠️ Surveiller" if risk >= 4 else "✅ OK")
+    return risk, label, "|".join(reasons[:3])
+
+
 def score_antiscam_expl(volume_24h, n_red_flags) -> float:
     """Filtre minimum anti-scam — plus permissif que le modele principal."""
     if n_red_flags >= 3:   return 0    # scam evident
@@ -253,6 +290,14 @@ def run():
         bull_p = [p for p in patterns if p in _BULLISH_PATTERNS]
         bear_p = [p for p in patterns if p in _BEARISH_PATTERNS]
 
+        exit_risk, exit_label, exit_reasons = compute_exit_risk_expl(
+            rsi,
+            ind.get("vol_ratio_vs_med90"),
+            ind.get("distance_to_90d_high"),
+            patterns,
+            ind.get("macd_hist"),
+        )
+
         rows.append({
             "symbol":         sym,
             "tier":           tier,
@@ -276,6 +321,9 @@ def run():
             "vol_spike":      vol_spike,
             "support_90d":    ind.get("support_90d"),
             "resistance_90d": ind.get("resistance_90d"),
+            "exit_risk":      exit_risk,
+            "exit_label":     exit_label,
+            "exit_reasons":   exit_reasons,
         })
 
     rows.sort(key=lambda r: -r["score_explosif"])
