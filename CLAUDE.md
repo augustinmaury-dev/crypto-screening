@@ -142,4 +142,5 @@ git push origin main
 
 ## Contexte de la collaboration
 - Cette conversation Cowork est **dédiée au projet crypto**
-- Les autres sujet
+- Les autres sujets (portfolio boursier, analyses sectorielles) sont traités dans d'autres conversations
+- Augustin a aussi un portfolio d'actions Tech/IA/Semis, un PEA (MSCI World, DAX, Grèce, Japon TOPIX), des cryptos, et de l'immobilier via LaPremiereBrique — mais cela ne concerne pas cette conversation

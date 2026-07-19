@@ -433,6 +433,21 @@ def run():
     bull_m, bear_m = _regime_multipliers(regime_score)
     log.info(f"Régime macro : {regime_score:+.1f}/10 → bull ×{bull_m:.2f}, bear ×{bear_m:.2f}")
 
+    # ── Référence BTC (calculée une fois, sert de baseline pour vs_btc_label) ──
+    _btc_ind = ind_by_sym.get("BTCUSDT") or {}
+    if _btc_ind:
+        _bm    = score_momentum(_btc_ind.get("price"), _btc_ind.get("ma_50"), _btc_ind.get("ma_200"),
+                                _btc_ind.get("rsi_14"), _btc_ind.get("vol_ratio_vs_med90"))
+        _brisk = score_risk(_btc_ind.get("vol_30d_annualized"), _btc_ind.get("drawdown_90d"),
+                            _btc_ind.get("distance_to_90d_high"), _btc_ind.get("corr_btc_90d"))
+        _bsig  = score_signal(_btc_ind.get("patterns", []), _btc_ind.get("bull_signals", 0),
+                              _btc_ind.get("bear_signals", 0), regime_score)
+        btc_bull_prob = predict_bull_prob_7d(_bm, _bsig, _brisk,
+                                             _btc_ind.get("rsi_14"), _btc_ind.get("vol_ratio_vs_med90"), 0)
+    else:
+        btc_bull_prob = 50
+    log.info(f"BTC bull_prob de référence : {btc_bull_prob}%")
+
     rows = []
     from datetime import datetime, timezone
     now = datetime.now(timezone.utc)
@@ -464,9 +479,9 @@ def run():
         s_risk = score_risk(ind["vol_30d_annualized"], ind["drawdown_90d"], ind["distance_to_90d_high"], ind["corr_btc_90d"])
         s_anti = score_antiscam(u["volume_24h_quote"], None, team_score, n_rf)
         s_sig = score_signal(ind.get("patterns", []), ind.get("bull_signals", 0), ind.get("bear_signals", 0), regime_score)
-        # Poids lus depuis formula_weights.json (appris) ou défauts si pas encore de données
+        # Score qualité composite (conservé pour référence / anti-scam)
         fw = _load_formula_weights()
-        score = round(
+        score_quality = round(
             fw["solidity"]*s_sol + fw["momentum"]*s_mom +
             fw["risk"]*s_risk   + fw["antiscam"]*s_anti +
             fw["signal"]*s_sig,
@@ -511,6 +526,19 @@ def run():
             catalyst_score
         )
 
+        # Score principal = probabilité de hausse sur 7j
+        # C'est la seule métrique corrélée à la direction réelle des prix.
+        score = bull_prob_7d
+
+        # ── Comparaison vs BTC ──
+        alpha_vs_btc = bull_prob_7d - btc_bull_prob
+        if alpha_vs_btc >= 8:
+            vs_btc_label = "🟢 Surperforme BTC"
+        elif alpha_vs_btc <= -8:
+            vs_btc_label = "🔴 Sous-performe BTC"
+        else:
+            vs_btc_label = "≈ Neutre vs BTC"
+
         # ── Risque de sortie ──
         exit_risk, exit_label, exit_reasons = compute_exit_risk(
             ind.get("rsi_14"),
@@ -546,6 +574,9 @@ def run():
             "score_antiscam": round(s_anti, 1),
             "score_signal": round(s_sig, 1),
             "score": score,
+            "score_quality": score_quality,
+            "alpha_vs_btc": alpha_vs_btc,
+            "vs_btc_label": vs_btc_label,
             "suspect": suspect,
             "stablecoin": stablecoin,
             "categories": "|".join(((enrich or {}).get("categories") or [])[:5]),

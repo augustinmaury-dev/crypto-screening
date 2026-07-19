@@ -179,7 +179,7 @@ section.block h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;col
           <th style="width:24px"></th>
           <th data-col="symbol">Symbol</th>
           <th data-col="tier">Tier</th>
-          <th data-col="score">Score</th>
+          <th data-col="score">% Hausse 7j</th>
           <th data-col="bias">Biais</th>
           <th data-col="rsi_14">RSI</th>
           <th data-col="change_24h_pct">Δ24h</th>
@@ -203,12 +203,12 @@ section.block h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;col
 <script>
 // ── Constantes ────────────────────────────────────────────────────────────────
 const NUM = new Set([
-  'score','score_solidity','score_momentum','score_risk','score_antiscam','score_signal',
+  'score','score_quality','score_solidity','score_momentum','score_risk','score_antiscam','score_signal',
   'explosion_score','rsi_14','macd_hist','ma_50','ma_200','ma_20','vol_30d_ann',
   'drawdown_90d','dist_to_high_90d','vol_ratio_vs_med90','corr_btc_90d',
   'price','vol_24h_usd','change_24h_pct','age_days','rank_mcap',
   'bull_signals','bear_signals','n_red_flags','support_90d','resistance_90d',
-  'catalyst_score','trending_rank','vol_spike_ratio','bull_prob_7d',
+  'catalyst_score','trending_rank','vol_spike_ratio','bull_prob_7d','alpha_vs_btc',
   'market_cap','fdv','circ_ratio_pct','tvl','tvl_change_7d',
 ]);
 
@@ -556,8 +556,8 @@ function renderDetail(r){
 
   <div class="detail-header">
     <div class="score-circle" style="border-color:${scC}">
-      <span class="n" style="color:${scC}">${sc.toFixed(1)}</span>
-      <span class="l">score</span>
+      <span class="n" style="color:${scC}">${sc.toFixed(0)}%</span>
+      <span class="l">hausse 7j</span>
     </div>
     <div class="detail-title">
       <h2>${r.symbol.replace('USDT','')} <span style="font-size:14px;color:var(--muted)">/ USDT</span>
@@ -652,6 +652,9 @@ function renderDetail(r){
     const expl=+r.explosion_score||0;
     const explPct=Math.min(100,Math.round(expl/15*100));
     const explC=expl>=9?'#f85149':expl>=6?'#d29922':'#58a6ff';
+    const alpha=+r.alpha_vs_btc||0;
+    const vsBtcLabel=r.vs_btc_label||'';
+    const vsBtcC=alpha>=8?'#3fb950':alpha<=-8?'#f85149':'#8b949e';
     return`<div class="score-axes">
       <h3>📈 Prédiction <span style="font-size:10px;color:var(--muted);font-weight:400">— indicatif, pas un conseil</span></h3>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px">
@@ -665,6 +668,7 @@ function renderDetail(r){
           </div>
           <div style="font-size:11px;color:${probC};margin-top:4px">${probLbl}</div>
           <div style="font-size:10px;color:var(--muted);margin-top:3px">Basé sur momentum, signal, RSI et catalyseurs</div>
+          ${vsBtcLabel?`<div style="margin-top:8px;padding:4px 8px;background:${vsBtcC}18;border:1px solid ${vsBtcC}44;border-radius:4px;font-size:11px;color:${vsBtcC};font-weight:600">${vsBtcLabel} <span style="font-weight:400;color:var(--muted)">(${alpha>=0?'+':''}${alpha}pp vs BTC)</span></div>`:''}
         </div>
         <div>
           <div style="font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px">Potentiel explosion 30j</div>
