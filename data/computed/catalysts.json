@@ -1,10 +1,15 @@
 {
-  "generated": "20260726",
+  "generated": "20260727",
   "fear_greed": {
-    "value": 26,
+    "value": 30,
     "classification": "Fear",
     "classification_fr": "Peur",
     "history_7d": [
+      {
+        "date": "1785110400",
+        "value": 30,
+        "label": "Fear"
+      },
       {
         "date": "1785024000",
         "value": 26,
@@ -34,194 +39,213 @@
         "date": "1784592000",
         "value": 25,
         "label": "Extreme Fear"
-      },
-      {
-        "date": "1784505600",
-        "value": 29,
-        "label": "Fear"
       }
     ],
     "trend": "stable"
   },
   "trending": [
     {
-      "id": "pudgy-penguins",
-      "symbol": "PENGU",
-      "name": "Pudgy Penguins",
-      "rank": 108,
+      "id": "geodnet",
+      "symbol": "GEOD",
+      "name": "Geodnet",
+      "rank": 202,
       "score": 0
     },
     {
-      "id": "bitmart-token",
-      "symbol": "BMX",
-      "name": "BitMart",
-      "rank": 680,
+      "id": "casper-network",
+      "symbol": "CSPR",
+      "name": "Casper Network",
+      "rank": 698,
       "score": 1
-    },
-    {
-      "id": "shiba-inu",
-      "symbol": "SHIB",
-      "name": "Shiba Inu",
-      "rank": 29,
-      "score": 2
-    },
-    {
-      "id": "euler",
-      "symbol": "EUL",
-      "name": "Euler",
-      "rank": 373,
-      "score": 3
-    },
-    {
-      "id": "sui",
-      "symbol": "SUI",
-      "name": "Sui",
-      "rank": 33,
-      "score": 4
-    },
-    {
-      "id": "dexe",
-      "symbol": "DEXE",
-      "name": "DeXe",
-      "rank": 177,
-      "score": 5
-    },
-    {
-      "id": "solana",
-      "symbol": "SOL",
-      "name": "Solana",
-      "rank": 7,
-      "score": 6
-    },
-    {
-      "id": "bitcoin",
-      "symbol": "BTC",
-      "name": "Bitcoin",
-      "rank": 1,
-      "score": 7
     },
     {
       "id": "pons",
       "symbol": "PONS",
       "name": "Pons",
-      "rank": 529,
+      "rank": 452,
+      "score": 2
+    },
+    {
+      "id": "lorenzo-protocol",
+      "symbol": "BANK",
+      "name": "Lorenzo Protocol",
+      "rank": 192,
+      "score": 3
+    },
+    {
+      "id": "pump-fun",
+      "symbol": "PUMP",
+      "name": "Pump.fun",
+      "rank": 76,
+      "score": 4
+    },
+    {
+      "id": "pudgy-penguins",
+      "symbol": "PENGU",
+      "name": "Pudgy Penguins",
+      "rank": 110,
+      "score": 5
+    },
+    {
+      "id": "storj",
+      "symbol": "STORJ",
+      "name": "Storj",
+      "rank": 1223,
+      "score": 6
+    },
+    {
+      "id": "akedo",
+      "symbol": "AKE",
+      "name": "Akedo",
+      "rank": 265,
+      "score": 7
+    },
+    {
+      "id": "dexe",
+      "symbol": "DEXE",
+      "name": "DeXe",
+      "rank": 230,
       "score": 8
     },
     {
-      "id": "bittensor",
-      "symbol": "TAO",
-      "name": "Bittensor",
-      "rank": 41,
+      "id": "zama",
+      "symbol": "ZAMA",
+      "name": "Zama",
+      "rank": 219,
       "score": 9
-    },
-    {
-      "id": "pepe",
-      "symbol": "PEPE",
-      "name": "Pepe",
-      "rank": 59,
-      "score": 10
-    },
-    {
-      "id": "pieverse",
-      "symbol": "PIEVERSE",
-      "name": "Pieverse",
-      "rank": 141,
-      "score": 11
-    },
-    {
-      "id": "monad",
-      "symbol": "MON",
-      "name": "Monad",
-      "rank": 144,
-      "score": 12
-    },
-    {
-      "id": "the-black-bull",
-      "symbol": "ANSEM",
-      "name": "The Black Bull",
-      "rank": 299,
-      "score": 13
     },
     {
       "id": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
       "rank": 2,
+      "score": 10
+    },
+    {
+      "id": "kaito",
+      "symbol": "KAITO",
+      "name": "KAITO",
+      "rank": 135,
+      "score": 11
+    },
+    {
+      "id": "euler",
+      "symbol": "EUL",
+      "name": "Euler",
+      "rank": 467,
+      "score": 12
+    },
+    {
+      "id": "kaspa",
+      "symbol": "KAS",
+      "name": "Kaspa",
+      "rank": 79,
+      "score": 13
+    },
+    {
+      "id": "bitcoin",
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "rank": 1,
       "score": 14
     }
   ],
   "vol_spikes": [
     {
       "symbol": "DEXEUSDT",
-      "vol_ratio": 65.6,
-      "rsi": 29.4,
-      "bias": "mixte"
-    },
-    {
-      "symbol": "VANAUSDT",
-      "vol_ratio": 45.83,
-      "rsi": 49.4,
-      "bias": "haussier"
-    },
-    {
-      "symbol": "EULUSDT",
-      "vol_ratio": 30.59,
-      "rsi": 90.7,
-      "bias": "mixte"
+      "vol_ratio": 52.17,
+      "rsi": 28.6,
+      "bias": "baissier"
     },
     {
       "symbol": "DIAUSDT",
-      "vol_ratio": 28.54,
-      "rsi": 77.0,
+      "vol_ratio": 43.84,
+      "rsi": 84.2,
       "bias": "haussier"
     },
     {
-      "symbol": "QIUSDT",
-      "vol_ratio": 10.36,
-      "rsi": 62.3,
+      "symbol": "ESPUSDT",
+      "vol_ratio": 16.64,
+      "rsi": 59.4,
+      "bias": "mixte"
+    },
+    {
+      "symbol": "BANKUSDT",
+      "vol_ratio": 11.52,
+      "rsi": 79.0,
       "bias": "neutre"
     },
     {
-      "symbol": "REQUSDT",
-      "vol_ratio": 7.27,
-      "rsi": 64.9,
+      "symbol": "EULUSDT",
+      "vol_ratio": 9.38,
+      "rsi": 68.0,
+      "bias": "baissier"
+    },
+    {
+      "symbol": "VANAUSDT",
+      "vol_ratio": 8.51,
+      "rsi": 47.8,
       "bias": "haussier"
     },
     {
-      "symbol": "SHIBUSDT",
-      "vol_ratio": 5.74,
-      "rsi": 80.1,
+      "symbol": "STORJUSDT",
+      "vol_ratio": 5.39,
+      "rsi": 26.0,
+      "bias": "baissier"
+    },
+    {
+      "symbol": "NILUSDT",
+      "vol_ratio": 4.88,
+      "rsi": 71.3,
       "bias": "haussier"
     },
     {
-      "symbol": "1000CATUSDT",
-      "vol_ratio": 4.47,
-      "rsi": 55.5,
+      "symbol": "LPTUSDT",
+      "vol_ratio": 4.72,
+      "rsi": 40.6,
       "bias": "baissier"
     },
     {
       "symbol": "LAUSDT",
-      "vol_ratio": 3.98,
-      "rsi": 60.5,
+      "vol_ratio": 4.54,
+      "rsi": 61.4,
       "bias": "baissier"
     },
     {
-      "symbol": "RIFUSDT",
-      "vol_ratio": 3.6,
-      "rsi": 45.7,
-      "bias": "baissier"
+      "symbol": "TUSDT",
+      "vol_ratio": 4.27,
+      "rsi": 44.6,
+      "bias": "haussier"
     },
     {
-      "symbol": "BANKUSDT",
-      "vol_ratio": 3.54,
-      "rsi": 82.9,
-      "bias": "baissier"
+      "symbol": "PEOPLEUSDT",
+      "vol_ratio": 3.65,
+      "rsi": 72.3,
+      "bias": "haussier"
+    },
+    {
+      "symbol": "ERAUSDT",
+      "vol_ratio": 3.65,
+      "rsi": 41.9,
+      "bias": "neutre"
+    },
+    {
+      "symbol": "VANRYUSDT",
+      "vol_ratio": 3.33,
+      "rsi": 38.5,
+      "bias": "neutre"
+    },
+    {
+      "symbol": "ZKPUSDT",
+      "vol_ratio": 3.3,
+      "rsi": 45.0,
+      "bias": "mixte"
     }
   ],
   "gh_spikes": [],
   "cmc_events": [],
   "by_symbol": {
-    "PENGUUSDT": {
+    "GEODUSDT": {
       "flags": [
         "🔥 Trending #1 sur CoinGecko"
       ],
@@ -230,7 +254,7 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "BMXUSDT": {
+    "CSPRUSDT": {
       "flags": [
         "🔥 Trending #2 sur CoinGecko"
       ],
@@ -239,27 +263,26 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "SHIBUSDT": {
+    "PONSUSDT": {
       "flags": [
-        "🔥 Trending #3 sur CoinGecko",
-        "⚡ Volume ×5.7 vs médiane"
+        "🔥 Trending #3 sur CoinGecko"
       ],
       "events": [],
       "trending_rank": 3,
-      "vol_spike": 5.74,
+      "vol_spike": null,
       "gh_spike": null
     },
-    "EULUSDT": {
+    "BANKUSDT": {
       "flags": [
         "🔥 Trending #4 sur CoinGecko",
-        "⚡ Volume ×30.6 vs médiane"
+        "⚡ Volume ×11.5 vs médiane"
       ],
       "events": [],
       "trending_rank": 4,
-      "vol_spike": 30.59,
+      "vol_spike": 11.52,
       "gh_spike": null
     },
-    "SUIUSDT": {
+    "PUMPUSDT": {
       "flags": [
         "🔥 Trending #5 sur CoinGecko"
       ],
@@ -268,26 +291,26 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "DEXEUSDT": {
+    "PENGUUSDT": {
       "flags": [
-        "🔥 Trending #6 sur CoinGecko",
-        "⚡ Volume ×65.6 vs médiane"
+        "🔥 Trending #6 sur CoinGecko"
       ],
       "events": [],
       "trending_rank": 6,
-      "vol_spike": 65.6,
-      "gh_spike": null
-    },
-    "SOLUSDT": {
-      "flags": [
-        "🔥 Trending #7 sur CoinGecko"
-      ],
-      "events": [],
-      "trending_rank": 7,
       "vol_spike": null,
       "gh_spike": null
     },
-    "BTCUSDT": {
+    "STORJUSDT": {
+      "flags": [
+        "🔥 Trending #7 sur CoinGecko",
+        "⚡ Volume ×5.4 vs médiane"
+      ],
+      "events": [],
+      "trending_rank": 7,
+      "vol_spike": 5.39,
+      "gh_spike": null
+    },
+    "AKEUSDT": {
       "flags": [
         "🔥 Trending #8 sur CoinGecko"
       ],
@@ -296,16 +319,17 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "PONSUSDT": {
+    "DEXEUSDT": {
       "flags": [
-        "🔥 Trending #9 sur CoinGecko"
+        "🔥 Trending #9 sur CoinGecko",
+        "⚡ Volume ×52.2 vs médiane"
       ],
       "events": [],
       "trending_rank": 9,
-      "vol_spike": null,
+      "vol_spike": 52.17,
       "gh_spike": null
     },
-    "TAOUSDT": {
+    "ZAMAUSDT": {
       "flags": [
         "🔥 Trending #10 sur CoinGecko"
       ],
@@ -314,7 +338,7 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "PEPEUSDT": {
+    "ETHUSDT": {
       "flags": [
         "🔥 Trending #11 sur CoinGecko"
       ],
@@ -323,7 +347,7 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "PIEVERSEUSDT": {
+    "KAITOUSDT": {
       "flags": [
         "🔥 Trending #12 sur CoinGecko"
       ],
@@ -332,16 +356,17 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "MONUSDT": {
+    "EULUSDT": {
       "flags": [
-        "🔥 Trending #13 sur CoinGecko"
+        "🔥 Trending #13 sur CoinGecko",
+        "⚡ Volume ×9.4 vs médiane"
       ],
       "events": [],
       "trending_rank": 13,
-      "vol_spike": null,
+      "vol_spike": 9.38,
       "gh_spike": null
     },
-    "ANSEMUSDT": {
+    "KASUSDT": {
       "flags": [
         "🔥 Trending #14 sur CoinGecko"
       ],
@@ -350,7 +375,7 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "ETHUSDT": {
+    "BTCUSDT": {
       "flags": [
         "🔥 Trending #15 sur CoinGecko"
       ],
@@ -359,76 +384,103 @@
       "vol_spike": null,
       "gh_spike": null
     },
-    "VANAUSDT": {
-      "flags": [
-        "⚡ Volume ×45.8 vs médiane"
-      ],
-      "events": [],
-      "trending_rank": null,
-      "vol_spike": 45.83,
-      "gh_spike": null
-    },
     "DIAUSDT": {
       "flags": [
-        "⚡ Volume ×28.5 vs médiane"
+        "⚡ Volume ×43.8 vs médiane"
       ],
       "events": [],
       "trending_rank": null,
-      "vol_spike": 28.54,
+      "vol_spike": 43.84,
       "gh_spike": null
     },
-    "QIUSDT": {
+    "ESPUSDT": {
       "flags": [
-        "⚡ Volume ×10.4 vs médiane"
+        "⚡ Volume ×16.6 vs médiane"
       ],
       "events": [],
       "trending_rank": null,
-      "vol_spike": 10.36,
+      "vol_spike": 16.64,
       "gh_spike": null
     },
-    "REQUSDT": {
+    "VANAUSDT": {
       "flags": [
-        "⚡ Volume ×7.3 vs médiane"
+        "⚡ Volume ×8.5 vs médiane"
       ],
       "events": [],
       "trending_rank": null,
-      "vol_spike": 7.27,
+      "vol_spike": 8.51,
       "gh_spike": null
     },
-    "1000CATUSDT": {
+    "NILUSDT": {
+      "flags": [
+        "⚡ Volume ×4.9 vs médiane"
+      ],
+      "events": [],
+      "trending_rank": null,
+      "vol_spike": 4.88,
+      "gh_spike": null
+    },
+    "LPTUSDT": {
+      "flags": [
+        "⚡ Volume ×4.7 vs médiane"
+      ],
+      "events": [],
+      "trending_rank": null,
+      "vol_spike": 4.72,
+      "gh_spike": null
+    },
+    "LAUSDT": {
       "flags": [
         "⚡ Volume ×4.5 vs médiane"
       ],
       "events": [],
       "trending_rank": null,
-      "vol_spike": 4.47,
+      "vol_spike": 4.54,
       "gh_spike": null
     },
-    "LAUSDT": {
+    "TUSDT": {
       "flags": [
-        "⚡ Volume ×4.0 vs médiane"
+        "⚡ Volume ×4.3 vs médiane"
       ],
       "events": [],
       "trending_rank": null,
-      "vol_spike": 3.98,
+      "vol_spike": 4.27,
       "gh_spike": null
     },
-    "RIFUSDT": {
+    "PEOPLEUSDT": {
       "flags": [
         "⚡ Volume ×3.6 vs médiane"
       ],
       "events": [],
       "trending_rank": null,
-      "vol_spike": 3.6,
+      "vol_spike": 3.65,
       "gh_spike": null
     },
-    "BANKUSDT": {
+    "ERAUSDT": {
       "flags": [
-        "⚡ Volume ×3.5 vs médiane"
+        "⚡ Volume ×3.6 vs médiane"
       ],
       "events": [],
       "trending_rank": null,
-      "vol_spike": 3.54,
+      "vol_spike": 3.65,
+      "gh_spike": null
+    },
+    "VANRYUSDT": {
+      "flags": [
+        "⚡ Volume ×3.3 vs médiane"
+      ],
+      "events": [],
+      "trending_rank": null,
+      "vol_spike": 3.33,
+      "gh_spike": null
+    },
+    "ZKPUSDT": {
+      "flags": [
+        "⚡ Volume ×3.3 vs médiane"
+      ],
+      "events": [],
+      "trending_rank": null,
+      "vol_spike": 3.3,
       "gh_spike": null
     }
   }
