@@ -145,6 +145,10 @@ def main():
     hist = importlib.import_module("12_build_history")
     step("build_history", hist.run)
 
+    # --- 13 Mémoire cumulative du projet ---
+    mem = importlib.import_module("13_memory")
+    step("memory", mem.run)
+
     # Purge raw > 30j
     try:
         purged = purge_old_raw(days=30)
