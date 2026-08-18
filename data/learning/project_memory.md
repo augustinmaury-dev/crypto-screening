@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 17 août 2026*
+*Dernière mise à jour : 18 août 2026*
 
 ---
 
@@ -15,10 +15,10 @@ J'apprends chaque jour en mesurant si mes prédictions passées étaient correct
 
 ## Mon auto-évaluation
 
-**Régime de marché (BTC bull_prob) :** 🟡 Neutre — 50%
+**Régime de marché (BTC bull_prob) :** 🟡 Neutre — 54%
 
 **Signaux haussiers fiables (>50%) :** aucun ❌
-  → Meilleur signal haussier actuel : `rsi_bullish_divergence` à 36.6%
+  → Meilleur signal haussier actuel : `rsi_bullish_divergence` à 36.4%
 **Signaux baissiers fiables (>50%) :** 11 / 11
 
 ### ❌ Mes signaux d'ACHAT ne sont PAS encore fiables.
@@ -32,34 +32,34 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `bear_flag` | 85.1% | 302 | → |
-| `double_top_90d` | 75.4% | 2430 | → |
-| `rsi_bearish_divergence` | 75.4% | 483 | → |
+| `bear_flag` | 84.8% | 303 | → |
+| `double_top_90d` | 75.2% | 2450 | → |
+| `rsi_bearish_divergence` | 75.1% | 485 | → |
 | `shooting_star_4h` | 74.3% | 171 | → |
-| `downtrend` | 69.3% | 11822 | → |
-| `bearish_engulfing_4h` | 67.8% | 543 | → |
-| `evening_star_4h` | 64.4% | 517 | → |
-| `macd_bearish_cross` | 61.9% | 4690 | → |
-| `breakdown_30d` | 61.6% | 86 | → |
-| `death_cross` | 60.3% | 262 | → |
-| `resistance_test` | 55.2% | 1096 | → |
+| `downtrend` | 69.2% | 11983 | → |
+| `bearish_engulfing_4h` | 67.2% | 555 | → |
+| `evening_star_4h` | 64.0% | 531 | → |
+| `macd_bearish_cross` | 61.8% | 4717 | → |
+| `breakdown_30d` | 60.9% | 87 | → |
+| `death_cross` | 60.1% | 263 | → |
+| `resistance_test` | 55.0% | 1110 | → |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `rsi_bullish_divergence` | 36.6% | 1986 | → |
-| `bullish_engulfing_4h` | 31.9% | 734 | → |
-| `support_bounce` | 31.2% | 1693 | → |
-| `golden_cross` | 29.7% | 313 | → |
-| `hammer_4h` | 29.6% | 159 | → |
+| `rsi_bullish_divergence` | 36.4% | 2018 | → |
+| `bullish_engulfing_4h` | 32.1% | 739 | → |
+| `support_bounce` | 31.3% | 1720 | → |
+| `golden_cross` | 29.7% | 316 | → |
+| `hammer_4h` | 29.6% | 162 | → |
 | `bull_flag` | 29.4% | 109 | → |
-| `double_bottom_90d` | 27.9% | 1601 | → |
-| `uptrend` | 26.1% | 5966 | → |
-| `morning_star_4h` | 25.8% | 616 | → |
-| `squeeze_breakout` | 23.8% | 122 | → |
-| `macd_bullish_cross` | 21.7% | 5199 | → |
-| `breakout_30d` | 15.5% | 194 | → |
+| `double_bottom_90d` | 28.1% | 1608 | → |
+| `uptrend` | 26.4% | 6034 | → |
+| `morning_star_4h` | 25.8% | 620 | → |
+| `squeeze_breakout` | 24.2% | 124 | → |
+| `macd_bullish_cross` | 22.3% | 5298 | → |
+| `breakout_30d` | 15.9% | 195 | → |
 
 ---
 
@@ -67,10 +67,13 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 *Aucune prédiction mesurée pour l'instant (14 jours de recul nécessaires).*
 
-**2 prédictions en attente de résultat (< 14 jours) :**
+**5 prédictions en attente de résultat (< 14 jours) :**
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
+| 18 août 2026 | **ACE** | 77% | 0.1958 |
+| 18 août 2026 | **RED** | 70% | 0.0994 |
+| 18 août 2026 | **EURI** | 75% | 1.1581 |
 | 17 août 2026 | **ACE** | 76% | 0.1526 |
 | 17 août 2026 | **PLUME** | 75% | 0.01261 |
 
@@ -93,13 +96,14 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 17 août 2026
+## Aujourd'hui — 18 août 2026
 
-**Régime :** 🟡 Neutre (BTC bull_prob = 50%)
+**Régime :** 🟡 Neutre (BTC bull_prob = 54%)
 
 **Top tokens aujourd'hui (score ≥ 70%) :**
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **ACE** | 76% | +29pp | 0 | 🔥 Trending #4 sur CoinGecko|⚡ Volume ×9.6 vs média |
-| **PLUME** | 75% | +28pp | 0 | ⚡ Volume ×16.3 vs médiane |
+| **ACE** | 77% | +23pp | 0 | 🔥 Trending #3 sur CoinGecko|⚡ Volume ×9.0 vs média |
+| **EURI** | 75% | +21pp | 2 | ⚡ Volume ×6.3 vs médiane |
+| **RED** | 70% | +16pp | 0 | ⚡ Volume ×10.1 vs médiane |
