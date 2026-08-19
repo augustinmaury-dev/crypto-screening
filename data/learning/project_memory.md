@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 18 août 2026*
+*Dernière mise à jour : 19 août 2026*
 
 ---
 
@@ -32,34 +32,34 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `bear_flag` | 84.8% | 303 | → |
-| `double_top_90d` | 75.2% | 2450 | → |
-| `rsi_bearish_divergence` | 75.1% | 485 | → |
-| `shooting_star_4h` | 74.3% | 171 | → |
-| `downtrend` | 69.2% | 11983 | → |
-| `bearish_engulfing_4h` | 67.2% | 555 | → |
-| `evening_star_4h` | 64.0% | 531 | → |
-| `macd_bearish_cross` | 61.8% | 4717 | → |
+| `bear_flag` | 84.9% | 304 | → |
+| `double_top_90d` | 75.1% | 2471 | → |
+| `rsi_bearish_divergence` | 75.0% | 488 | → |
+| `shooting_star_4h` | 73.7% | 175 | → |
+| `downtrend` | 69.2% | 12150 | → |
+| `bearish_engulfing_4h` | 66.6% | 569 | → |
+| `evening_star_4h` | 64.0% | 545 | → |
+| `macd_bearish_cross` | 61.7% | 4739 | → |
 | `breakdown_30d` | 60.9% | 87 | → |
-| `death_cross` | 60.1% | 263 | → |
-| `resistance_test` | 55.0% | 1110 | → |
+| `death_cross` | 59.8% | 264 | → |
+| `resistance_test` | 54.9% | 1123 | → |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `rsi_bullish_divergence` | 36.4% | 2018 | → |
-| `bullish_engulfing_4h` | 32.1% | 739 | → |
-| `support_bounce` | 31.3% | 1720 | → |
-| `golden_cross` | 29.7% | 316 | → |
+| `rsi_bullish_divergence` | 36.4% | 2024 | → |
+| `bullish_engulfing_4h` | 32.0% | 740 | → |
+| `support_bounce` | 31.5% | 1750 | → |
+| `golden_cross` | 29.8% | 319 | → |
 | `hammer_4h` | 29.6% | 162 | → |
 | `bull_flag` | 29.4% | 109 | → |
-| `double_bottom_90d` | 28.1% | 1608 | → |
-| `uptrend` | 26.4% | 6034 | → |
-| `morning_star_4h` | 25.8% | 620 | → |
-| `squeeze_breakout` | 24.2% | 124 | → |
-| `macd_bullish_cross` | 22.3% | 5298 | → |
-| `breakout_30d` | 15.9% | 195 | → |
+| `double_bottom_90d` | 28.3% | 1620 | → |
+| `uptrend` | 26.7% | 6102 | → |
+| `morning_star_4h` | 25.8% | 623 | → |
+| `squeeze_breakout` | 24.6% | 126 | → |
+| `macd_bullish_cross` | 22.8% | 5410 | → |
+| `breakout_30d` | 16.2% | 198 | → |
 
 ---
 
@@ -67,10 +67,18 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 *Aucune prédiction mesurée pour l'instant (14 jours de recul nécessaires).*
 
-**5 prédictions en attente de résultat (< 14 jours) :**
+**13 prédictions en attente de résultat (< 14 jours) :**
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
+| 19 août 2026 | **GNO** | 74% | 114.45 |
+| 19 août 2026 | **ACE** | 71% | 0.2266 |
+| 19 août 2026 | **GPS** | 70% | 0.01236 |
+| 19 août 2026 | **ALPINE** | 70% | 0.337 |
+| 19 août 2026 | **ACM** | 70% | 0.288 |
+| 19 août 2026 | **USDE** | 76% | 1.0005 |
+| 19 août 2026 | **EURI** | 74% | 1.1601 |
+| 19 août 2026 | **XUSD** | 70% | 1.0009 |
 | 18 août 2026 | **ACE** | 77% | 0.1958 |
 | 18 août 2026 | **RED** | 70% | 0.0994 |
 | 18 août 2026 | **EURI** | 75% | 1.1581 |
@@ -96,7 +104,7 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 18 août 2026
+## Aujourd'hui — 19 août 2026
 
 **Régime :** 🟡 Neutre (BTC bull_prob = 54%)
 
@@ -104,6 +112,11 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **ACE** | 77% | +23pp | 0 | 🔥 Trending #3 sur CoinGecko|⚡ Volume ×9.0 vs média |
-| **EURI** | 75% | +21pp | 2 | ⚡ Volume ×6.3 vs médiane |
-| **RED** | 70% | +16pp | 0 | ⚡ Volume ×10.1 vs médiane |
+| **USDE** | 76% | +22pp | 3 | ⚡ Volume ×4.4 vs médiane |
+| **GNO** | 74% | +20pp | 2 | ⚡ Volume ×6.7 vs médiane |
+| **EURI** | 74% | +20pp | 2 | ⚡ Volume ×4.9 vs médiane |
+| **ACE** | 71% | +17pp | 0 | ⚡ Volume ×9.4 vs médiane |
+| **GPS** | 70% | +16pp | 0 | ⚡ Volume ×13.5 vs médiane |
+| **ALPINE** | 70% | +16pp | 0 | ⚡ Volume ×6.7 vs médiane |
+| **ACM** | 70% | +16pp | 2 | ⚡ Volume ×3.1 vs médiane |
+| **XUSD** | 70% | +16pp | 2 |  |
