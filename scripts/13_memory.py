@@ -175,7 +175,134 @@ def update_prediction_log(today_scores: list[dict]) -> list[dict]:
     return pred_log
 
 
-# ─────────────────────── 3. Génération de la mémoire ───────────────────────
+# ─────────────────────── 3. Journal quotidien ─────────────────────────────
+
+def update_journal(weights: dict, today_scores: list[dict]) -> list[dict]:
+    """Ajoute une entrée par jour dans journal.json — conserve les MAX_JOURNAL_DAYS derniers."""
+    journal_path = LEARNING / "journal.json"
+    journal: list[dict] = load_json(journal_path, [])
+
+    # évite les doublons
+    if journal and journal[-1]["date"] == TODAY:
+        return journal
+
+    btc_row  = next((r for r in today_scores if r.get("symbol") == "BTCUSDT"), None)
+    btc_prob = float(btc_row.get("bull_prob_7d", 50)) if btc_row else 50
+
+    top = sorted(
+        [r for r in today_scores if float(r.get("score") or 0) >= SCORE_THRESHOLD],
+        key=lambda r: -float(r.get("score") or 0)
+    )[:5]
+    top_names = [r["symbol"].replace("USDT", "") for r in top]
+
+    # meilleur signal haussier du jour
+    best_bull = max(
+        [(p, weights[p]["hit_rate_14d"]) for p in BULL_PATS
+         if p in weights and weights[p].get("hit_rate_14d")],
+        key=lambda x: x[1], default=("—", 0.0)
+    )
+
+    bear_ok = [p for p in BEAR_PATS
+               if p in weights and (weights[p].get("hit_rate_14d") or 0) > 0.50]
+
+    journal.append({
+        "date":           TODAY,
+        "btc_prob":       round(btc_prob, 1),
+        "regime":         "Haussier" if btc_prob >= 55 else ("Baissier" if btc_prob <= 45 else "Neutre"),
+        "top_tokens":     top_names,
+        "n_top":          len(top),
+        "best_bull_pat":  best_bull[0],
+        "best_bull_rate": round(best_bull[1], 3),
+        "bear_signals_ok": len(bear_ok),
+    })
+
+    journal = journal[-MAX_JOURNAL_DAYS:]
+    save_json(journal_path, journal)
+    return journal
+
+
+# ─────────────────────── 4. Section évolution ──────────────────────────────
+
+def generate_evolution_section(pat_history: dict, journal: list[dict]) -> str:
+    """Décrit comment le projet a évolué depuis le début."""
+    lines = []
+    a = lines.append
+
+    a("## Comment j'évolue et comment je m'adapte")
+    a("")
+
+    # ── Évolution du régime marché ─────────────────────────────────────────
+    if len(journal) >= 2:
+        a("### Évolution du régime de marché")
+        a("")
+        a("| Date | Régime | BTC bull_prob | Top tokens |")
+        a("|------|--------|---------------|-----------|")
+        for entry in journal:
+            emoji = "🟢" if entry["regime"] == "Haussier" else ("🔴" if entry["regime"] == "Baissier" else "🟡")
+            tops  = ", ".join(entry.get("top_tokens", [])[:3])
+            a(f"| {fmt_date(entry['date'])} | {emoji} {entry['regime']} | {entry['btc_prob']}% | {tops} |")
+        a("")
+
+        # tendance régime
+        first_prob = journal[0]["btc_prob"]
+        last_prob  = journal[-1]["btc_prob"]
+        delta = last_prob - first_prob
+        if delta > 5:
+            a(f"📈 **Le marché s'est renforcé** depuis le début du journal : BTC bull_prob {first_prob}% → {last_prob}%")
+        elif delta < -5:
+            a(f"📉 **Le marché s'est dégradé** depuis le début du journal : BTC bull_prob {first_prob}% → {last_prob}%")
+        else:
+            a(f"→ **Régime stable** : BTC bull_prob entre {first_prob}% et {last_prob}%")
+        a("")
+
+    # ── Évolution des patterns clés ────────────────────────────────────────
+    a("### Évolution des patterns clés")
+    a("")
+    key_patterns = ["bear_flag", "rsi_bullish_divergence", "downtrend", "squeeze_breakout", "rsi_bearish_divergence"]
+    for pat in key_patterns:
+        hist = pat_history.get(pat, [])
+        if len(hist) < 2:
+            continue
+        first = hist[0]
+        last  = hist[-1]
+        delta = last["hit_rate"] - first["hit_rate"]
+        direction = "📈" if delta > 0.02 else ("📉" if delta < -0.02 else "→")
+        kind = "baissier" if pat in BEAR_PATS else "haussier"
+        a(f"**`{pat}`** ({kind}) : {first['hit_rate']:.1%} ({fmt_date(first['date'])}) → "
+          f"{last['hit_rate']:.1%} ({fmt_date(last['date'])}) — {delta:+.1%} {direction}")
+    a("")
+
+    # ── Interprétation ────────────────────────────────────────────────────
+    a("### Ce que ça signifie")
+    a("")
+    bear_flag_hist = pat_history.get("bear_flag", [])
+    bull_div_hist  = pat_history.get("rsi_bullish_divergence", [])
+
+    if len(bear_flag_hist) >= 2:
+        bf_delta = bear_flag_hist[-1]["hit_rate"] - bear_flag_hist[0]["hit_rate"]
+        if bf_delta < -0.03:
+            a("- Les signaux baissiers **perdent en précision** : le marché sort progressivement du régime baissier.")
+        elif bf_delta > 0.03:
+            a("- Les signaux baissiers **gagnent en précision** : le régime baissier se renforce.")
+        else:
+            a("- Les signaux baissiers sont **stables** : régime de marché inchangé.")
+
+    if len(bull_div_hist) >= 2:
+        bd_delta = bull_div_hist[-1]["hit_rate"] - bull_div_hist[0]["hit_rate"]
+        if bd_delta > 0.03:
+            a("- Les signaux haussiers **progressent** : le marché commence à répondre aux patterns d'achat.")
+        elif bd_delta < -0.03:
+            a("- Les signaux haussiers **reculent** : dans ce marché, les patterns d'achat ne fonctionnent pas encore.")
+        else:
+            a("- Les signaux haussiers sont **bloqués** sous 40% : je ne suis pas encore fiable pour détecter les hausses.")
+
+    a("")
+    a("---")
+    a("")
+    return "\n".join(lines)
+
+
+# ─────────────────────── 5. Génération de la mémoire ───────────────────────
 
 def generate_memory(
     weights:       dict,
@@ -183,6 +310,7 @@ def generate_memory(
     pred_log:      list[dict],
     formula:       dict,
     today_scores:  list[dict],
+    journal:       list[dict] | None = None,
 ) -> str:
     lines = []
     a = lines.append
@@ -337,6 +465,10 @@ def generate_memory(
     a("---")
     a("")
 
+    # ── Évolution ─────────────────────────────────────────────────────────
+    evolution = generate_evolution_section(pat_history, journal or [])
+    lines.extend(evolution.split("\n"))
+
     # ── Score composite ────────────────────────────────────────────────────
     a("## Le score composite est-il utile ?")
     a("")
@@ -410,7 +542,10 @@ def run():
     pred_log = update_prediction_log(today_scores)
     log.info(f"prediction_log : {len(pred_log)} entrées")
 
-    memory_md   = generate_memory(weights, pat_history, pred_log, formula, today_scores)
+    journal = update_journal(weights, today_scores)
+    log.info(f"journal : {len(journal)} entrées")
+
+    memory_md   = generate_memory(weights, pat_history, pred_log, formula, today_scores, journal)
     memory_path = LEARNING / "project_memory.md"
     memory_path.write_text(memory_md, encoding="utf-8")
     log.info(f"project_memory.md généré ({len(memory_md)} caractères)")
