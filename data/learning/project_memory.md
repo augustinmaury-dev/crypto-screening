@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 21 août 2026*
+*Dernière mise à jour : 22 août 2026*
 
 ---
 
@@ -15,10 +15,10 @@ J'apprends chaque jour en mesurant si mes prédictions passées étaient correct
 
 ## Mon auto-évaluation
 
-**Régime de marché (BTC bull_prob) :** 🟢 Haussier — 57%
+**Régime de marché (BTC bull_prob) :** 🟡 Neutre — 50%
 
 **Signaux haussiers fiables (>50%) :** aucun ❌
-  → Meilleur signal haussier actuel : `rsi_bullish_divergence` à 36.7%
+  → Meilleur signal haussier actuel : `rsi_bullish_divergence` à 37.0%
 **Signaux baissiers fiables (>50%) :** 11 / 11
 
 ### ❌ Mes signaux d'ACHAT ne sont PAS encore fiables.
@@ -32,34 +32,34 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `bear_flag` | 79.0% | 338 | 📉 |
-| `double_top_90d` | 74.2% | 2513 | → |
-| `rsi_bearish_divergence` | 74.1% | 498 | → |
-| `shooting_star_4h` | 71.7% | 184 | 📉 |
-| `downtrend` | 68.1% | 12505 | → |
-| `bearish_engulfing_4h` | 65.4% | 584 | → |
-| `evening_star_4h` | 63.2% | 555 | → |
-| `macd_bearish_cross` | 61.7% | 4775 | → |
+| `double_top_90d` | 73.6% | 2534 | → |
+| `rsi_bearish_divergence` | 73.4% | 504 | → |
+| `shooting_star_4h` | 70.2% | 188 | → |
+| `bear_flag` | 68.8% | 388 | 📉 |
+| `downtrend` | 67.2% | 12690 | → |
+| `bearish_engulfing_4h` | 64.3% | 597 | → |
+| `evening_star_4h` | 62.6% | 562 | → |
+| `macd_bearish_cross` | 61.6% | 4788 | → |
 | `breakdown_30d` | 60.7% | 89 | → |
 | `death_cross` | 59.6% | 265 | → |
-| `resistance_test` | 54.7% | 1149 | → |
+| `resistance_test` | 54.6% | 1165 | → |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `rsi_bullish_divergence` | 36.7% | 2051 | → |
-| `support_bounce` | 32.9% | 1821 | → |
-| `bullish_engulfing_4h` | 32.2% | 754 | → |
-| `golden_cross` | 30.0% | 323 | → |
-| `hammer_4h` | 29.4% | 163 | → |
-| `double_bottom_90d` | 29.3% | 1653 | → |
+| `rsi_bullish_divergence` | 37.0% | 2063 | → |
+| `support_bounce` | 33.9% | 1853 | → |
+| `bullish_engulfing_4h` | 32.2% | 758 | → |
+| `golden_cross` | 30.7% | 326 | → |
+| `double_bottom_90d` | 30.1% | 1672 | → |
+| `hammer_4h` | 29.9% | 164 | → |
 | `bull_flag` | 29.1% | 110 | → |
-| `uptrend` | 27.9% | 6240 | → |
-| `squeeze_breakout` | 27.2% | 136 | → |
-| `morning_star_4h` | 26.6% | 629 | → |
-| `macd_bullish_cross` | 25.6% | 5723 | → |
-| `breakout_30d` | 15.8% | 203 | → |
+| `uptrend` | 28.6% | 6306 | → |
+| `squeeze_breakout` | 27.7% | 137 | → |
+| `morning_star_4h` | 27.6% | 638 | → |
+| `macd_bullish_cross` | 27.5% | 5891 | → |
+| `breakout_30d` | 15.7% | 204 | → |
 
 ---
 
@@ -67,37 +67,46 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 *Aucune prédiction mesurée pour l'instant (14 jours de recul nécessaires).*
 
-**21 prédictions en attente de résultat (< 14 jours) :**
+**32 prédictions en attente de résultat (< 14 jours) :**
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
+| 22 août 2026 | **PEOPLE** | 75% | 0.01042 |
+| 22 août 2026 | **HIVE** | 73% | 0.0455 |
+| 22 août 2026 | **UNI** | 72% | 4.2 |
+| 22 août 2026 | **ME** | 71% | 0.06818 |
+| 22 août 2026 | **XAI** | 71% | 0.00782 |
+| 22 août 2026 | **DOLO** | 71% | 0.02582 |
+| 22 août 2026 | **SHELL** | 71% | 0.0229 |
+| 22 août 2026 | **ASTER** | 70% | 0.678 |
+| 22 août 2026 | **MORPHO** | 70% | 2.253 |
+| 22 août 2026 | **PYTH** | 70% | 0.05067 |
+| 22 août 2026 | **BROCCOLI714** | 70% | 0.01917 |
 | 21 août 2026 | **PROM** | 72% | 2.425 |
 | 21 août 2026 | **XPL** | 70% | 0.09535 |
 | 20 août 2026 | **PLUME** | 75% | 0.01261 |
 | 20 août 2026 | **TRUMP** | 74% | 1.642 |
-| 20 août 2026 | **XEC** | 73% | 6.95e-06 |
-| 20 août 2026 | **MET** | 70% | 0.219 |
-| 20 août 2026 | **ACE** | 70% | 0.1884 |
-| 20 août 2026 | **EURI** | 70% | 1.1693 |
-| 19 août 2026 | **GNO** | 74% | 114.45 |
-| 19 août 2026 | **ACE** | 71% | 0.2266 |
-| 19 août 2026 | **GPS** | 70% | 0.01236 |
-| 19 août 2026 | **ALPINE** | 70% | 0.337 |
-| 19 août 2026 | **ACM** | 70% | 0.288 |
-| 19 août 2026 | **USDE** | 76% | 1.0005 |
-| 19 août 2026 | **EURI** | 74% | 1.1601 |
 
 ---
 
 ## Comment j'évolue et comment je m'adapte
 
+### Évolution du régime de marché
+
+| Date | Régime | BTC bull_prob | Top tokens |
+|------|--------|---------------|-----------|
+| 21 août 2026 | 🟢 Haussier | 57.0% | PROM, XPL |
+| 22 août 2026 | 🟡 Neutre | 50.0% | PEOPLE, HIVE, UNI |
+
+📉 **Le marché s'est dégradé** depuis le début du journal : BTC bull_prob 57.0% → 50.0%
+
 ### Évolution des patterns clés
 
-**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 79.0% (21 août 2026) — -6.1% 📉
-**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 36.7% (21 août 2026) — +0.1% →
-**`downtrend`** (baissier) : 69.3% (17 août 2026) → 68.1% (21 août 2026) — -1.2% →
-**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 27.2% (21 août 2026) — +3.4% 📈
-**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 74.1% (21 août 2026) — -1.3% →
+**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 68.8% (22 août 2026) — -16.3% 📉
+**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 37.0% (22 août 2026) — +0.4% →
+**`downtrend`** (baissier) : 69.3% (17 août 2026) → 67.2% (22 août 2026) — -2.1% 📉
+**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 27.7% (22 août 2026) — +3.9% 📈
+**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 73.4% (22 août 2026) — -2.0% 📉
 
 ### Ce que ça signifie
 
@@ -123,13 +132,22 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 21 août 2026
+## Aujourd'hui — 22 août 2026
 
-**Régime :** 🟢 Haussier (BTC bull_prob = 57%)
+**Régime :** 🟡 Neutre (BTC bull_prob = 50%)
 
 **Top tokens aujourd'hui (score ≥ 70%) :**
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **PROM** | 72% | +25pp | 1 |  |
-| **XPL** | 70% | +23pp | 0 | ⚡ Volume ×15.1 vs médiane |
+| **PEOPLE** | 75% | +32pp | 0 | ⚡ Volume ×5.2 vs médiane |
+| **HIVE** | 73% | +30pp | 0 |  |
+| **UNI** | 72% | +29pp | 0 |  |
+| **ME** | 71% | +28pp | 0 |  |
+| **XAI** | 71% | +28pp | 0 |  |
+| **DOLO** | 71% | +28pp | 0 |  |
+| **SHELL** | 71% | +28pp | 0 |  |
+| **ASTER** | 70% | +27pp | 0 |  |
+| **MORPHO** | 70% | +27pp | ⚠️ 4 |  |
+| **PYTH** | 70% | +27pp | ⚠️ 4 | ⚡ Volume ×46.7 vs médiane |
+| **BROCCOLI714** | 70% | +27pp | 2 |  |
