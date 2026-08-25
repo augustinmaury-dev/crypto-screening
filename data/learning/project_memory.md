@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 24 août 2026*
+*Dernière mise à jour : 25 août 2026*
 
 ---
 
@@ -15,10 +15,10 @@ J'apprends chaque jour en mesurant si mes prédictions passées étaient correct
 
 ## Mon auto-évaluation
 
-**Régime de marché (BTC bull_prob) :** 🔴 Baissier — 44%
+**Régime de marché (BTC bull_prob) :** 🟡 Neutre — 51%
 
 **Signaux haussiers fiables (>50%) :** aucun ❌
-  → Meilleur signal haussier actuel : `rsi_bullish_divergence` à 37.2%
+  → Meilleur signal haussier actuel : `rsi_bullish_divergence` à 37.9%
 **Signaux baissiers fiables (>50%) :** 11 / 11
 
 ### ❌ Mes signaux d'ACHAT ne sont PAS encore fiables.
@@ -32,34 +32,34 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `double_top_90d` | 72.8% | 2576 | → |
-| `rsi_bearish_divergence` | 71.6% | 528 | → |
-| `shooting_star_4h` | 68.2% | 198 | → |
-| `downtrend` | 65.8% | 13056 | → |
-| `bearish_engulfing_4h` | 63.7% | 606 | → |
-| `evening_star_4h` | 62.1% | 568 | → |
-| `macd_bearish_cross` | 61.5% | 4803 | → |
-| `breakdown_30d` | 60.7% | 89 | → |
+| `double_top_90d` | 72.4% | 2597 | → |
+| `rsi_bearish_divergence` | 71.0% | 535 | → |
+| `shooting_star_4h` | 67.5% | 200 | → |
+| `downtrend` | 65.1% | 13232 | → |
+| `bearish_engulfing_4h` | 63.6% | 607 | → |
+| `evening_star_4h` | 62.1% | 570 | → |
+| `macd_bearish_cross` | 61.3% | 4819 | → |
+| `breakdown_30d` | 60.0% | 90 | → |
 | `death_cross` | 59.6% | 265 | → |
-| `bear_flag` | 56.3% | 483 | 📉 |
-| `resistance_test` | 54.6% | 1193 | → |
+| `resistance_test` | 54.6% | 1206 | → |
+| `bear_flag` | 52.8% | 519 | 📉 |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `rsi_bullish_divergence` | 37.2% | 2077 | → |
-| `support_bounce` | 36.1% | 1935 | → |
-| `bullish_engulfing_4h` | 33.0% | 770 | → |
-| `squeeze_breakout` | 32.2% | 152 | → |
-| `golden_cross` | 32.0% | 334 | → |
-| `double_bottom_90d` | 31.9% | 1723 | → |
-| `macd_bullish_cross` | 30.3% | 6200 | → |
-| `hammer_4h` | 29.9% | 167 | → |
-| `uptrend` | 29.5% | 6428 | → |
-| `bull_flag` | 28.8% | 111 | → |
-| `morning_star_4h` | 28.6% | 651 | → |
-| `breakout_30d` | 16.5% | 212 | → |
+| `rsi_bullish_divergence` | 37.9% | 2111 | → |
+| `support_bounce` | 36.4% | 1952 | → |
+| `bullish_engulfing_4h` | 33.1% | 771 | → |
+| `double_bottom_90d` | 32.7% | 1747 | → |
+| `golden_cross` | 32.5% | 338 | → |
+| `squeeze_breakout` | 31.8% | 154 | → |
+| `macd_bullish_cross` | 31.1% | 6289 | → |
+| `hammer_4h` | 30.4% | 168 | → |
+| `uptrend` | 30.0% | 6488 | → |
+| `morning_star_4h` | 28.7% | 654 | → |
+| `bull_flag` | 28.6% | 112 | → |
+| `breakout_30d` | 16.4% | 213 | → |
 
 ---
 
@@ -67,10 +67,13 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 *Aucune prédiction mesurée pour l'instant (14 jours de recul nécessaires).*
 
-**42 prédictions en attente de résultat (< 14 jours) :**
+**45 prédictions en attente de résultat (< 14 jours) :**
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
+| 25 août 2026 | **PEOPLE** | 74% | 0.00915 |
+| 25 août 2026 | **TUT** | 71% | 0.04777 |
+| 25 août 2026 | **EURI** | 74% | 1.1662 |
 | 24 août 2026 | **TUT** | 73% | 0.08001 |
 | 24 août 2026 | **COTI** | 71% | 0.0123 |
 | 24 août 2026 | **EUL** | 71% | 1.334 |
@@ -83,9 +86,6 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 | 23 août 2026 | **USDP** | 72% | 0.9997 |
 | 22 août 2026 | **PEOPLE** | 75% | 0.01042 |
 | 22 août 2026 | **HIVE** | 73% | 0.0455 |
-| 22 août 2026 | **UNI** | 72% | 4.2 |
-| 22 août 2026 | **ME** | 71% | 0.06818 |
-| 22 août 2026 | **XAI** | 71% | 0.00782 |
 
 ---
 
@@ -99,16 +99,17 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 | 22 août 2026 | 🟡 Neutre | 50.0% | PEOPLE, HIVE, UNI |
 | 23 août 2026 | 🟡 Neutre | 46.0% | EUL, TUT, USDP |
 | 24 août 2026 | 🔴 Baissier | 44.0% | TUT, COTI, EUL |
+| 25 août 2026 | 🟡 Neutre | 51.0% | PEOPLE, EURI, TUT |
 
-📉 **Le marché s'est dégradé** depuis le début du journal : BTC bull_prob 57.0% → 44.0%
+📉 **Le marché s'est dégradé** depuis le début du journal : BTC bull_prob 57.0% → 51.0%
 
 ### Évolution des patterns clés
 
-**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 56.3% (24 août 2026) — -28.8% 📉
-**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 37.2% (24 août 2026) — +0.6% →
-**`downtrend`** (baissier) : 69.3% (17 août 2026) → 65.8% (24 août 2026) — -3.5% 📉
-**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 32.2% (24 août 2026) — +8.4% 📈
-**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 71.6% (24 août 2026) — -3.8% 📉
+**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 52.8% (25 août 2026) — -32.3% 📉
+**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 37.9% (25 août 2026) — +1.3% →
+**`downtrend`** (baissier) : 69.3% (17 août 2026) → 65.1% (25 août 2026) — -4.2% 📉
+**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 31.8% (25 août 2026) — +8.0% 📈
+**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 71.0% (25 août 2026) — -4.4% 📉
 
 ### Ce que ça signifie
 
@@ -134,16 +135,14 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 24 août 2026
+## Aujourd'hui — 25 août 2026
 
-**Régime :** 🔴 Baissier (BTC bull_prob = 44%)
+**Régime :** 🟡 Neutre (BTC bull_prob = 51%)
 
 **Top tokens aujourd'hui (score ≥ 70%) :**
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **TUT** | 73% | +29pp | 0 | ⚡ Volume ×5.9 vs médiane |
-| **COTI** | 71% | +27pp | 0 | ⚡ Volume ×3.8 vs médiane |
-| **EUL** | 71% | +27pp | 0 |  |
-| **ONG** | 70% | +26pp | 0 | ⚡ Volume ×6.0 vs médiane |
-| **EURI** | 70% | +26pp | ⚠️ 4 | ⚡ Volume ×4.0 vs médiane |
+| **PEOPLE** | 74% | +32pp | 0 |  |
+| **EURI** | 74% | +32pp | 2 | ⚡ Volume ×4.5 vs médiane |
+| **TUT** | 71% | +29pp | 1 | ⚡ Volume ×5.0 vs médiane |
