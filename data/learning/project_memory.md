@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 5 sep 2026*
+*Dernière mise à jour : 6 sep 2026*
 
 ---
 
@@ -15,13 +15,13 @@ J'apprends chaque jour en mesurant si mes prédictions passées étaient correct
 
 ## Mon auto-évaluation
 
-**Régime de marché (BTC bull_prob) :** 🟢 Haussier — 58%
+**Régime de marché (BTC bull_prob) :** 🟡 Neutre — 54%
 
 **Signaux haussiers fiables (>50%) :** aucun ❌
-  → Meilleur signal haussier actuel : `rsi_bullish_divergence` à 43.5%
+  → Meilleur signal haussier actuel : `rsi_bullish_divergence` à 43.6%
 **Signaux baissiers fiables (>50%) :** 10 / 11
 
-**Précision sur mes prédictions passées :** 53% (17/32 correctes)
+**Précision sur mes prédictions passées :** 57% (17/30 correctes)
 
 ### ❌ Mes signaux d'ACHAT ne sont PAS encore fiables.
 N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
@@ -34,43 +34,48 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `rsi_bearish_divergence` | 67.9% | 611 | → |
-| `double_top_90d` | 67.3% | 2878 | → |
-| `shooting_star_4h` | 61.3% | 225 | → |
-| `downtrend` | 59.6% | 14947 | → |
-| `bearish_engulfing_4h` | 59.2% | 740 | → |
-| `evening_star_4h` | 57.4% | 646 | → |
-| `macd_bearish_cross` | 55.6% | 5590 | → |
-| `resistance_test` | 55.0% | 1375 | → |
-| `death_cross` | 53.9% | 308 | → |
+| `rsi_bearish_divergence` | 67.6% | 617 | → |
+| `double_top_90d` | 67.1% | 2903 | → |
+| `shooting_star_4h` | 61.5% | 226 | → |
+| `downtrend` | 59.1% | 15093 | → |
+| `bearish_engulfing_4h` | 58.8% | 747 | → |
+| `evening_star_4h` | 57.3% | 647 | → |
+| `macd_bearish_cross` | 55.5% | 5612 | → |
+| `resistance_test` | 54.6% | 1399 | → |
 | `breakdown_30d` | 53.7% | 108 | → |
+| `death_cross` | 53.4% | 311 | → |
 | `bear_flag` | 49.1% | 562 | → |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `rsi_bullish_divergence` | 43.5% | 2352 | → |
-| `squeeze_breakout` | 42.9% | 224 | → |
-| `support_bounce` | 40.8% | 2233 | → |
-| `bullish_engulfing_4h` | 39.4% | 901 | → |
-| `double_bottom_90d` | 38.4% | 1985 | → |
-| `golden_cross` | 37.6% | 386 | → |
-| `macd_bullish_cross` | 34.9% | 6979 | → |
-| `hammer_4h` | 34.9% | 189 | → |
+| `rsi_bullish_divergence` | 43.6% | 2358 | → |
+| `squeeze_breakout` | 43.4% | 226 | → |
+| `support_bounce` | 40.8% | 2237 | → |
+| `bullish_engulfing_4h` | 39.5% | 912 | → |
+| `double_bottom_90d` | 39.0% | 2018 | → |
+| `golden_cross` | 38.8% | 397 | → |
+| `hammer_4h` | 38.7% | 204 | 📈 |
+| `macd_bullish_cross` | 36.1% | 7145 | → |
+| `uptrend` | 34.4% | 7288 | → |
 | `bull_flag` | 34.2% | 149 | → |
-| `uptrend` | 33.9% | 7187 | → |
-| `morning_star_4h` | 31.8% | 721 | → |
-| `breakout_30d` | 26.2% | 305 | 📈 |
+| `morning_star_4h` | 31.6% | 725 | → |
+| `breakout_30d` | 26.4% | 307 | → |
 
 ---
 
 ## Mes prédictions passées et leurs résultats
 
-**32 prédictions mesurées — précision globale : 53%**
+**30 prédictions mesurées — précision globale : 57%**
 
 | Date | Token | Score | Prix prédit | Prix 14j après | Résultat |
 |------|-------|-------|-------------|----------------|---------|
+| 23 août 2026 | **EUL** | 73% | 1.247 | 1.294 | ✅ +3.8% |
+| 23 août 2026 | **TUT** | 72% | 0.06405 | 0.02601 | ❌ -59.4% |
+| 23 août 2026 | **COTI** | 71% | 0.01233 | 0.01759 | ✅ +42.7% |
+| 23 août 2026 | **POWR** | 70% | 0.0431 | 0.0493 | ✅ +14.4% |
+| 23 août 2026 | **USDP** | 72% | 0.9997 | 1 | ✅ +0.0% |
 | 22 août 2026 | **PEOPLE** | 75% | 0.01042 | 0.00822 | ❌ -21.1% |
 | 22 août 2026 | **HIVE** | 73% | 0.0455 | 0.0465 | ✅ +2.2% |
 | 22 août 2026 | **UNI** | 72% | 4.2 | 6.257 | ✅ +49.0% |
@@ -90,32 +95,27 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 | 20 août 2026 | **MET** | 70% | 0.219 | 0.1981 | ❌ -9.5% |
 | 20 août 2026 | **ACE** | 70% | 0.1884 | 0.1805 | ❌ -4.2% |
 | 20 août 2026 | **EURI** | 70% | 1.1693 | 1.1615 | ❌ -0.7% |
-| 19 août 2026 | **GNO** | 74% | 114.45 | 114.1 | ❌ -0.3% |
-| 19 août 2026 | **ACE** | 71% | 0.2266 | 0.1918 | ❌ -15.4% |
 | 19 août 2026 | **GPS** | 70% | 0.01236 | 0.01009 | ❌ -18.4% |
-| 19 août 2026 | **ALPINE** | 70% | 0.337 | 0.347 | ✅ +3.0% |
-| 19 août 2026 | **ACM** | 70% | 0.288 | 0.28 | ❌ -2.8% |
-| 19 août 2026 | **USDE** | 76% | 1.0005 | 0.9999 | ❌ -0.1% |
 
-**248 prédictions en attente de résultat (< 14 jours) :**
+**270 prédictions en attente de résultat (< 14 jours) :**
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
-| 5 sep 2026 | **AIXBT** | 75% | 0.02216 |
-| 5 sep 2026 | **1000CAT** | 75% | 0.002312 |
-| 5 sep 2026 | **ZKP** | 74% | 0.0497 |
-| 5 sep 2026 | **CATI** | 74% | 0.05253 |
-| 5 sep 2026 | **DIA** | 74% | 0.1462 |
-| 5 sep 2026 | **ENJ** | 73% | 0.0275 |
-| 5 sep 2026 | **SAHARA** | 73% | 0.00915 |
-| 5 sep 2026 | **SOPH** | 73% | 0.00435 |
-| 5 sep 2026 | **COTI** | 72% | 0.01484 |
-| 5 sep 2026 | **ZK** | 72% | 0.01003 |
-| 5 sep 2026 | **ZKC** | 72% | 0.0492 |
-| 5 sep 2026 | **BANANA** | 72% | 4.058 |
-| 5 sep 2026 | **PROM** | 71% | 5.288 |
-| 5 sep 2026 | **AWE** | 71% | 0.06132 |
-| 5 sep 2026 | **NOM** | 71% | 0.00191 |
+| 6 sep 2026 | **XVS** | 80% | 3.27 |
+| 6 sep 2026 | **WOO** | 79% | 0.01236 |
+| 6 sep 2026 | **T** | 76% | 0.00459 |
+| 6 sep 2026 | **MET** | 76% | 0.2098 |
+| 6 sep 2026 | **GMX** | 76% | 8.25 |
+| 6 sep 2026 | **NOM** | 76% | 0.00183 |
+| 6 sep 2026 | **BOME** | 75% | 0.0009261 |
+| 6 sep 2026 | **NMR** | 74% | 9.46 |
+| 6 sep 2026 | **SAHARA** | 74% | 0.00942 |
+| 6 sep 2026 | **1000CAT** | 74% | 0.002233 |
+| 6 sep 2026 | **OG** | 74% | 2.884 |
+| 6 sep 2026 | **FORM** | 73% | 0.2709 |
+| 6 sep 2026 | **GRT** | 73% | 0.01989 |
+| 6 sep 2026 | **SOPH** | 73% | 0.00417 |
+| 6 sep 2026 | **SUSHI** | 72% | 0.2447 |
 
 ---
 
@@ -141,16 +141,17 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 | 3 sep 2026 | 🟢 Haussier | 56.0% | PROM, RED, COMP |
 | 4 sep 2026 | 🟡 Neutre | 51.0% | HIVE, PROM, ZKP |
 | 5 sep 2026 | 🟢 Haussier | 58.0% | AIXBT, 1000CAT, ZKP |
+| 6 sep 2026 | 🟡 Neutre | 54.0% | XVS, WOO, T |
 
-→ **Régime stable** : BTC bull_prob entre 57.0% et 58.0%
+→ **Régime stable** : BTC bull_prob entre 57.0% et 54.0%
 
 ### Évolution des patterns clés
 
-**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 49.1% (5 sep 2026) — -36.0% 📉
-**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.5% (5 sep 2026) — +6.9% 📈
-**`downtrend`** (baissier) : 69.3% (17 août 2026) → 59.6% (5 sep 2026) — -9.7% 📉
-**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 42.9% (5 sep 2026) — +19.1% 📈
-**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 67.9% (5 sep 2026) — -7.5% 📉
+**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 49.1% (6 sep 2026) — -36.0% 📉
+**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.6% (6 sep 2026) — +7.0% 📈
+**`downtrend`** (baissier) : 69.3% (17 août 2026) → 59.1% (6 sep 2026) — -10.2% 📉
+**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 43.4% (6 sep 2026) — +19.6% 📈
+**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 67.6% (6 sep 2026) — -7.8% 📉
 
 ### Ce que ça signifie
 
@@ -161,11 +162,11 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 ## Le score composite est-il utile ?
 
-J'ai analysé **32840 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
+J'ai analysé **33188 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
 
 | Sous-score | Corrélation avec return 14j |
 |------------|---------------------------|
-| solidity | 0.0083 |
+| solidity | 0.0086 |
 | momentum | 0.0000 |
 | risk | 0.0000 |
 | antiscam | 0.0000 |
@@ -176,23 +177,23 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 5 sep 2026
+## Aujourd'hui — 6 sep 2026
 
-**Régime :** 🟢 Haussier (BTC bull_prob = 58%)
+**Régime :** 🟡 Neutre (BTC bull_prob = 54%)
 
 **Top tokens aujourd'hui (score ≥ 70%) :**
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **AIXBT** | 75% | +17pp | 2 | ⚡ Volume ×5.1 vs médiane |
-| **1000CAT** | 75% | +17pp | ⚠️ 4 | ⚡ Volume ×5.3 vs médiane |
-| **ZKP** | 74% | +16pp | 0 | ⚡ Volume ×4.6 vs médiane |
-| **CATI** | 74% | +16pp | 0 | ⚡ Volume ×5.5 vs médiane |
-| **DIA** | 74% | +16pp | 3 |  |
-| **ENJ** | 73% | +15pp | 0 |  |
-| **SAHARA** | 73% | +15pp | 0 | ⚡ Volume ×77.2 vs médiane |
-| **SOPH** | 73% | +15pp | 0 |  |
-| **COTI** | 72% | +14pp | 0 | ⚡ Volume ×4.4 vs médiane |
-| **ZK** | 72% | +14pp | 0 | ⚡ Volume ×3.0 vs médiane |
-| **ZKC** | 72% | +14pp | 0 | ⚡ Volume ×174.4 vs médiane |
-| **BANANA** | 72% | +14pp | ⚠️ 5 |  |
+| **XVS** | 80% | +26pp | 2 |  |
+| **WOO** | 79% | +25pp | 0 | ⚡ Volume ×26.3 vs médiane |
+| **T** | 76% | +22pp | 0 | ⚡ Volume ×6.0 vs médiane |
+| **MET** | 76% | +22pp | 1 |  |
+| **GMX** | 76% | +22pp | 2 |  |
+| **NOM** | 76% | +22pp | 0 | ⚡ Volume ×5.2 vs médiane |
+| **BOME** | 75% | +21pp | 1 | ⚡ Volume ×4.8 vs médiane |
+| **NMR** | 74% | +20pp | 2 |  |
+| **SAHARA** | 74% | +20pp | 0 | ⚡ Volume ×40.4 vs médiane |
+| **1000CAT** | 74% | +20pp | 0 | ⚡ Volume ×4.7 vs médiane |
+| **OG** | 74% | +20pp | 3 |  |
+| **FORM** | 73% | +19pp | 2 |  |
