@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 8 sep 2026*
+*Dernière mise à jour : 9 sep 2026*
 
 ---
 
@@ -32,34 +32,34 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `double_top_90d` | 66.6% | 2950 | → |
-| `rsi_bearish_divergence` | 66.0% | 656 | → |
-| `shooting_star_4h` | 59.6% | 235 | → |
-| `downtrend` | 58.6% | 15357 | → |
-| `bearish_engulfing_4h` | 57.6% | 780 | → |
-| `evening_star_4h` | 57.3% | 654 | → |
-| `macd_bearish_cross` | 55.3% | 5646 | → |
-| `resistance_test` | 54.5% | 1451 | → |
+| `double_top_90d` | 66.4% | 2975 | → |
+| `rsi_bearish_divergence` | 65.8% | 675 | → |
+| `shooting_star_4h` | 58.5% | 241 | → |
+| `downtrend` | 58.4% | 15480 | → |
+| `evening_star_4h` | 57.2% | 656 | → |
+| `bearish_engulfing_4h` | 56.9% | 792 | → |
+| `macd_bearish_cross` | 55.2% | 5675 | → |
+| `resistance_test` | 53.9% | 1480 | → |
 | `breakdown_30d` | 53.7% | 108 | → |
-| `death_cross` | 52.9% | 314 | → |
+| `death_cross` | 52.5% | 316 | → |
 | `bear_flag` | 49.1% | 562 | → |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `rsi_bullish_divergence` | 43.6% | 2370 | → |
-| `squeeze_breakout` | 43.4% | 226 | → |
-| `golden_cross` | 40.9% | 423 | → |
-| `support_bounce` | 40.9% | 2254 | → |
-| `double_bottom_90d` | 39.9% | 2088 | → |
-| `bullish_engulfing_4h` | 39.8% | 917 | → |
+| `rsi_bullish_divergence` | 43.6% | 2372 | → |
+| `squeeze_breakout` | 43.0% | 228 | → |
+| `golden_cross` | 41.9% | 434 | → |
+| `support_bounce` | 41.0% | 2261 | → |
+| `double_bottom_90d` | 40.5% | 2122 | → |
+| `bullish_engulfing_4h` | 40.0% | 920 | → |
 | `hammer_4h` | 38.7% | 204 | → |
-| `macd_bullish_cross` | 36.5% | 7261 | → |
-| `uptrend` | 35.2% | 7513 | → |
+| `macd_bullish_cross` | 36.6% | 7277 | → |
+| `uptrend` | 35.6% | 7627 | → |
 | `bull_flag` | 34.0% | 150 | → |
-| `morning_star_4h` | 31.8% | 738 | → |
-| `breakout_30d` | 27.2% | 313 | → |
+| `morning_star_4h` | 32.2% | 743 | → |
+| `breakout_30d` | 27.1% | 314 | → |
 
 ---
 
@@ -71,21 +71,21 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
-| 8 sep 2026 | **ORCA** | 80% | 1.4 |
-| 8 sep 2026 | **1000CAT** | 80% | 0.00213 |
-| 8 sep 2026 | **UMA** | 77% | 0.385 |
-| 8 sep 2026 | **RAY** | 76% | 1.0778 |
-| 8 sep 2026 | **SAHARA** | 75% | 0.00952 |
-| 8 sep 2026 | **HEMI** | 75% | 0.00894 |
-| 8 sep 2026 | **HAEDAL** | 75% | 0.01975 |
-| 8 sep 2026 | **INJ** | 74% | 6.254 |
-| 8 sep 2026 | **NMR** | 74% | 9.45 |
-| 8 sep 2026 | **USTC** | 74% | 0.00556 |
-| 8 sep 2026 | **DASH** | 72% | 63.14 |
-| 8 sep 2026 | **COTI** | 72% | 0.01767 |
-| 8 sep 2026 | **SFP** | 72% | 0.2815 |
-| 8 sep 2026 | **XVS** | 72% | 3.3 |
-| 8 sep 2026 | **ZKC** | 72% | 0.0488 |
+| 9 sep 2026 | **HOLO** | 80% | 0.0675 |
+| 9 sep 2026 | **ORCA** | 80% | 1.446 |
+| 9 sep 2026 | **GLM** | 80% | 0.1082 |
+| 9 sep 2026 | **G** | 80% | 0.00399 |
+| 9 sep 2026 | **OSMO** | 78% | 0.0377 |
+| 9 sep 2026 | **DASH** | 77% | 65.61 |
+| 9 sep 2026 | **ETC** | 77% | 8.32 |
+| 9 sep 2026 | **FORM** | 76% | 0.2987 |
+| 9 sep 2026 | **HAEDAL** | 76% | 0.02002 |
+| 9 sep 2026 | **XTZ** | 75% | 0.2625 |
+| 9 sep 2026 | **ZRX** | 74% | 0.108 |
+| 9 sep 2026 | **CELO** | 74% | 0.07891 |
+| 9 sep 2026 | **MIRA** | 74% | 0.04971 |
+| 9 sep 2026 | **ZKP** | 74% | 0.0481 |
+| 9 sep 2026 | **NEWT** | 73% | 0.04446 |
 
 ---
 
@@ -114,16 +114,17 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 | 6 sep 2026 | 🟡 Neutre | 54.0% | XVS, WOO, T |
 | 7 sep 2026 | 🟢 Haussier | 64.0% | YGG, USTC, ILV |
 | 8 sep 2026 | 🟢 Haussier | 69.0% | ORCA, 1000CAT, UMA |
+| 9 sep 2026 | 🟢 Haussier | 69.0% | HOLO, ORCA, GLM |
 
 📈 **Le marché s'est renforcé** depuis le début du journal : BTC bull_prob 57.0% → 69.0%
 
 ### Évolution des patterns clés
 
-**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 49.1% (8 sep 2026) — -36.0% 📉
-**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.6% (8 sep 2026) — +7.0% 📈
-**`downtrend`** (baissier) : 69.3% (17 août 2026) → 58.6% (8 sep 2026) — -10.7% 📉
-**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 43.4% (8 sep 2026) — +19.6% 📈
-**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 66.0% (8 sep 2026) — -9.4% 📉
+**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 49.1% (9 sep 2026) — -36.0% 📉
+**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.6% (9 sep 2026) — +7.0% 📈
+**`downtrend`** (baissier) : 69.3% (17 août 2026) → 58.4% (9 sep 2026) — -10.9% 📉
+**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 43.0% (9 sep 2026) — +19.2% 📈
+**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 65.8% (9 sep 2026) — -9.6% 📉
 
 ### Ce que ça signifie
 
@@ -134,7 +135,7 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 ## Le score composite est-il utile ?
 
-J'ai analysé **33849 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
+J'ai analysé **34157 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
 
 | Sous-score | Corrélation avec return 14j |
 |------------|---------------------------|
@@ -149,7 +150,7 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 8 sep 2026
+## Aujourd'hui — 9 sep 2026
 
 **Régime :** 🟢 Haussier (BTC bull_prob = 69%)
 
@@ -157,15 +158,15 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **ORCA** | 80% | +11pp | 0 | ⚡ Volume ×5.0 vs médiane |
-| **1000CAT** | 80% | +11pp | 0 | ⚡ Volume ×7.5 vs médiane |
-| **UMA** | 77% | +8pp | 0 | ⚡ Volume ×4.7 vs médiane |
-| **RAY** | 76% | +7pp | 0 | ⚡ Volume ×6.7 vs médiane |
-| **SAHARA** | 75% | +6pp | 0 | ⚡ Volume ×8.3 vs médiane |
-| **HEMI** | 75% | +6pp | 3 | ⚡ Volume ×4.1 vs médiane |
-| **HAEDAL** | 75% | +6pp | ⚠️ 5 | ⚡ Volume ×14.9 vs médiane |
-| **INJ** | 74% | +5pp | 2 |  |
-| **NMR** | 74% | +5pp | 0 |  |
-| **USTC** | 74% | +5pp | 0 |  |
-| **DASH** | 72% | +3pp | 0 |  |
-| **COTI** | 72% | +3pp | ⚠️ 4 |  |
+| **HOLO** | 80% | +11pp | 0 | ⚡ Volume ×6.2 vs médiane |
+| **ORCA** | 80% | +11pp | 0 | ⚡ Volume ×6.8 vs médiane |
+| **GLM** | 80% | +11pp | 1 | ⚡ Volume ×6.6 vs médiane |
+| **G** | 80% | +11pp | 0 |  |
+| **OSMO** | 78% | +9pp | 0 | ⚡ Volume ×3.9 vs médiane |
+| **DASH** | 77% | +8pp | 2 |  |
+| **ETC** | 77% | +8pp | 2 |  |
+| **FORM** | 76% | +7pp | 0 | ⚡ Volume ×10.0 vs médiane |
+| **HAEDAL** | 76% | +7pp | ⚠️ 4 | ⚡ Volume ×4.0 vs médiane |
+| **XTZ** | 75% | +6pp | 2 | ⚡ Volume ×6.2 vs médiane |
+| **ZRX** | 74% | +5pp | ⚠️ 4 | ⚡ Volume ×5.1 vs médiane |
+| **CELO** | 74% | +5pp | 2 |  |
