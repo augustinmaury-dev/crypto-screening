@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 18 sep 2026*
+*Dernière mise à jour : 19 sep 2026*
 
 ---
 
@@ -15,10 +15,10 @@ J'apprends chaque jour en mesurant si mes prédictions passées étaient correct
 
 ## Mon auto-évaluation
 
-**Régime de marché (BTC bull_prob) :** 🟢 Haussier — 70%
+**Régime de marché (BTC bull_prob) :** 🟢 Haussier — 60%
 
 **Signaux haussiers fiables (>50%) :** aucun ❌
-  → Meilleur signal haussier actuel : `squeeze_breakout` à 46.1%
+  → Meilleur signal haussier actuel : `squeeze_breakout` à 45.7%
 **Signaux baissiers fiables (>50%) :** 10 / 11
 
 ### ❌ Mes signaux d'ACHAT ne sont PAS encore fiables.
@@ -32,34 +32,34 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `double_top_90d` | 65.5% | 3283 | → |
-| `rsi_bearish_divergence` | 62.3% | 844 | → |
-| `downtrend` | 58.2% | 15909 | → |
-| `bearish_engulfing_4h` | 56.6% | 868 | → |
-| `evening_star_4h` | 56.3% | 726 | → |
+| `double_top_90d` | 65.0% | 3319 | → |
+| `rsi_bearish_divergence` | 60.2% | 896 | 📉 |
+| `downtrend` | 58.1% | 15953 | → |
+| `bearish_engulfing_4h` | 56.6% | 870 | → |
+| `evening_star_4h` | 56.4% | 732 | → |
 | `breakdown_30d` | 56.3% | 119 | → |
-| `shooting_star_4h` | 55.5% | 274 | → |
-| `macd_bearish_cross` | 55.2% | 6670 | → |
-| `resistance_test` | 52.8% | 1611 | → |
-| `death_cross` | 52.7% | 347 | → |
+| `shooting_star_4h` | 55.4% | 280 | → |
+| `macd_bearish_cross` | 55.0% | 6741 | → |
+| `resistance_test` | 52.5% | 1629 | → |
+| `death_cross` | 52.4% | 349 | → |
 | `bear_flag` | 49.0% | 575 | → |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `squeeze_breakout` | 46.1% | 282 | → |
-| `rsi_bullish_divergence` | 43.6% | 2428 | → |
-| `golden_cross` | 43.1% | 527 | → |
+| `squeeze_breakout` | 45.7% | 291 | → |
+| `rsi_bullish_divergence` | 43.6% | 2431 | → |
+| `golden_cross` | 43.4% | 535 | → |
+| `bull_flag` | 42.3% | 260 | → |
 | `hammer_4h` | 42.2% | 263 | → |
-| `support_bounce` | 41.6% | 2396 | → |
-| `bull_flag` | 40.6% | 239 | → |
-| `double_bottom_90d` | 40.5% | 2259 | → |
-| `bullish_engulfing_4h` | 40.4% | 986 | → |
-| `uptrend` | 37.8% | 8872 | → |
-| `macd_bullish_cross` | 36.8% | 7445 | → |
-| `morning_star_4h` | 32.8% | 798 | → |
-| `breakout_30d` | 29.5% | 353 | → |
+| `support_bounce` | 41.7% | 2406 | → |
+| `bullish_engulfing_4h` | 40.9% | 1000 | → |
+| `double_bottom_90d` | 40.6% | 2272 | → |
+| `uptrend` | 38.5% | 9066 | → |
+| `macd_bullish_cross` | 37.0% | 7522 | → |
+| `morning_star_4h` | 33.1% | 807 | → |
+| `breakout_30d` | 30.1% | 359 | → |
 
 ---
 
@@ -71,21 +71,21 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
-| 18 sep 2026 | **ROSE** | 80% | 0.0072 |
-| 18 sep 2026 | **ENSO** | 80% | 0.943 |
-| 18 sep 2026 | **LSK** | 78% | 0.4501 |
-| 18 sep 2026 | **AXS** | 78% | 0.999 |
-| 18 sep 2026 | **LPT** | 77% | 1.523 |
-| 18 sep 2026 | **ASTR** | 77% | 0.006536 |
-| 18 sep 2026 | **STEEM** | 77% | 0.05559 |
-| 18 sep 2026 | **ARB** | 76% | 0.2047 |
-| 18 sep 2026 | **MET** | 76% | 0.2489 |
-| 18 sep 2026 | **ORCA** | 76% | 1.432 |
-| 18 sep 2026 | **1INCH** | 76% | 0.0949 |
-| 18 sep 2026 | **CVC** | 76% | 0.02654 |
-| 18 sep 2026 | **APT** | 75% | 0.683 |
-| 18 sep 2026 | **SKY** | 75% | 0.06646 |
-| 18 sep 2026 | **REZ** | 75% | 0.003929 |
+| 19 sep 2026 | **ESP** | 80% | 0.09691 |
+| 19 sep 2026 | **SLP** | 80% | 0.000667 |
+| 19 sep 2026 | **C98** | 78% | 0.01612 |
+| 19 sep 2026 | **ASTER** | 76% | 0.768 |
+| 19 sep 2026 | **A** | 76% | 0.0898 |
+| 19 sep 2026 | **SSV** | 76% | 3.206 |
+| 19 sep 2026 | **LSK** | 75% | 0.4424 |
+| 19 sep 2026 | **LUNA** | 75% | 0.048 |
+| 19 sep 2026 | **PROVE** | 74% | 0.2162 |
+| 19 sep 2026 | **STEEM** | 74% | 0.05652 |
+| 19 sep 2026 | **USUAL** | 74% | 0.01276 |
+| 19 sep 2026 | **CVC** | 74% | 0.02732 |
+| 19 sep 2026 | **MTL** | 74% | 0.295 |
+| 19 sep 2026 | **AVAX** | 73% | 9.313 |
+| 19 sep 2026 | **SKY** | 73% | 0.06958 |
 
 ---
 
@@ -124,16 +124,17 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 | 16 sep 2026 | 🟢 Haussier | 67.0% | ASTR, POL, HIVE |
 | 17 sep 2026 | 🟢 Haussier | 67.0% | A, ASTR, BNSOL |
 | 18 sep 2026 | 🟢 Haussier | 70.0% | ROSE, ENSO, LSK |
+| 19 sep 2026 | 🟢 Haussier | 60.0% | ESP, SLP, C98 |
 
-📈 **Le marché s'est renforcé** depuis le début du journal : BTC bull_prob 57.0% → 70.0%
+→ **Régime stable** : BTC bull_prob entre 57.0% et 60.0%
 
 ### Évolution des patterns clés
 
-**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 49.0% (18 sep 2026) — -36.1% 📉
-**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.6% (18 sep 2026) — +7.0% 📈
-**`downtrend`** (baissier) : 69.3% (17 août 2026) → 58.2% (18 sep 2026) — -11.1% 📉
-**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 46.1% (18 sep 2026) — +22.3% 📈
-**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 62.3% (18 sep 2026) — -13.1% 📉
+**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 49.0% (19 sep 2026) — -36.1% 📉
+**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.6% (19 sep 2026) — +7.0% 📈
+**`downtrend`** (baissier) : 69.3% (17 août 2026) → 58.1% (19 sep 2026) — -11.2% 📉
+**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 45.7% (19 sep 2026) — +21.9% 📈
+**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 60.2% (19 sep 2026) — -15.2% 📉
 
 ### Ce que ça signifie
 
@@ -144,13 +145,13 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 ## Le score composite est-il utile ?
 
-J'ai analysé **37052 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
+J'ai analysé **37426 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
 
 | Sous-score | Corrélation avec return 14j |
 |------------|---------------------------|
-| solidity | 0.0083 |
+| solidity | 0.0087 |
 | momentum | 0.0000 |
-| risk | 0.0034 |
+| risk | 0.0051 |
 | antiscam | 0.0000 |
 | signal | 0.0000 |
 
@@ -159,23 +160,23 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 18 sep 2026
+## Aujourd'hui — 19 sep 2026
 
-**Régime :** 🟢 Haussier (BTC bull_prob = 70%)
+**Régime :** 🟢 Haussier (BTC bull_prob = 60%)
 
 **Top tokens aujourd'hui (score ≥ 70%) :**
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **ROSE** | 80% | +10pp | 2 |  |
-| **ENSO** | 80% | +10pp | 0 |  |
-| **LSK** | 78% | +8pp | 0 | ⚡ Volume ×16.5 vs médiane |
-| **AXS** | 78% | +8pp | 0 |  |
-| **LPT** | 77% | +7pp | 0 |  |
-| **ASTR** | 77% | +7pp | 2 |  |
-| **STEEM** | 77% | +7pp | 0 | ⚡ Volume ×4.5 vs médiane |
-| **ARB** | 76% | +6pp | ⚠️ 6 | 🔥 Trending #3 sur CoinGecko|⚡ Volume ×5.1 vs média |
-| **MET** | 76% | +6pp | 2 |  |
-| **ORCA** | 76% | +6pp | 1 |  |
-| **1INCH** | 76% | +6pp | 3 |  |
-| **CVC** | 76% | +6pp | 0 | ⚡ Volume ×4.1 vs médiane |
+| **ESP** | 80% | +20pp | 3 | ⚡ Volume ×6.5 vs médiane |
+| **SLP** | 80% | +20pp | 3 |  |
+| **C98** | 78% | +18pp | 2 |  |
+| **ASTER** | 76% | +16pp | 2 |  |
+| **A** | 76% | +16pp | 2 | ⚡ Volume ×11.5 vs médiane |
+| **SSV** | 76% | +16pp | 2 |  |
+| **LSK** | 75% | +15pp | 0 | ⚡ Volume ×9.2 vs médiane |
+| **LUNA** | 75% | +15pp | 0 |  |
+| **PROVE** | 74% | +14pp | 2 | ⚡ Volume ×104.0 vs médiane |
+| **STEEM** | 74% | +14pp | 0 |  |
+| **USUAL** | 74% | +14pp | 2 |  |
+| **CVC** | 74% | +14pp | 0 |  |
