@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260824",
-    "btc_prob": 44.0,
-    "regime": "Baissier",
-    "top_tokens": [
-      "TUT",
-      "COTI",
-      "EUL",
-      "ONG",
-      "EURI"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.372,
-    "bear_signals_ok": 11
-  },
-  {
     "date": "20260825",
     "btc_prob": 51.0,
     "regime": "Neutre",
@@ -475,6 +459,22 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.478,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20260923",
+    "btc_prob": 65.0,
+    "regime": "Haussier",
+    "top_tokens": [
+      "PENGU",
+      "BROCCOLI714",
+      "WIN",
+      "BFUSD",
+      "ASTER"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.49,
     "bear_signals_ok": 10
   }
 ]

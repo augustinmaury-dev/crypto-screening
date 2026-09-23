@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 22 sep 2026*
+*Dernière mise à jour : 23 sep 2026*
 
 ---
 
@@ -15,10 +15,10 @@ J'apprends chaque jour en mesurant si mes prédictions passées étaient correct
 
 ## Mon auto-évaluation
 
-**Régime de marché (BTC bull_prob) :** 🟢 Haussier — 64%
+**Régime de marché (BTC bull_prob) :** 🟢 Haussier — 65%
 
 **Signaux haussiers fiables (>50%) :** aucun ❌
-  → Meilleur signal haussier actuel : `squeeze_breakout` à 47.8%
+  → Meilleur signal haussier actuel : `squeeze_breakout` à 49.0%
 **Signaux baissiers fiables (>50%) :** 10 / 11
 
 ### ❌ Mes signaux d'ACHAT ne sont PAS encore fiables.
@@ -32,34 +32,34 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `double_top_90d` | 64.2% | 3399 | → |
-| `downtrend` | 57.9% | 16062 | → |
-| `bearish_engulfing_4h` | 56.3% | 877 | → |
+| `double_top_90d` | 63.8% | 3425 | → |
+| `downtrend` | 57.8% | 16100 | → |
+| `bearish_engulfing_4h` | 56.1% | 880 | → |
 | `breakdown_30d` | 55.8% | 120 | → |
-| `rsi_bearish_divergence` | 55.5% | 1019 | → |
-| `evening_star_4h` | 55.4% | 751 | → |
+| `evening_star_4h` | 55.2% | 753 | → |
 | `shooting_star_4h` | 55.0% | 289 | → |
-| `macd_bearish_cross` | 54.8% | 6809 | → |
+| `macd_bearish_cross` | 54.7% | 6829 | → |
+| `rsi_bearish_divergence` | 54.3% | 1048 | → |
 | `death_cross` | 52.3% | 350 | → |
-| `resistance_test` | 51.2% | 1712 | → |
-| `bear_flag` | 49.1% | 579 | → |
+| `resistance_test` | 50.7% | 1734 | → |
+| `bear_flag` | 48.3% | 594 | → |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `squeeze_breakout` | 47.8% | 324 | → |
-| `golden_cross` | 44.0% | 564 | → |
+| `squeeze_breakout` | 49.0% | 341 | → |
+| `golden_cross` | 44.4% | 576 | → |
 | `bull_flag` | 44.0% | 293 | → |
-| `rsi_bullish_divergence` | 43.7% | 2441 | → |
-| `hammer_4h` | 42.4% | 269 | → |
-| `support_bounce` | 42.1% | 2450 | → |
-| `bullish_engulfing_4h` | 41.7% | 1049 | → |
-| `double_bottom_90d` | 41.3% | 2323 | → |
-| `uptrend` | 41.0% | 9715 | → |
-| `macd_bullish_cross` | 38.6% | 7947 | → |
+| `rsi_bullish_divergence` | 43.7% | 2444 | → |
+| `hammer_4h` | 42.9% | 273 | → |
+| `uptrend` | 42.1% | 9931 | → |
+| `support_bounce` | 42.1% | 2462 | → |
+| `bullish_engulfing_4h` | 41.7% | 1051 | → |
+| `double_bottom_90d` | 41.6% | 2338 | → |
+| `macd_bullish_cross` | 39.2% | 8058 | → |
 | `morning_star_4h` | 35.3% | 845 | → |
-| `breakout_30d` | 32.1% | 386 | → |
+| `breakout_30d` | 32.4% | 392 | → |
 
 ---
 
@@ -71,21 +71,21 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
-| 22 sep 2026 | **ASTER** | 80% | 0.719 |
-| 22 sep 2026 | **PENGU** | 80% | 0.008946 |
-| 22 sep 2026 | **FORM** | 80% | 0.3268 |
-| 22 sep 2026 | **ICP** | 78% | 2.915 |
-| 22 sep 2026 | **MTL** | 78% | 0.306 |
-| 22 sep 2026 | **XRP** | 77% | 1.5307 |
-| 22 sep 2026 | **TST** | 77% | 0.01906 |
-| 22 sep 2026 | **ZEN** | 76% | 7.695 |
-| 22 sep 2026 | **ORCA** | 76% | 1.476 |
-| 22 sep 2026 | **COOKIE** | 76% | 0.0127 |
-| 22 sep 2026 | **CVC** | 76% | 0.02773 |
-| 22 sep 2026 | **SHIB** | 75% | 5.91e-06 |
-| 22 sep 2026 | **VTHO** | 75% | 0.000699 |
-| 22 sep 2026 | **XEC** | 75% | 8.67e-06 |
-| 22 sep 2026 | **AVNT** | 75% | 0.1152 |
+| 23 sep 2026 | **PENGU** | 80% | 0.010131 |
+| 23 sep 2026 | **BROCCOLI714** | 80% | 0.02316 |
+| 23 sep 2026 | **WIN** | 80% | 3.973e-05 |
+| 23 sep 2026 | **ASTER** | 78% | 0.7123 |
+| 23 sep 2026 | **XVS** | 77% | 3.366 |
+| 23 sep 2026 | **XRP** | 76% | 1.5665 |
+| 23 sep 2026 | **UNI** | 76% | 9.744 |
+| 23 sep 2026 | **ZEN** | 76% | 8.126 |
+| 23 sep 2026 | **SUSHI** | 76% | 0.2747 |
+| 23 sep 2026 | **NOT** | 76% | 0.0005 |
+| 23 sep 2026 | **API3** | 76% | 0.2767 |
+| 23 sep 2026 | **WLD** | 75% | 0.455 |
+| 23 sep 2026 | **CAKE** | 75% | 2.61 |
+| 23 sep 2026 | **XNO** | 75% | 0.377 |
+| 23 sep 2026 | **ORCA** | 75% | 1.566 |
 
 ---
 
@@ -95,7 +95,6 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Date | Régime | BTC bull_prob | Top tokens |
 |------|--------|---------------|-----------|
-| 24 août 2026 | 🔴 Baissier | 44.0% | TUT, COTI, EUL |
 | 25 août 2026 | 🟡 Neutre | 51.0% | PEOPLE, EURI, TUT |
 | 26 août 2026 | 🔴 Baissier | 39.0% | USDP, EUL, EDEN |
 | 27 août 2026 | 🔴 Baissier | 42.0% | WAXP, TRX, ALT |
@@ -125,16 +124,17 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 | 20 sep 2026 | 🟢 Haussier | 66.0% | KMNO, HOT, JOE |
 | 21 sep 2026 | 🟢 Haussier | 67.0% | ASTER, FLOW, NMR |
 | 22 sep 2026 | 🟢 Haussier | 64.0% | ASTER, PENGU, FORM |
+| 23 sep 2026 | 🟢 Haussier | 65.0% | PENGU, BROCCOLI714, WIN |
 
-📈 **Le marché s'est renforcé** depuis le début du journal : BTC bull_prob 44.0% → 64.0%
+📈 **Le marché s'est renforcé** depuis le début du journal : BTC bull_prob 51.0% → 65.0%
 
 ### Évolution des patterns clés
 
-**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 49.1% (22 sep 2026) — -36.0% 📉
-**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.7% (22 sep 2026) — +7.1% 📈
-**`downtrend`** (baissier) : 69.3% (17 août 2026) → 57.9% (22 sep 2026) — -11.4% 📉
-**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 47.8% (22 sep 2026) — +24.0% 📈
-**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 55.5% (22 sep 2026) — -19.9% 📉
+**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 48.3% (23 sep 2026) — -36.8% 📉
+**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.7% (23 sep 2026) — +7.1% 📈
+**`downtrend`** (baissier) : 69.3% (17 août 2026) → 57.8% (23 sep 2026) — -11.5% 📉
+**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 49.0% (23 sep 2026) — +25.2% 📈
+**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 54.3% (23 sep 2026) — -21.1% 📉
 
 ### Ce que ça signifie
 
@@ -145,13 +145,13 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 ## Le score composite est-il utile ?
 
-J'ai analysé **38551 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
+J'ai analysé **38900 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
 
 | Sous-score | Corrélation avec return 14j |
 |------------|---------------------------|
-| solidity | 0.0095 |
-| momentum | 0.0023 |
-| risk | 0.0076 |
+| solidity | 0.0101 |
+| momentum | 0.0070 |
+| risk | 0.0095 |
 | antiscam | 0.0000 |
 | signal | 0.0000 |
 
@@ -160,23 +160,23 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 22 sep 2026
+## Aujourd'hui — 23 sep 2026
 
-**Régime :** 🟢 Haussier (BTC bull_prob = 64%)
+**Régime :** 🟢 Haussier (BTC bull_prob = 65%)
 
 **Top tokens aujourd'hui (score ≥ 70%) :**
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **ASTER** | 80% | +16pp | 1 |  |
-| **PENGU** | 80% | +16pp | 0 | 🔥 Trending #3 sur CoinGecko |
-| **FORM** | 80% | +16pp | 0 | ⚡ Volume ×7.8 vs médiane |
-| **ICP** | 78% | +14pp | 2 |  |
-| **MTL** | 78% | +14pp | 0 | ⚡ Volume ×5.4 vs médiane |
-| **XRP** | 77% | +13pp | 2 |  |
-| **TST** | 77% | +13pp | 0 |  |
-| **ZEN** | 76% | +12pp | 0 |  |
-| **ORCA** | 76% | +12pp | 2 |  |
-| **COOKIE** | 76% | +12pp | 0 | ⚡ Volume ×8.6 vs médiane |
-| **CVC** | 76% | +12pp | 0 | ⚡ Volume ×5.0 vs médiane |
-| **SHIB** | 75% | +11pp | 2 |  |
+| **PENGU** | 80% | +15pp | 2 | 🔥 Trending #2 sur CoinGecko |
+| **BROCCOLI714** | 80% | +15pp | 0 |  |
+| **WIN** | 80% | +15pp | ⚠️ 5 |  |
+| **BFUSD** | 80% | +15pp | 3 |  |
+| **ASTER** | 78% | +13pp | 1 |  |
+| **XVS** | 77% | +12pp | 2 |  |
+| **XRP** | 76% | +11pp | 2 |  |
+| **UNI** | 76% | +11pp | ⚠️ 4 | 🔥 Trending #5 sur CoinGecko |
+| **ZEN** | 76% | +11pp | 2 |  |
+| **SUSHI** | 76% | +11pp | ⚠️ 4 |  |
+| **NOT** | 76% | +11pp | 2 |  |
+| **API3** | 76% | +11pp | 2 | ⚡ Volume ×6.1 vs médiane |
