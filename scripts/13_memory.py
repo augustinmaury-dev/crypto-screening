@@ -169,8 +169,12 @@ def update_prediction_log(today_scores: list[dict]) -> list[dict]:
 
     log.info(f"Outcomes mis à jour : {updated} prédictions")
 
-    # Garde les 300 dernières entrées
-    pred_log = pred_log[-300:]
+    # Garde TOUTES les prédictions mesurées + les 300 dernières en attente
+    measured_preds = [p for p in pred_log if p.get("measured_date") is not None]
+    pending_preds  = [p for p in pred_log if p.get("measured_date") is None]
+    pending_preds  = pending_preds[-300:]
+    pred_log = measured_preds + pending_preds
+
     save_json(log_path, pred_log)
     return pred_log
 
