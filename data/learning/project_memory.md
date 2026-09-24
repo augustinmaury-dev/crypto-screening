@@ -1,5 +1,5 @@
 # Mémoire du Projet Crypto Screening
-*Dernière mise à jour : 23 sep 2026*
+*Dernière mise à jour : 24 sep 2026*
 
 ---
 
@@ -15,10 +15,10 @@ J'apprends chaque jour en mesurant si mes prédictions passées étaient correct
 
 ## Mon auto-évaluation
 
-**Régime de marché (BTC bull_prob) :** 🟢 Haussier — 65%
+**Régime de marché (BTC bull_prob) :** 🟢 Haussier — 67%
 
 **Signaux haussiers fiables (>50%) :** aucun ❌
-  → Meilleur signal haussier actuel : `squeeze_breakout` à 49.0%
+  → Meilleur signal haussier actuel : `squeeze_breakout` à 49.1%
 **Signaux baissiers fiables (>50%) :** 10 / 11
 
 ### ❌ Mes signaux d'ACHAT ne sont PAS encore fiables.
@@ -32,34 +32,34 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `double_top_90d` | 63.8% | 3425 | → |
-| `downtrend` | 57.8% | 16100 | → |
-| `bearish_engulfing_4h` | 56.1% | 880 | → |
-| `breakdown_30d` | 55.8% | 120 | → |
+| `double_top_90d` | 63.3% | 3454 | → |
+| `downtrend` | 57.7% | 16134 | → |
+| `bearish_engulfing_4h` | 56.0% | 882 | → |
+| `breakdown_30d` | 55.3% | 123 | → |
 | `evening_star_4h` | 55.2% | 753 | → |
-| `shooting_star_4h` | 55.0% | 289 | → |
-| `macd_bearish_cross` | 54.7% | 6829 | → |
-| `rsi_bearish_divergence` | 54.3% | 1048 | → |
-| `death_cross` | 52.3% | 350 | → |
-| `resistance_test` | 50.7% | 1734 | → |
-| `bear_flag` | 48.3% | 594 | → |
+| `shooting_star_4h` | 54.5% | 292 | → |
+| `macd_bearish_cross` | 54.1% | 6927 | → |
+| `rsi_bearish_divergence` | 54.1% | 1052 | → |
+| `death_cross` | 52.0% | 352 | → |
+| `resistance_test` | 50.7% | 1749 | → |
+| `bear_flag` | 48.2% | 596 | → |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
-| `squeeze_breakout` | 49.0% | 341 | → |
-| `golden_cross` | 44.4% | 576 | → |
+| `squeeze_breakout` | 49.1% | 344 | → |
+| `golden_cross` | 45.1% | 588 | → |
 | `bull_flag` | 44.0% | 293 | → |
-| `rsi_bullish_divergence` | 43.7% | 2444 | → |
-| `hammer_4h` | 42.9% | 273 | → |
-| `uptrend` | 42.1% | 9931 | → |
-| `support_bounce` | 42.1% | 2462 | → |
-| `bullish_engulfing_4h` | 41.7% | 1051 | → |
-| `double_bottom_90d` | 41.6% | 2338 | → |
-| `macd_bullish_cross` | 39.2% | 8058 | → |
-| `morning_star_4h` | 35.3% | 845 | → |
-| `breakout_30d` | 32.4% | 392 | → |
+| `rsi_bullish_divergence` | 43.8% | 2449 | → |
+| `hammer_4h` | 43.5% | 276 | → |
+| `uptrend` | 43.2% | 10144 | → |
+| `support_bounce` | 42.0% | 2471 | → |
+| `bullish_engulfing_4h` | 41.9% | 1055 | → |
+| `double_bottom_90d` | 41.8% | 2345 | → |
+| `macd_bullish_cross` | 39.3% | 8097 | → |
+| `morning_star_4h` | 35.4% | 847 | → |
+| `breakout_30d` | 32.7% | 394 | → |
 
 ---
 
@@ -71,21 +71,21 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Date | Token | Score | Prix |
 |------|-------|-------|------|
-| 23 sep 2026 | **PENGU** | 80% | 0.010131 |
-| 23 sep 2026 | **BROCCOLI714** | 80% | 0.02316 |
-| 23 sep 2026 | **WIN** | 80% | 3.973e-05 |
-| 23 sep 2026 | **ASTER** | 78% | 0.7123 |
-| 23 sep 2026 | **XVS** | 77% | 3.366 |
-| 23 sep 2026 | **XRP** | 76% | 1.5665 |
-| 23 sep 2026 | **UNI** | 76% | 9.744 |
-| 23 sep 2026 | **ZEN** | 76% | 8.126 |
-| 23 sep 2026 | **SUSHI** | 76% | 0.2747 |
-| 23 sep 2026 | **NOT** | 76% | 0.0005 |
-| 23 sep 2026 | **API3** | 76% | 0.2767 |
-| 23 sep 2026 | **WLD** | 75% | 0.455 |
-| 23 sep 2026 | **CAKE** | 75% | 2.61 |
-| 23 sep 2026 | **XNO** | 75% | 0.377 |
-| 23 sep 2026 | **ORCA** | 75% | 1.566 |
+| 24 sep 2026 | **ONDO** | 80% | 0.4551 |
+| 24 sep 2026 | **COMP** | 80% | 23.03 |
+| 24 sep 2026 | **AI** | 79% | 0.0196 |
+| 24 sep 2026 | **BTTC** | 78% | 3.7e-07 |
+| 24 sep 2026 | **ZEC** | 76% | 1482.5 |
+| 24 sep 2026 | **ICP** | 76% | 2.977 |
+| 24 sep 2026 | **BOME** | 76% | 0.0010523 |
+| 24 sep 2026 | **QTUM** | 76% | 0.958 |
+| 24 sep 2026 | **AUCTION** | 76% | 3.716 |
+| 24 sep 2026 | **XRP** | 75% | 1.4724 |
+| 24 sep 2026 | **ORCA** | 75% | 1.54 |
+| 24 sep 2026 | **NMR** | 75% | 9.31 |
+| 24 sep 2026 | **XVS** | 75% | 3.231 |
+| 24 sep 2026 | **TST** | 75% | 0.01971 |
+| 24 sep 2026 | **MTL** | 74% | 0.3231 |
 
 ---
 
@@ -95,7 +95,6 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 | Date | Régime | BTC bull_prob | Top tokens |
 |------|--------|---------------|-----------|
-| 25 août 2026 | 🟡 Neutre | 51.0% | PEOPLE, EURI, TUT |
 | 26 août 2026 | 🔴 Baissier | 39.0% | USDP, EUL, EDEN |
 | 27 août 2026 | 🔴 Baissier | 42.0% | WAXP, TRX, ALT |
 | 28 août 2026 | 🟢 Haussier | 70.0% | SOL, MORPHO, GMX |
@@ -125,16 +124,17 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 | 21 sep 2026 | 🟢 Haussier | 67.0% | ASTER, FLOW, NMR |
 | 22 sep 2026 | 🟢 Haussier | 64.0% | ASTER, PENGU, FORM |
 | 23 sep 2026 | 🟢 Haussier | 65.0% | PENGU, BROCCOLI714, WIN |
+| 24 sep 2026 | 🟢 Haussier | 67.0% | ONDO, COMP, AI |
 
-📈 **Le marché s'est renforcé** depuis le début du journal : BTC bull_prob 51.0% → 65.0%
+📈 **Le marché s'est renforcé** depuis le début du journal : BTC bull_prob 39.0% → 67.0%
 
 ### Évolution des patterns clés
 
-**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 48.3% (23 sep 2026) — -36.8% 📉
-**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.7% (23 sep 2026) — +7.1% 📈
-**`downtrend`** (baissier) : 69.3% (17 août 2026) → 57.8% (23 sep 2026) — -11.5% 📉
-**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 49.0% (23 sep 2026) — +25.2% 📈
-**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 54.3% (23 sep 2026) — -21.1% 📉
+**`bear_flag`** (baissier) : 85.1% (17 août 2026) → 48.2% (24 sep 2026) — -36.9% 📉
+**`rsi_bullish_divergence`** (haussier) : 36.6% (17 août 2026) → 43.8% (24 sep 2026) — +7.2% 📈
+**`downtrend`** (baissier) : 69.3% (17 août 2026) → 57.7% (24 sep 2026) — -11.6% 📉
+**`squeeze_breakout`** (haussier) : 23.8% (17 août 2026) → 49.1% (24 sep 2026) — +25.3% 📈
+**`rsi_bearish_divergence`** (baissier) : 75.4% (17 août 2026) → 54.1% (24 sep 2026) — -21.3% 📉
 
 ### Ce que ça signifie
 
@@ -145,13 +145,13 @@ N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.
 
 ## Le score composite est-il utile ?
 
-J'ai analysé **38900 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
+J'ai analysé **39233 paires (date, token)** pour mesurer si mon score composite prédit les returns à 14j.
 
 | Sous-score | Corrélation avec return 14j |
 |------------|---------------------------|
-| solidity | 0.0101 |
-| momentum | 0.0070 |
-| risk | 0.0095 |
+| solidity | 0.0103 |
+| momentum | 0.0113 |
+| risk | 0.0101 |
 | antiscam | 0.0000 |
 | signal | 0.0000 |
 
@@ -160,23 +160,23 @@ C'est pourquoi j'utilise `bull_prob_7d` comme score principal.
 
 ---
 
-## Aujourd'hui — 23 sep 2026
+## Aujourd'hui — 24 sep 2026
 
-**Régime :** 🟢 Haussier (BTC bull_prob = 65%)
+**Régime :** 🟢 Haussier (BTC bull_prob = 67%)
 
 **Top tokens aujourd'hui (score ≥ 70%) :**
 
 | Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |
 |-------|-------|--------------|-----------|-------------|
-| **PENGU** | 80% | +15pp | 2 | 🔥 Trending #2 sur CoinGecko |
-| **BROCCOLI714** | 80% | +15pp | 0 |  |
-| **WIN** | 80% | +15pp | ⚠️ 5 |  |
-| **BFUSD** | 80% | +15pp | 3 |  |
-| **ASTER** | 78% | +13pp | 1 |  |
-| **XVS** | 77% | +12pp | 2 |  |
-| **XRP** | 76% | +11pp | 2 |  |
-| **UNI** | 76% | +11pp | ⚠️ 4 | 🔥 Trending #5 sur CoinGecko |
-| **ZEN** | 76% | +11pp | 2 |  |
-| **SUSHI** | 76% | +11pp | ⚠️ 4 |  |
-| **NOT** | 76% | +11pp | 2 |  |
-| **API3** | 76% | +11pp | 2 | ⚡ Volume ×6.1 vs médiane |
+| **ONDO** | 80% | +13pp | 2 | 🔥 Trending #1 sur CoinGecko |
+| **COMP** | 80% | +13pp | 2 | ⚡ Volume ×6.8 vs médiane |
+| **AI** | 79% | +12pp | 0 | ⚡ Volume ×5.9 vs médiane |
+| **BTTC** | 78% | +11pp | 2 |  |
+| **ZEC** | 76% | +9pp | 2 | 🔥 Trending #4 sur CoinGecko |
+| **ICP** | 76% | +9pp | 2 |  |
+| **BOME** | 76% | +9pp | 0 |  |
+| **QTUM** | 76% | +9pp | 2 |  |
+| **AUCTION** | 76% | +9pp | 2 |  |
+| **XRP** | 75% | +8pp | 0 |  |
+| **ORCA** | 75% | +8pp | ⚠️ 4 |  |
+| **NMR** | 75% | +8pp | 0 |  |

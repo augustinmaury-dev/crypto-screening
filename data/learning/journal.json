@@ -1,19 +1,5 @@
 [
   {
-    "date": "20260825",
-    "btc_prob": 51.0,
-    "regime": "Neutre",
-    "top_tokens": [
-      "PEOPLE",
-      "EURI",
-      "TUT"
-    ],
-    "n_top": 3,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.379,
-    "bear_signals_ok": 11
-  },
-  {
     "date": "20260826",
     "btc_prob": 39.0,
     "regime": "Baissier",
@@ -475,6 +461,22 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.49,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20260924",
+    "btc_prob": 67.0,
+    "regime": "Haussier",
+    "top_tokens": [
+      "ONDO",
+      "COMP",
+      "AI",
+      "BTTC",
+      "ZEC"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.491,
     "bear_signals_ok": 10
   }
 ]
