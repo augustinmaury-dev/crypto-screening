@@ -15,7 +15,8 @@ from pathlib import Path
 log = setup_logger("13_memory")
 
 LEARNING   = ROOT / "data" / "learning"
-SCORE_THRESHOLD  = 70   # score minimum pour enregistrer une prédiction
+TOP_N_PRED       = 20   # une "prédiction" = un des 20 tokens les mieux classés du jour
+# (avant le 25/09/2026 : score >= 70 ; le score appris n'atteint plus ces valeurs, on suit donc le top du classement)
 # bull_prob_7d est une prédiction à 7 jours → on la juge à 7 jours.
 # 14 jours est mesuré en complément.
 OUTCOME_HORIZONS = (7, 14)
@@ -23,7 +24,12 @@ MAIN_HORIZON     = 7
 SNAPSHOT_TOLERANCE = 2  # si le snapshot J+H manque, on accepte J+H+1 ou J+H+2
 MAX_PENDING_AGE  = 30   # une prédiction non mesurable après 30 j (token délisté…) est abandonnée
 MAX_JOURNAL_DAYS = 30   # jours de journal conservés
-CALIB_BUCKETS = [(20, 35), (35, 45), (45, 50), (50, 55), (55, 60), (60, 65), (65, 70), (70, 81)]
+N_QUINTILES = 5
+
+def model_group(row: dict) -> str:
+    """Ancienne formule manuelle vs modèle appris (06b_ml_score.py)."""
+    m = str(row.get("score_model") or "")
+    return "Modèle appris" if m.startswith(("ml_", "naive")) else "Ancienne formule"
 
 BULL_PATS = {
     "breakout_30d", "rsi_bullish_divergence", "golden_cross",
@@ -186,10 +192,15 @@ def find_outcome_snapshot(date: str, horizon: int) -> str | None:
 def history_dates() -> list[str]:
     return sorted(p.stem.replace("scores_", "") for p in HISTORY.glob("scores_*.csv"))
 
-def make_prediction(date: str, row: dict) -> dict:
+def make_prediction(date: str, row: dict, rank: int = 0) -> dict:
     score = float(row.get("score") or 0)
     return {
         "date":           date,
+        "selection":      f"top{TOP_N_PRED}",
+        "rank":           rank,
+        "model":          model_group(row),
+        "score_model":    row.get("score_model", ""),
+        "market_regime":  row.get("market_regime", ""),
         "symbol":         row.get("symbol", ""),
         "score":          score,
         "bull_prob":      float(_fnum(row.get("bull_prob_7d")) or score),
@@ -236,13 +247,15 @@ def measure(p: dict) -> bool:
 
 def update_prediction_log(today_scores: list[dict]) -> list[dict]:
     """
-    1. Backfill : ajoute les prédictions (score >= SCORE_THRESHOLD) de tous les snapshots
+    1. Backfill : ajoute les prédictions (top TOP_N_PRED du jour) de tous les snapshots
        historiques qui ne sont pas encore dans le log (+ celles d'aujourd'hui).
     2. Mesure les résultats à 7 j et 14 j dès que le snapshot correspondant existe.
     3. Abandonne les prédictions impossibles à mesurer après MAX_PENDING_AGE jours.
     """
     log_path = LEARNING / "prediction_log.json"
     pred_log: list[dict] = load_json(log_path, [])
+    # Les entrées de l'ancienne règle (score >= 70) sont reconstruites selon la règle actuelle
+    pred_log = [p for p in pred_log if p.get("selection") == f"top{TOP_N_PRED}"]
     existing_keys = {(p["date"], p["symbol"]) for p in pred_log}
 
     # ── 1. Nouvelles prédictions : snapshots historiques + aujourd'hui ─────
@@ -252,15 +265,13 @@ def update_prediction_log(today_scores: list[dict]) -> list[dict]:
     for date, rows in sources:
         if not rows or "bull_prob_7d" not in rows[0]:
             continue  # snapshots antérieurs à l'introduction de bull_prob_7d
-        for row in rows:
-            if _is_excluded(row):
-                continue
-            if float(_fnum(row.get("score")) or 0) < SCORE_THRESHOLD:
-                continue
+        eligible = [r for r in rows if not _is_excluded(r) and _fnum(r.get("price"))]
+        eligible.sort(key=lambda r: -float(_fnum(r.get("score")) or 0))
+        for rank, row in enumerate(eligible[:TOP_N_PRED], 1):
             key = (date, row.get("symbol", ""))
             if key in existing_keys:
                 continue
-            pred_log.append(make_prediction(date, row))
+            pred_log.append(make_prediction(date, row, rank))
             existing_keys.add(key)
             new_count += 1
     log.info(f"Nouvelles prédictions enregistrées (backfill inclus) : {new_count}")
@@ -303,54 +314,63 @@ def _spearman(xs: list[float], ys: list[float]) -> float:
 
 def compute_calibration() -> dict:
     """
-    Juge bull_prob_7d sur TOUT l'univers (pas seulement les tokens >= 70) :
-    pour chaque (date, token) historique, return réel à 7 j et 14 j.
-    Répond à : "quand je dis 70 %, est-ce que ça monte 70 % du temps ?"
-    et "est-ce que les tokens bien notés font mieux que les autres ?".
+    Juge le score sur TOUT l'univers (pas seulement le top), séparément pour
+    l'ancienne formule et le modèle appris :
+      - corrélation de rang score ↔ surperformance ;
+      - le top 20 du jour bat-il la médiane ? ;
+      - quintiles : les 20 % les mieux notés font-ils mieux que les 20 % les moins bien notés ?
     Sauvegardé dans data/learning/calibration.json.
     """
     result = {"generated_date": TODAY, "horizons": {}}
     dates = [d for d in history_dates() if (load_snapshot(d) and "bull_prob_7d" in next(iter(load_snapshot(d).values())))]
     for h in OUTCOME_HORIZONS:
-        obs = []  # (bull_prob, return, excess, date)
+        groups: dict[str, dict] = {}
         for d in dates:
             d_out = find_outcome_snapshot(d, h)
             if not d_out: continue
             s0, s1 = load_snapshot(d), load_snapshot(d_out)
             med = universe_median_return(d, d_out)
             if med is None: continue
+            day = []
             for sym, r in s0.items():
                 if _is_excluded(r) or sym not in s1: continue
-                bp, p0, p1 = _fnum(r.get("bull_prob_7d")), _fnum(r.get("price")), _fnum(s1[sym].get("price"))
-                if bp is None or not p0 or not p1 or p0 <= 0: continue
-                ret = (p1 / p0 - 1) * 100
-                obs.append((bp, ret, ret - med, d))
-        if not obs:
-            continue
-        buckets = []
-        for lo, hi in CALIB_BUCKETS:
-            b = [o for o in obs if lo <= o[0] < hi]
-            if not b: continue
-            buckets.append({
-                "range": f"{lo}-{hi - 1}",
-                "predicted_mean": round(sum(o[0] for o in b) / len(b), 1),
-                "n": len(b),
-                "hit_rate": round(sum(o[1] > 0 for o in b) / len(b), 3),
-                "beat_market_rate": round(sum(o[2] > 0 for o in b) / len(b), 3),
-                "median_return": round(_median([o[1] for o in b]), 2),
-            })
-        result["horizons"][str(h)] = {
-            "n_obs": len(obs),
-            "n_days": len({o[3] for o in obs}),
-            "base_hit_rate": round(sum(o[1] > 0 for o in obs) / len(obs), 3),
-            "spearman_excess": round(_spearman([o[0] for o in obs], [o[2] for o in obs]), 4),
-            "buckets": buckets,
-        }
+                sc, p0, p1 = _fnum(r.get("score")), _fnum(r.get("price")), _fnum(s1[sym].get("price"))
+                if sc is None or not p0 or not p1 or p0 <= 0: continue
+                day.append((sc, (p1 / p0 - 1) * 100 - med, (p1 / p0 - 1) * 100))
+            if len(day) < 50: continue
+            g = groups.setdefault(model_group(next(iter(s0.values()))), {"obs": [], "top_beat": [], "q": [[] for _ in range(N_QUINTILES)], "days": 0})
+            g["days"] += 1
+            day.sort(key=lambda x: -x[0])
+            g["top_beat"].append(sum(1 for x in day[:TOP_N_PRED] if x[1] > 0) / TOP_N_PRED)
+            for i, x in enumerate(day):
+                g["q"][min(N_QUINTILES - 1, i * N_QUINTILES // len(day))].append(x)
+            g["obs"].extend(day)
+        out = {}
+        for name, g in groups.items():
+            obs = g["obs"]
+            out[name] = {
+                "n_obs": len(obs), "n_days": g["days"],
+                "spearman_excess": round(_spearman([o[0] for o in obs], [o[1] for o in obs]), 4),
+                "top_beat_rate": round(sum(g["top_beat"]) / len(g["top_beat"]), 3),
+                "quintiles": [{"q": i + 1,
+                               "beat_market_rate": round(sum(1 for o in q if o[1] > 0) / len(q), 3) if q else None,
+                               "median_return": round(_median([o[2] for o in q]), 2) if q else None}
+                              for i, q in enumerate(g["q"])],
+            }
+        result["horizons"][str(h)] = out
     save_json(LEARNING / "calibration.json", result)
     return result
 
 
 # ─────────────────────── 3. Journal quotidien ─────────────────────────────
+
+def load_market_regime() -> dict:
+    """Régime du jour calculé par 06b_ml_score.py (data/computed/market_regime.json)."""
+    return (load_json(COMPUTED / "market_regime.json", {}) or {}).get("today", {}) or {}
+
+REGIME_EMOJI = {"Altseason": "🚀", "Altseason en formation": "🌱", "Saison Bitcoin": "🟠",
+                "Bitcoin domine (court terme)": "🟠", "Neutre": "🟡",
+                "Haussier": "🟢", "Baissier": "🔴"}  # (les deux derniers : anciennes entrées du journal)
 
 def update_journal(weights: dict, today_scores: list[dict]) -> list[dict]:
     """Ajoute une entrée par jour dans journal.json — conserve les MAX_JOURNAL_DAYS derniers."""
@@ -361,11 +381,10 @@ def update_journal(weights: dict, today_scores: list[dict]) -> list[dict]:
     if journal and journal[-1]["date"] == TODAY:
         return journal
 
-    btc_row  = next((r for r in today_scores if r.get("symbol") == "BTCUSDT"), None)
-    btc_prob = float(btc_row.get("bull_prob_7d", 50)) if btc_row else 50
+    reg = load_market_regime()
 
     top = sorted(
-        [r for r in today_scores if float(r.get("score") or 0) >= SCORE_THRESHOLD],
+        [r for r in today_scores if not _is_excluded(r)],
         key=lambda r: -float(r.get("score") or 0)
     )[:5]
     top_names = [r["symbol"].replace("USDT", "") for r in top]
@@ -382,8 +401,11 @@ def update_journal(weights: dict, today_scores: list[dict]) -> list[dict]:
 
     journal.append({
         "date":           TODAY,
-        "btc_prob":       round(btc_prob, 1),
-        "regime":         "Haussier" if btc_prob >= 55 else ("Baissier" if btc_prob <= 45 else "Neutre"),
+        "regime":         reg.get("label", "—"),
+        "alt_index_30d":  reg.get("alt_index_30d"),
+        "alt_index_90d":  reg.get("alt_index_90d"),
+        "btc_ret_30d":    reg.get("btc_ret_30d"),
+        "score_model":    (today_scores[0].get("score_model") if today_scores else ""),
         "top_tokens":     top_names,
         "n_top":          len(top),
         "best_bull_pat":  best_bull[0],
@@ -410,24 +432,17 @@ def generate_evolution_section(pat_history: dict, journal: list[dict]) -> str:
     if len(journal) >= 2:
         a("### Évolution du régime de marché")
         a("")
-        a("| Date | Régime | BTC bull_prob | Top tokens |")
-        a("|------|--------|---------------|-----------|")
+        a("| Date | Régime | Indice altseason 30 j | BTC 30 j | Top tokens |")
+        a("|------|--------|-----------------------|----------|-----------|")
         for entry in journal:
-            emoji = "🟢" if entry["regime"] == "Haussier" else ("🔴" if entry["regime"] == "Baissier" else "🟡")
+            reg = entry.get("regime", "—")
+            alt = entry.get("alt_index_30d"); btc = entry.get("btc_ret_30d")
+            alt_s = f"{alt:.0f}" if isinstance(alt, (int, float)) else "—"
+            btc_s = f"{btc:+.1f}%" if isinstance(btc, (int, float)) else (f"(bull_prob {entry['btc_prob']}%)" if "btc_prob" in entry else "—")
             tops  = ", ".join(entry.get("top_tokens", [])[:3])
-            a(f"| {fmt_date(entry['date'])} | {emoji} {entry['regime']} | {entry['btc_prob']}% | {tops} |")
+            a(f"| {fmt_date(entry['date'])} | {REGIME_EMOJI.get(reg, '')} {reg} | {alt_s} | {btc_s} | {tops} |")
         a("")
-
-        # tendance régime
-        first_prob = journal[0]["btc_prob"]
-        last_prob  = journal[-1]["btc_prob"]
-        delta = last_prob - first_prob
-        if delta > 5:
-            a(f"📈 **Le marché s'est renforcé** depuis le début du journal : BTC bull_prob {first_prob}% → {last_prob}%")
-        elif delta < -5:
-            a(f"📉 **Le marché s'est dégradé** depuis le début du journal : BTC bull_prob {first_prob}% → {last_prob}%")
-        else:
-            a(f"→ **Régime stable** : BTC bull_prob entre {first_prob}% et {last_prob}%")
+        a("*Avant le 26/09/2026, le régime était déduit de la bull_prob de BTC (ancienne formule).*")
         a("")
 
     # ── Évolution des patterns clés ────────────────────────────────────────
@@ -503,9 +518,10 @@ def generate_memory(
     a("")
     a("Je suis un système de screening automatique qui analyse chaque matin les marchés crypto.")
     a("Je collecte des données de prix, volume et indicateurs techniques sur plusieurs centaines de tokens.")
-    a("Je détecte des patterns chartistes (golden_cross, bear_flag, squeeze_breakout, etc.)")
-    a("et calcule pour chaque token un `score` = probabilité estimée de hausse sur 7 jours (`bull_prob_7d`).")
-    a("J'apprends chaque jour en mesurant si mes prédictions passées étaient correctes.")
+    a("Je détecte des patterns chartistes (golden_cross, bear_flag, squeeze_breakout, etc.).")
+    a("Depuis le 26/09/2026, mon `score` est la **probabilité qu'un token fasse mieux que la médiane du marché sur 7 jours**,")
+    a("calculée par un modèle réentraîné chaque jour sur toutes mes prédictions passées déjà mesurées (`06b_ml_score.py`).")
+    a("Je surveille aussi le **régime de marché** (altseason ou saison Bitcoin), car ce qui marche change selon le régime.")
     a("")
     a("---")
     a("")
@@ -514,21 +530,39 @@ def generate_memory(
     a("## Mon auto-évaluation")
     a("")
 
-    btc_row  = next((r for r in today_scores if r.get("symbol") == "BTCUSDT"), None)
-    btc_prob = float(btc_row.get("bull_prob_7d", 50)) if btc_row else 50
+    reg = load_market_regime()
+    regime_label = reg.get("label", "inconnu")
+    regime_emoji = REGIME_EMOJI.get(regime_label, "")
+    mrep = load_json(LEARNING / "model_report.json", {})
 
-    if btc_prob >= 55:
-        regime_emoji = "🟢"
-        regime_label = "Haussier"
-    elif btc_prob <= 45:
-        regime_emoji = "🔴"
-        regime_label = "Baissier"
-    else:
-        regime_emoji = "🟡"
-        regime_label = "Neutre"
-
-    a(f"**Régime de marché (BTC bull_prob) :** {regime_emoji} {regime_label} — {btc_prob:.0f}%")
+    a(f"### Régime de marché : {regime_emoji} {regime_label}")
     a("")
+    if reg:
+        a(f"- **Indice altseason** : {reg.get('alt_index_30d', '—')} sur 30 j, {reg.get('alt_index_90d', '—')} sur 90 j "
+          f"(= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)")
+        a(f"- **BTC** : {reg.get('btc_ret_30d', '—')} % sur 30 j · **Tokens au-dessus de leur MA50** : {reg.get('breadth_ma50', '—')} %")
+        if "Altseason" in regime_label or (reg.get("alt_index_30d") or 0) >= 60:
+            a("- ⚠️ **En altseason, les règles changent** : la prime aux grosses caps peu volatiles (ce que j'ai surtout appris) "
+              "s'efface et le momentum redevient payant. J'intègre donc une part de momentum dans le classement, "
+              f"et j'entraînerai un modèle dédié à l'altseason dès que j'aurai {mrep.get('min_alt_days_for_alt_model', 30)} jours "
+              f"d'altseason mesurés (actuellement : {mrep.get('alt_days_measured', '?')}).")
+    a("")
+
+    if mrep:
+        oos = mrep.get("oos_last_5_weeks", {})
+        a(f"### Mon modèle aujourd'hui : `{mrep.get('model_used_today', '?')}`")
+        a("")
+        a(f"- Entraîné sur {mrep.get('train_rows', '?')} observations ({mrep.get('train_days', '?')} jours), horizon {mrep.get('horizon_days', 7)} j")
+        if oos.get("model_top20_beat") is not None:
+            a(f"- **Test sur les 5 dernières semaines (données jamais vues)** : mon top 20 a battu la médiane "
+              f"**{oos['model_top20_beat']:.0%}** du temps (règle simple « grosses caps peu volatiles » : {oos.get('naive_top20_beat', 0):.0%} ; hasard : 50 %)")
+        if mrep.get("calibration_k") is not None:
+            a(f"- Confiance (calibration) : k = {mrep['calibration_k']:.2f} "
+              f"— plus k est bas, plus mes probabilités sont ramenées vers 50 % parce que je me suis trompé récemment")
+        if mrep.get("top_factors"):
+            a("- Ce qui compte le plus en ce moment : " + ", ".join(
+                f"`{f['feature']}` ({'+' if f['effect'] > 0 else '−'})" for f in mrep["top_factors"][:6]))
+        a("")
 
     # Signaux fiables
     bull_ok = [p for p in BULL_PATS
@@ -560,15 +594,20 @@ def generate_memory(
         accuracy = correct / len(measured) * 100
         bm = [p for p in measured if p.get(f"beat_market_{H}d") is not None]
         beat = sum(1 for p in bm if p[f"beat_market_{H}d"]) / len(bm) * 100 if bm else float("nan")
-        a(f"**Mes prédictions ≥ {SCORE_THRESHOLD}% à {H} j :** {len(measured)} mesurées — "
+        a(f"**Mon top {TOP_N_PRED} quotidien, jugé à {H} j :** {len(measured)} prédictions mesurées — "
           f"{accuracy:.0f}% ont monté, **{beat:.0f}% ont battu la médiane du marché** (50% = hasard)")
         a("")
 
-    if ready_for_buy:
-        a("### ✅ Mes signaux d'ACHAT sont exploitables.")
+    ml_live = [p for p in measured if p.get("model") == "Modèle appris" and p.get(f"beat_market_{H}d") is not None]
+    if len({p["date"] for p in ml_live}) >= 10:
+        live = sum(1 for p in ml_live if p[f"beat_market_{H}d"]) / len(ml_live)
+        if live >= 0.55:
+            a(f"### ✅ En conditions réelles, mon classement bat le marché ({live:.0%} de mon top {TOP_N_PRED}).")
+        else:
+            a(f"### ⚠️ En conditions réelles, mon classement ne bat pas clairement le marché ({live:.0%} de mon top {TOP_N_PRED}).")
     else:
-        a("### ❌ Mes signaux d'ACHAT ne sont PAS encore fiables.")
-        a("N'agis pas sur mes recommandations d'achat sans vérification supplémentaire.")
+        a("### ⏳ Le modèle appris est trop récent pour être jugé en conditions réelles (il faut ≥ 10 jours mesurés).")
+    a("Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trompe souvent sur 7 jours.")
     a("")
     a("---")
     a("")
@@ -615,22 +654,22 @@ def generate_memory(
     # ── Prédictions passées ────────────────────────────────────────────────
     a("## Mes prédictions passées et leurs résultats")
     a("")
-    a(f"*Une prédiction = un token noté ≥ {SCORE_THRESHOLD}% un jour donné. Jugée à {H} j (horizon de `bull_prob_7d`) "
-      f"et à 14 j. « Bat le marché » = a fait mieux que la médiane de tous les tokens sur la même période.*")
+    a(f"*Une prédiction = un des {TOP_N_PRED} tokens les mieux classés un jour donné. Jugée à {H} j et à 14 j. "
+      f"« Bat le marché » = a fait mieux que la médiane de tous les tokens sur la même période.*")
     a("")
     if measured:
-        by_month: dict[str, list] = {}
+        by_month: dict[tuple, list] = {}
         for p in measured:
-            by_month.setdefault(p["date"][:6], []).append(p)
-        a("| Mois | Prédictions | Ont monté (7 j) | Ont battu le marché (7 j) | Return médian (7 j) |")
-        a("|------|-------------|-----------------|---------------------------|---------------------|")
-        for m in sorted(by_month):
-            L = by_month[m]
+            by_month.setdefault((p["date"][:6], p.get("model", "Ancienne formule")), []).append(p)
+        a("| Mois | Modèle | Prédictions | Ont monté (7 j) | Ont battu le marché (7 j) | Return médian (7 j) |")
+        a("|------|--------|-------------|-----------------|---------------------------|---------------------|")
+        for (m, model) in sorted(by_month):
+            L = by_month[(m, model)]
             up = sum(1 for p in L if p.get(f"correct_{H}d")) / len(L)
             bmL = [p for p in L if p.get(f"beat_market_{H}d") is not None]
             bt = (sum(1 for p in bmL if p[f"beat_market_{H}d"]) / len(bmL)) if bmL else float("nan")
             med = _median([p[f"return_{H}d"] for p in L])
-            a(f"| {m[:4]}-{m[4:]} | {len(L)} | {up:.0%} | {bt:.0%} | {med:+.1f}% |")
+            a(f"| {m[:4]}-{m[4:]} | {model} | {len(L)} | {up:.0%} | {bt:.0%} | {med:+.1f}% |")
         a("")
         a("**Dernières prédictions mesurées :**")
         a("")
@@ -653,27 +692,22 @@ def generate_memory(
     a("")
 
     # ── Calibration ────────────────────────────────────────────────────────
-    cal = (calibration or {}).get("horizons", {}).get(str(H))
+    cal = (calibration or {}).get("horizons", {}).get(str(H)) or {}
     if cal:
-        a("## Mes probabilités sont-elles fiables ? (calibration de `bull_prob_7d`)")
+        a("## Mon classement distingue-t-il les gagnants des perdants ?")
         a("")
-        a(f"Mesuré sur **tout l'univers** : {cal['n_obs']} observations (token, jour) sur {cal['n_days']} jours. "
-          f"Taux de hausse moyen à {H} j, tous tokens confondus : **{cal['base_hit_rate']:.0%}**.")
+        a(f"*Mesuré sur **tout l'univers**, à {H} jours. Q1 = les 20 % de tokens les mieux notés du jour, Q5 = les 20 % les moins bien notés. "
+          "Si le classement fonctionne, Q1 bat le marché plus souvent que Q5.*")
         a("")
-        a("| bull_prob annoncé | Observations | A monté | A battu le marché | Return médian |")
-        a("|-------------------|--------------|---------|-------------------|---------------|")
-        for b in cal["buckets"]:
-            a(f"| {b['range']}% (moy. {b['predicted_mean']:.0f}%) | {b['n']} | {b['hit_rate']:.0%} | "
-              f"{b['beat_market_rate']:.0%} | {b['median_return']:+.1f}% |")
+        a("| Modèle | Jours | Corrélation de rang | Top 20 bat le marché | Q1 | Q2 | Q3 | Q4 | Q5 |")
+        a("|--------|-------|---------------------|----------------------|----|----|----|----|----|")
+        for name in ("Ancienne formule", "Modèle appris"):
+            c = cal.get(name)
+            if not c: continue
+            qs = " | ".join(f"{q['beat_market_rate']:.0%}" if q["beat_market_rate"] is not None else "—" for q in c["quintiles"])
+            a(f"| {name} | {c['n_days']} | {c['spearman_excess']:+.3f} | {c['top_beat_rate']:.0%} | {qs} |")
         a("")
-        rho = cal["spearman_excess"]
-        a(f"**Corrélation de rang (bull_prob vs surperformance) : {rho:+.3f}**")
-        if abs(rho) < 0.03:
-            a("→ **Verdict : mon score ne distingue pas les gagnants des perdants.** Les tokens bien notés ne font pas mieux que les autres.")
-        elif rho > 0:
-            a("→ Verdict : un pouvoir prédictif apparaît (les tokens mieux notés font un peu mieux). À confirmer dans la durée.")
-        else:
-            a("→ **Verdict : corrélation négative — les tokens les mieux notés font MOINS bien que les autres.**")
+        a("*(Pourcentages Q1…Q5 = part des tokens du groupe qui ont battu la médiane du marché. Hasard = 50 %.)*")
         a("")
         a("---")
         a("")
@@ -698,7 +732,7 @@ def generate_memory(
         a("")
     if max_c < 0.05:
         a("**Verdict : corrélations toutes proches de zéro. Le score composite ne prédit PAS les returns.**")
-        a("C'est pourquoi j'utilise `bull_prob_7d` comme score principal.")
+        a("C'est pourquoi le score principal vient désormais d'un modèle appris (voir plus haut).")
     else:
         a(f"**Verdict : une corrélation commence à émerger (max {max_c:.3f}). À surveiller.**")
     a("")
@@ -708,19 +742,20 @@ def generate_memory(
     # ── Aujourd'hui ────────────────────────────────────────────────────────
     a(f"## Aujourd'hui — {fmt_date(TODAY)}")
     a("")
-    a(f"**Régime :** {regime_emoji} {regime_label} (BTC bull_prob = {btc_prob:.0f}%)")
+    a(f"**Régime :** {regime_emoji} {regime_label} (indice altseason 30 j : {reg.get('alt_index_30d', '—')})")
     a("")
 
     top = sorted(
-        [r for r in today_scores if float(r.get("score") or 0) >= SCORE_THRESHOLD],
+        [r for r in today_scores if not _is_excluded(r)],
         key=lambda r: -float(r.get("score") or 0)
     )[:12]
 
     if top:
-        a(f"**Top tokens aujourd'hui (score ≥ {SCORE_THRESHOLD}%) :**")
+        a(f"**Top 12 du jour** — score = probabilité de battre la médiane du marché sur 7 j "
+          f"(modèle : `{top[0].get('score_model') or 'ancienne formule'}`) :")
         a("")
-        a("| Token | Score | Alpha vs BTC | Exit risk | Catalyseurs |")
-        a("|-------|-------|--------------|-----------|-------------|")
+        a("| Token | Tier | Score | vs BTC | Exit risk | Catalyseurs |")
+        a("|-------|------|-------|--------|-----------|-------------|")
         for r in top:
             sym   = r.get("symbol", "").replace("USDT", "")
             sc    = float(r.get("score") or 0)
@@ -728,9 +763,9 @@ def generate_memory(
             er    = int(float(r.get("exit_risk") or 0))
             er_s  = f"⚠️ {er}" if er >= 4 else str(er)
             cat   = (r.get("catalyst_flags") or "")[:50]
-            a(f"| **{sym}** | {sc:.0f}% | {alpha:+.0f}pp | {er_s} | {cat} |")
+            a(f"| **{sym}** | {r.get('tier', '')} | {sc:.1f}% | {alpha:+.1f}pp | {er_s} | {cat} |")
     else:
-        a("*Aucun token au-dessus du seuil aujourd'hui.*")
+        a("*Aucun token classé aujourd'hui.*")
 
     a("")
     return "\n".join(lines)
@@ -761,7 +796,8 @@ def run():
     try:
         calibration = compute_calibration()
         c7 = calibration.get("horizons", {}).get(str(MAIN_HORIZON), {})
-        log.info(f"calibration : {c7.get('n_obs', 0)} obs, spearman={c7.get('spearman_excess')}")
+        for name, c in c7.items():
+            log.info(f"calibration [{name}] : {c['n_days']} jours, top{TOP_N_PRED} bat le marché {c['top_beat_rate']:.0%}, spearman={c['spearman_excess']}")
     except Exception as e:
         log.warning(f"calibration impossible : {e}")
         calibration = None

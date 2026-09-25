@@ -125,6 +125,10 @@ def main():
     sc = importlib.import_module("06_score")
     step("score", sc.run)
 
+    # --- 06b Score appris + régime de marché / altseason (remplace bull_prob_7d manuel) ---
+    ml = importlib.import_module("06b_ml_score")
+    step("ml_score", ml.run)
+
     # --- 09 Explosion screen (avant le report pour enrichir le CSV) ---
     expl = importlib.import_module("09_explosion_screen")
     step("explosion_screen", expl.run)
