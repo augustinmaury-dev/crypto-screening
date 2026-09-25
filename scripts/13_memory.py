@@ -16,8 +16,14 @@ log = setup_logger("13_memory")
 
 LEARNING   = ROOT / "data" / "learning"
 SCORE_THRESHOLD  = 70   # score minimum pour enregistrer une prédiction
-OUTCOME_HORIZON  = 14   # jours après lesquels on mesure si la prédiction était correcte
+# bull_prob_7d est une prédiction à 7 jours → on la juge à 7 jours.
+# 14 jours est mesuré en complément.
+OUTCOME_HORIZONS = (7, 14)
+MAIN_HORIZON     = 7
+SNAPSHOT_TOLERANCE = 2  # si le snapshot J+H manque, on accepte J+H+1 ou J+H+2
+MAX_PENDING_AGE  = 30   # une prédiction non mesurable après 30 j (token délisté…) est abandonnée
 MAX_JOURNAL_DAYS = 30   # jours de journal conservés
+CALIB_BUCKETS = [(20, 35), (35, 45), (45, 50), (50, 55), (55, 60), (60, 65), (65, 70), (70, 81)]
 
 BULL_PATS = {
     "breakout_30d", "rsi_bullish_divergence", "golden_cross",
@@ -67,11 +73,13 @@ def fmt_date(d: str) -> str:
     except Exception:
         return d
 
-def trend_arrow(history: list[dict]) -> str:
-    """Flèche de tendance basée sur les 2 derniers snapshots."""
+def trend_arrow(history: list[dict], lookback: int = 7) -> str:
+    """Flèche de tendance : hit_rate actuel vs il y a ~7 snapshots.
+    (La comparaison jour à jour était toujours ≈ 0 car le hit_rate est cumulatif.)"""
     if len(history) < 2:
         return "→"
-    delta = history[-1]["hit_rate"] - history[-2]["hit_rate"]
+    ref = history[-1 - min(lookback, len(history) - 1)]
+    delta = history[-1]["hit_rate"] - ref["hit_rate"]
     if delta > 0.02:  return "📈"
     if delta < -0.02: return "📉"
     return "→"
@@ -101,82 +109,245 @@ def update_pattern_history(weights: dict) -> dict:
 
 
 # ─────────────────────── 2. Prediction log ─────────────────────────────────
+#
+# Correctif du 25/09/2026 — l'ancienne version :
+#   - gardait seulement les 300 dernières prédictions en attente, alors qu'il y en a
+#     50 à 75 par jour → elles étaient effacées au bout de ~5 jours, avant d'atteindre
+#     l'horizon de 14 jours. Résultat : 0 prédiction jamais mesurée.
+#   - mesurait une prédiction "7 jours" à 14 jours, avec le prix du jour (pas celui de J+H).
+#
+# Nouvelle version :
+#   - aucune limite en nombre ; une prédiction en attente n'est abandonnée qu'après
+#     MAX_PENDING_AGE jours (ex. token délisté) ;
+#   - mesure à 7 j (horizon de bull_prob_7d) ET à 14 j, avec le prix du snapshot
+#     historique J+H (data/history/scores_YYYYMMDD.csv) ;
+#   - compare aussi à la médiane de l'univers ce jour-là ("bat le marché") pour
+#     séparer la qualité du signal de la tendance générale ;
+#   - backfill : reconstruit automatiquement les prédictions passées à partir de
+#     data/history/ (toutes les dates où bull_prob_7d existe).
+
+_snapshot_cache: dict[str, dict | None] = {}
+
+def load_snapshot(date_str: str) -> dict | None:
+    """{symbol: row} pour un snapshot historique, avec cache."""
+    if date_str not in _snapshot_cache:
+        path = HISTORY / f"scores_{date_str}.csv"
+        rows = load_scores_csv(path)
+        _snapshot_cache[date_str] = {r["symbol"]: r for r in rows} if rows else None
+    return _snapshot_cache[date_str]
+
+def shift_date(d: str, n: int) -> str:
+    return (datetime.strptime(d, "%Y%m%d") + timedelta(days=n)).strftime("%Y%m%d")
+
+def _fnum(x) -> float | None:
+    try:
+        v = float(x)
+        return v if v == v else None  # NaN → None
+    except (TypeError, ValueError):
+        return None
+
+def _is_excluded(row: dict) -> bool:
+    return str(row.get("stablecoin", "")).lower() == "true" or str(row.get("suspect", "")).lower() == "true"
+
+def _median(vals: list[float]) -> float:
+    s = sorted(vals); n = len(s)
+    if n == 0: return 0.0
+    return s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2
+
+_median_cache: dict[tuple, float | None] = {}
+
+def universe_median_return(d0: str, d1: str) -> float | None:
+    """Return médian (%) de tout l'univers (hors stablecoins/suspects) entre deux snapshots."""
+    key = (d0, d1)
+    if key not in _median_cache:
+        s0, s1 = load_snapshot(d0), load_snapshot(d1)
+        if not s0 or not s1:
+            _median_cache[key] = None
+        else:
+            rets = []
+            for sym, r in s0.items():
+                if _is_excluded(r) or sym not in s1: continue
+                p0, p1 = _fnum(r.get("price")), _fnum(s1[sym].get("price"))
+                if p0 and p1 and p0 > 0:
+                    rets.append((p1 / p0 - 1) * 100)
+            _median_cache[key] = _median(rets) if rets else None
+    return _median_cache[key]
+
+def find_outcome_snapshot(date: str, horizon: int) -> str | None:
+    """Date du snapshot utilisé pour mesurer J+horizon (tolérance de quelques jours)."""
+    for extra in range(SNAPSHOT_TOLERANCE + 1):
+        d = shift_date(date, horizon + extra)
+        if d > TODAY:
+            return None
+        if load_snapshot(d):
+            return d
+    return None
+
+def history_dates() -> list[str]:
+    return sorted(p.stem.replace("scores_", "") for p in HISTORY.glob("scores_*.csv"))
+
+def make_prediction(date: str, row: dict) -> dict:
+    score = float(row.get("score") or 0)
+    return {
+        "date":           date,
+        "symbol":         row.get("symbol", ""),
+        "score":          score,
+        "bull_prob":      float(_fnum(row.get("bull_prob_7d")) or score),
+        "alpha_vs_btc":   float(_fnum(row.get("alpha_vs_btc")) or 0),
+        "vs_btc_label":   row.get("vs_btc_label", ""),
+        "price_at":       float(_fnum(row.get("price")) or 0),
+        "patterns":       row.get("patterns", ""),
+        "catalyst_flags": row.get("catalyst_flags", ""),
+        "exit_risk":      int(_fnum(row.get("exit_risk")) or 0),
+    }
+
+def measure(p: dict) -> bool:
+    """Remplit les résultats manquants (7 j et 14 j). Retourne True si quelque chose a changé."""
+    changed = False
+    for h in OUTCOME_HORIZONS:
+        if p.get(f"return_{h}d") is not None:
+            continue
+        d_out = find_outcome_snapshot(p["date"], h)
+        if not d_out:
+            continue
+        snap = load_snapshot(d_out) or {}
+        row = snap.get(p["symbol"])
+        p_now, p0 = _fnum(row.get("price")) if row else None, p.get("price_at") or 0
+        if not p_now or p0 <= 0:
+            continue
+        ret = (p_now / p0 - 1) * 100
+        med = universe_median_return(p["date"], d_out)
+        p[f"return_{h}d"]      = round(ret, 2)
+        p[f"excess_{h}d"]      = round(ret - med, 2) if med is not None else None
+        p[f"correct_{h}d"]     = ret > 0
+        p[f"beat_market_{h}d"] = (ret > med) if med is not None else None
+        p[f"measured_{h}d"]    = d_out
+        changed = True
+    # Champs historiques (compatibilité dashboard) = horizon principal
+    if p.get(f"return_{MAIN_HORIZON}d") is not None and p.get("measured_date") is None:
+        p["return_pct"]    = p[f"return_{MAIN_HORIZON}d"]
+        p["correct"]       = p[f"correct_{MAIN_HORIZON}d"]
+        p["measured_date"] = p[f"measured_{MAIN_HORIZON}d"]
+        snap = load_snapshot(p["measured_date"]) or {}
+        p["price_outcome"] = _fnum((snap.get(p["symbol"]) or {}).get("price"))
+    p.setdefault("price_outcome", None); p.setdefault("return_pct", None)
+    p.setdefault("correct", None);       p.setdefault("measured_date", None)
+    return changed
 
 def update_prediction_log(today_scores: list[dict]) -> list[dict]:
     """
-    1. Enregistre les nouvelles prédictions (tokens score >= SCORE_THRESHOLD).
-    2. Mesure les outcomes des prédictions faites il y a OUTCOME_HORIZON jours.
+    1. Backfill : ajoute les prédictions (score >= SCORE_THRESHOLD) de tous les snapshots
+       historiques qui ne sont pas encore dans le log (+ celles d'aujourd'hui).
+    2. Mesure les résultats à 7 j et 14 j dès que le snapshot correspondant existe.
+    3. Abandonne les prédictions impossibles à mesurer après MAX_PENDING_AGE jours.
     """
     log_path = LEARNING / "prediction_log.json"
     pred_log: list[dict] = load_json(log_path, [])
     existing_keys = {(p["date"], p["symbol"]) for p in pred_log}
 
-    # Prix actuels pour calculer les outcomes
-    current_prices = {
-        r["symbol"]: float(r["price"])
-        for r in today_scores
-        if r.get("price") and float(r.get("price") or 0) > 0
-    }
-
-    # ── Enregistre prédictions d'aujourd'hui ──────────────────────────────
+    # ── 1. Nouvelles prédictions : snapshots historiques + aujourd'hui ─────
     new_count = 0
-    for row in today_scores:
-        sym   = row.get("symbol", "")
-        score = float(row.get("score") or 0)
-        if score < SCORE_THRESHOLD:
-            continue
-        if (TODAY, sym) in existing_keys:
-            continue
-        pred_log.append({
-            "date":           TODAY,
-            "symbol":         sym,
-            "score":          score,
-            "bull_prob":      float(row.get("bull_prob_7d") or score),
-            "alpha_vs_btc":   float(row.get("alpha_vs_btc") or 0),
-            "vs_btc_label":   row.get("vs_btc_label", ""),
-            "price_at":       float(row.get("price") or 0),
-            "patterns":       row.get("patterns", ""),
-            "catalyst_flags": row.get("catalyst_flags", ""),
-            "exit_risk":      int(float(row.get("exit_risk") or 0)),
-            "price_outcome":  None,
-            "return_pct":     None,
-            "correct":        None,
-            "measured_date":  None,
-        })
-        new_count += 1
+    sources = [(d, list((load_snapshot(d) or {}).values())) for d in history_dates()]
+    sources.append((TODAY, today_scores))
+    for date, rows in sources:
+        if not rows or "bull_prob_7d" not in rows[0]:
+            continue  # snapshots antérieurs à l'introduction de bull_prob_7d
+        for row in rows:
+            if _is_excluded(row):
+                continue
+            if float(_fnum(row.get("score")) or 0) < SCORE_THRESHOLD:
+                continue
+            key = (date, row.get("symbol", ""))
+            if key in existing_keys:
+                continue
+            pred_log.append(make_prediction(date, row))
+            existing_keys.add(key)
+            new_count += 1
+    log.info(f"Nouvelles prédictions enregistrées (backfill inclus) : {new_count}")
 
-    log.info(f"Nouvelles prédictions enregistrées : {new_count}")
+    # ── 2. Mesure des résultats ────────────────────────────────────────────
+    updated = sum(1 for p in pred_log if measure(p))
+    log.info(f"Prédictions mises à jour avec un résultat : {updated}")
 
-    # ── Met à jour les outcomes ────────────────────────────────────────────
-    target_date = date_n_ago(OUTCOME_HORIZON)
-    updated = 0
-    for p in pred_log:
-        if p.get("measured_date") is not None:
-            continue  # déjà mesuré
-        if p["date"] > target_date:
-            continue  # trop récent
-        sym = p["symbol"]
-        price_then = p.get("price_at", 0)
-        if sym not in current_prices or price_then <= 0:
-            continue
-        price_now = current_prices[sym]
-        ret = (price_now - price_then) / price_then * 100
-        p["price_outcome"]  = round(price_now, 8)
-        p["return_pct"]     = round(ret, 2)
-        p["correct"]        = ret > 0
-        p["measured_date"]  = TODAY
-        updated += 1
+    # ── 3. Nettoyage : seulement les prédictions trop vieilles ET jamais mesurées
+    cutoff = shift_date(TODAY, -MAX_PENDING_AGE)
+    before = len(pred_log)
+    pred_log = [p for p in pred_log if p.get("measured_date") is not None or p["date"] >= cutoff]
+    if len(pred_log) < before:
+        log.info(f"Prédictions abandonnées (non mesurables après {MAX_PENDING_AGE} j) : {before - len(pred_log)}")
 
-    log.info(f"Outcomes mis à jour : {updated} prédictions")
-
-    # Garde TOUTES les prédictions mesurées + les 300 dernières en attente
-    measured_preds = [p for p in pred_log if p.get("measured_date") is not None]
-    pending_preds  = [p for p in pred_log if p.get("measured_date") is None]
-    pending_preds  = pending_preds[-300:]
-    pred_log = measured_preds + pending_preds
-
+    pred_log.sort(key=lambda p: (p["date"], p["symbol"]))
     save_json(log_path, pred_log)
     return pred_log
+
+
+# ─────────────────────── 2b. Calibration de bull_prob_7d ───────────────────
+
+def _spearman(xs: list[float], ys: list[float]) -> float:
+    n = len(xs)
+    if n < 10: return 0.0
+    def ranks(v):
+        order = sorted(range(n), key=lambda i: v[i]); r = [0.0] * n
+        i = 0
+        while i < n:  # rangs moyens pour les ex aequo
+            j = i
+            while j + 1 < n and v[order[j + 1]] == v[order[i]]: j += 1
+            for k in range(i, j + 1): r[order[k]] = (i + j) / 2
+            i = j + 1
+        return r
+    rx, ry = ranks(xs), ranks(ys)
+    mx, my = sum(rx) / n, sum(ry) / n
+    num = sum((a - mx) * (b - my) for a, b in zip(rx, ry))
+    den = (sum((a - mx) ** 2 for a in rx) * sum((b - my) ** 2 for b in ry)) ** 0.5
+    return num / den if den else 0.0
+
+def compute_calibration() -> dict:
+    """
+    Juge bull_prob_7d sur TOUT l'univers (pas seulement les tokens >= 70) :
+    pour chaque (date, token) historique, return réel à 7 j et 14 j.
+    Répond à : "quand je dis 70 %, est-ce que ça monte 70 % du temps ?"
+    et "est-ce que les tokens bien notés font mieux que les autres ?".
+    Sauvegardé dans data/learning/calibration.json.
+    """
+    result = {"generated_date": TODAY, "horizons": {}}
+    dates = [d for d in history_dates() if (load_snapshot(d) and "bull_prob_7d" in next(iter(load_snapshot(d).values())))]
+    for h in OUTCOME_HORIZONS:
+        obs = []  # (bull_prob, return, excess, date)
+        for d in dates:
+            d_out = find_outcome_snapshot(d, h)
+            if not d_out: continue
+            s0, s1 = load_snapshot(d), load_snapshot(d_out)
+            med = universe_median_return(d, d_out)
+            if med is None: continue
+            for sym, r in s0.items():
+                if _is_excluded(r) or sym not in s1: continue
+                bp, p0, p1 = _fnum(r.get("bull_prob_7d")), _fnum(r.get("price")), _fnum(s1[sym].get("price"))
+                if bp is None or not p0 or not p1 or p0 <= 0: continue
+                ret = (p1 / p0 - 1) * 100
+                obs.append((bp, ret, ret - med, d))
+        if not obs:
+            continue
+        buckets = []
+        for lo, hi in CALIB_BUCKETS:
+            b = [o for o in obs if lo <= o[0] < hi]
+            if not b: continue
+            buckets.append({
+                "range": f"{lo}-{hi - 1}",
+                "predicted_mean": round(sum(o[0] for o in b) / len(b), 1),
+                "n": len(b),
+                "hit_rate": round(sum(o[1] > 0 for o in b) / len(b), 3),
+                "beat_market_rate": round(sum(o[2] > 0 for o in b) / len(b), 3),
+                "median_return": round(_median([o[1] for o in b]), 2),
+            })
+        result["horizons"][str(h)] = {
+            "n_obs": len(obs),
+            "n_days": len({o[3] for o in obs}),
+            "base_hit_rate": round(sum(o[1] > 0 for o in obs) / len(obs), 3),
+            "spearman_excess": round(_spearman([o[0] for o in obs], [o[2] for o in obs]), 4),
+            "buckets": buckets,
+        }
+    save_json(LEARNING / "calibration.json", result)
+    return result
 
 
 # ─────────────────────── 3. Journal quotidien ─────────────────────────────
@@ -315,6 +486,7 @@ def generate_memory(
     formula:       dict,
     today_scores:  list[dict],
     journal:       list[dict] | None = None,
+    calibration:   dict | None = None,
 ) -> str:
     lines = []
     a = lines.append
@@ -380,12 +552,16 @@ def generate_memory(
     a(f"**Signaux baissiers fiables (>50%) :** {len(bear_ok)} / {len(BEAR_PATS)}")
     a("")
 
-    # Précision sur les prédictions mesurées
-    measured = [p for p in pred_log if p.get("measured_date") is not None]
+    # Précision sur les prédictions mesurées (horizon principal = 7 j)
+    H = MAIN_HORIZON
+    measured = [p for p in pred_log if p.get(f"return_{H}d") is not None]
     if measured:
-        correct = sum(1 for p in measured if p.get("correct"))
+        correct = sum(1 for p in measured if p.get(f"correct_{H}d"))
         accuracy = correct / len(measured) * 100
-        a(f"**Précision sur mes prédictions passées :** {accuracy:.0f}% ({correct}/{len(measured)} correctes)")
+        bm = [p for p in measured if p.get(f"beat_market_{H}d") is not None]
+        beat = sum(1 for p in bm if p[f"beat_market_{H}d"]) / len(bm) * 100 if bm else float("nan")
+        a(f"**Mes prédictions ≥ {SCORE_THRESHOLD}% à {H} j :** {len(measured)} mesurées — "
+          f"{accuracy:.0f}% ont monté, **{beat:.0f}% ont battu la médiane du marché** (50% = hasard)")
         a("")
 
     if ready_for_buy:
@@ -439,35 +615,68 @@ def generate_memory(
     # ── Prédictions passées ────────────────────────────────────────────────
     a("## Mes prédictions passées et leurs résultats")
     a("")
-
+    a(f"*Une prédiction = un token noté ≥ {SCORE_THRESHOLD}% un jour donné. Jugée à {H} j (horizon de `bull_prob_7d`) "
+      f"et à 14 j. « Bat le marché » = a fait mieux que la médiane de tous les tokens sur la même période.*")
+    a("")
     if measured:
-        a(f"**{len(measured)} prédictions mesurées — précision globale : {accuracy:.0f}%**")
+        by_month: dict[str, list] = {}
+        for p in measured:
+            by_month.setdefault(p["date"][:6], []).append(p)
+        a("| Mois | Prédictions | Ont monté (7 j) | Ont battu le marché (7 j) | Return médian (7 j) |")
+        a("|------|-------------|-----------------|---------------------------|---------------------|")
+        for m in sorted(by_month):
+            L = by_month[m]
+            up = sum(1 for p in L if p.get(f"correct_{H}d")) / len(L)
+            bmL = [p for p in L if p.get(f"beat_market_{H}d") is not None]
+            bt = (sum(1 for p in bmL if p[f"beat_market_{H}d"]) / len(bmL)) if bmL else float("nan")
+            med = _median([p[f"return_{H}d"] for p in L])
+            a(f"| {m[:4]}-{m[4:]} | {len(L)} | {up:.0%} | {bt:.0%} | {med:+.1f}% |")
         a("")
-        a("| Date | Token | Score | Prix prédit | Prix 14j après | Résultat |")
-        a("|------|-------|-------|-------------|----------------|---------|")
-        for p in sorted(measured, key=lambda x: x["date"], reverse=True)[:25]:
-            emoji  = "✅" if p.get("correct") else "❌"
-            ret    = p.get("return_pct")
-            ret_s  = f"{ret:+.1f}%" if ret is not None else "?"
-            p_out  = p.get("price_outcome")
-            p_out_s = f"{p_out:.6g}" if p_out else "?"
-            a(f"| {fmt_date(p['date'])} | **{p['symbol'].replace('USDT','')}** | {p['score']:.0f}% | {p['price_at']:.6g} | {p_out_s} | {emoji} {ret_s} |")
+        a("**Dernières prédictions mesurées :**")
+        a("")
+        a("| Date | Token | Score | Prix prédit | Return 7 j | vs marché | Return 14 j |")
+        a("|------|-------|-------|-------------|------------|-----------|-------------|")
+        for p in sorted(measured, key=lambda x: (x["date"], x["score"]), reverse=True)[:20]:
+            r7 = p.get(f"return_{H}d"); ex = p.get(f"excess_{H}d"); r14 = p.get("return_14d")
+            emoji = "✅" if p.get(f"beat_market_{H}d") else "❌"
+            a(f"| {fmt_date(p['date'])} | **{p['symbol'].replace('USDT','')}** | {p['score']:.0f}% | {p['price_at']:.6g} | "
+              f"{r7:+.1f}% | {emoji} {ex:+.1f}pp | {f'{r14:+.1f}%' if r14 is not None else '…'} |")
     else:
-        a("*Aucune prédiction mesurée pour l'instant (14 jours de recul nécessaires).*")
+        a(f"*Aucune prédiction mesurée pour l'instant ({H} jours de recul nécessaires).*")
 
     a("")
-    pending = [p for p in pred_log if p.get("measured_date") is None]
+    pending = [p for p in pred_log if p.get(f"return_{H}d") is None]
     if pending:
-        a(f"**{len(pending)} prédictions en attente de résultat (< 14 jours) :**")
-        a("")
-        a("| Date | Token | Score | Prix |")
-        a("|------|-------|-------|------|")
-        for p in sorted(pending, key=lambda x: x["date"], reverse=True)[:15]:
-            a(f"| {fmt_date(p['date'])} | **{p['symbol'].replace('USDT','')}** | {p['score']:.0f}% | {p['price_at']:.6g} |")
-
+        a(f"**{len(pending)} prédictions en attente de résultat (< {H} jours).**")
     a("")
     a("---")
     a("")
+
+    # ── Calibration ────────────────────────────────────────────────────────
+    cal = (calibration or {}).get("horizons", {}).get(str(H))
+    if cal:
+        a("## Mes probabilités sont-elles fiables ? (calibration de `bull_prob_7d`)")
+        a("")
+        a(f"Mesuré sur **tout l'univers** : {cal['n_obs']} observations (token, jour) sur {cal['n_days']} jours. "
+          f"Taux de hausse moyen à {H} j, tous tokens confondus : **{cal['base_hit_rate']:.0%}**.")
+        a("")
+        a("| bull_prob annoncé | Observations | A monté | A battu le marché | Return médian |")
+        a("|-------------------|--------------|---------|-------------------|---------------|")
+        for b in cal["buckets"]:
+            a(f"| {b['range']}% (moy. {b['predicted_mean']:.0f}%) | {b['n']} | {b['hit_rate']:.0%} | "
+              f"{b['beat_market_rate']:.0%} | {b['median_return']:+.1f}% |")
+        a("")
+        rho = cal["spearman_excess"]
+        a(f"**Corrélation de rang (bull_prob vs surperformance) : {rho:+.3f}**")
+        if abs(rho) < 0.03:
+            a("→ **Verdict : mon score ne distingue pas les gagnants des perdants.** Les tokens bien notés ne font pas mieux que les autres.")
+        elif rho > 0:
+            a("→ Verdict : un pouvoir prédictif apparaît (les tokens mieux notés font un peu mieux). À confirmer dans la durée.")
+        else:
+            a("→ **Verdict : corrélation négative — les tokens les mieux notés font MOINS bien que les autres.**")
+        a("")
+        a("---")
+        a("")
 
     # ── Évolution ─────────────────────────────────────────────────────────
     evolution = generate_evolution_section(pat_history, journal or [])
@@ -549,7 +758,15 @@ def run():
     journal = update_journal(weights, today_scores)
     log.info(f"journal : {len(journal)} entrées")
 
-    memory_md   = generate_memory(weights, pat_history, pred_log, formula, today_scores, journal)
+    try:
+        calibration = compute_calibration()
+        c7 = calibration.get("horizons", {}).get(str(MAIN_HORIZON), {})
+        log.info(f"calibration : {c7.get('n_obs', 0)} obs, spearman={c7.get('spearman_excess')}")
+    except Exception as e:
+        log.warning(f"calibration impossible : {e}")
+        calibration = None
+
+    memory_md   = generate_memory(weights, pat_history, pred_log, formula, today_scores, journal, calibration)
     memory_path = LEARNING / "project_memory.md"
     memory_path.write_text(memory_md, encoding="utf-8")
     log.info(f"project_memory.md généré ({len(memory_md)} caractères)")
