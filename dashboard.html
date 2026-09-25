@@ -179,7 +179,7 @@ section.block h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;col
           <th style="width:24px"></th>
           <th data-col="symbol">Symbol</th>
           <th data-col="tier">Tier</th>
-          <th data-col="score">% Hausse 7j</th>
+          <th data-col="score" title="Probabilité de faire mieux que la médiane du marché sur 7 jours (modèle appris)">% Bat marché 7j</th>
           <th data-col="bias">Biais</th>
           <th data-col="rsi_14">RSI</th>
           <th data-col="change_24h_pct">Δ24h</th>
@@ -284,7 +284,7 @@ function fmtMoney(v){const x=+v;if(!isFinite(x)||x<=0)return'—';if(x>1e9)retur
 function fmtPct(v){const x=+v;if(!isFinite(x))return'—';return(x*100).toFixed(1)+'%';}
 function fmtNum(v,d=1){const x=+v;if(!isFinite(x))return'—';return x.toFixed(d);}
 function fmtSupply(v){const x=+v;if(!isFinite(x)||x<=0)return'—';if(x>1e12)return(x/1e12).toFixed(2)+'T';if(x>1e9)return(x/1e9).toFixed(2)+'B';if(x>1e6)return(x/1e6).toFixed(2)+'M';if(x>1e3)return(x/1e3).toFixed(0)+'K';return x.toFixed(0);}
-function scoreColor(s){s=+s;if(s>=70)return'#3fb950';if(s>=55)return'#d29922';return'#f85149';}
+function scoreColor(s){s=+s;if(s>=53)return'#3fb950';if(s>=47)return'#d29922';return'#f85149';}
 function biasColor(b){return{haussier:'#3fb950',baissier:'#f85149',mixte:'#d29922',neutre:'#8b949e'}[b]||'#8b949e';}
 function rsiColor(r){r=+r;if(r<30)return'#f85149';if(r<45)return'#d29922';if(r<=65)return'#3fb950';if(r<=75)return'#d29922';return'#f85149';}
 function rsiZone(r){r=+r;if(r<30)return{l:'Survendu',c:'#f85149'};if(r<45)return{l:'Faible',c:'#d29922'};if(r<=65)return{l:'Zone saine',c:'#3fb950'};if(r<=75)return{l:'Élevé',c:'#d29922'};return{l:'Suracheté',c:'#f85149'};}
@@ -647,8 +647,8 @@ function renderDetail(r){
   ${(()=>{
     const prob=+r.bull_prob_7d||0;
     if(!prob)return'';
-    const probC=prob>=60?'#3fb950':prob>=45?'#d29922':'#f85149';
-    const probLbl=prob>=65?'Biais haussier':prob>=55?'Légèrement haussier':prob>=45?'Neutre':prob>=35?'Légèrement baissier':'Biais baissier';
+    const probC=prob>=53?'#3fb950':prob>=47?'#d29922':'#f85149';
+    const probLbl=prob>=58?'Surperformance probable':prob>=53?'Légère surperformance':prob>=47?'Neutre':prob>=42?'Légère sous-performance':'Sous-performance probable';
     const expl=+r.explosion_score||0;
     const explPct=Math.min(100,Math.round(expl/15*100));
     const explC=expl>=9?'#f85149':expl>=6?'#d29922':'#58a6ff';
@@ -659,7 +659,7 @@ function renderDetail(r){
       <h3>📈 Prédiction <span style="font-size:10px;color:var(--muted);font-weight:400">— indicatif, pas un conseil</span></h3>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px">
         <div>
-          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px">Probabilité haussière 7j</div>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px">Probabilité de battre le marché (7j)</div>
           <div style="display:flex;align-items:center;gap:10px">
             <div style="flex:1;background:#21262d;border-radius:6px;height:12px;overflow:hidden">
               <div style="height:100%;width:${prob}%;background:linear-gradient(90deg,${probC}88,${probC});border-radius:6px"></div>
@@ -667,7 +667,7 @@ function renderDetail(r){
             <span style="font-size:18px;font-weight:700;color:${probC};width:40px;text-align:right">${prob}%</span>
           </div>
           <div style="font-size:11px;color:${probC};margin-top:4px">${probLbl}</div>
-          <div style="font-size:10px;color:var(--muted);margin-top:3px">Basé sur momentum, signal, RSI et catalyseurs</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:3px">Modèle appris sur l'historique (réentraîné chaque jour)${r.market_regime?` · régime : ${r.market_regime}`:''}</div>
           ${vsBtcLabel?`<div style="margin-top:8px;padding:4px 8px;background:${vsBtcC}18;border:1px solid ${vsBtcC}44;border-radius:4px;font-size:11px;color:${vsBtcC};font-weight:600">${vsBtcLabel} <span style="font-weight:400;color:var(--muted)">(${alpha>=0?'+':''}${alpha}pp vs BTC)</span></div>`:''}
         </div>
         <div>

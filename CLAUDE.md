@@ -1,5 +1,5 @@
 # CLAUDE.md — Crypto Screening Project
-> Fichier de contexte pour Claude (Cowork). Mis à jour le 09/05/2026.
+> Fichier de contexte pour Claude (Cowork). Mis à jour le 25/09/2026.
 > En cas de résumé de session ou perte de contexte, lire ce fichier en priorité.
 
 ---
@@ -37,13 +37,15 @@ Système de **screening crypto automatisé** sur l'**intégralité des paires US
 03_fetch_coingecko.py    → Top 1000 par market cap + détails (rate-limited 25/min)
 04_fetch_project_info.py → Activité GitHub + détection red flags
 05_compute_indicators.py → RSI, MACD, MA, vol, drawdown, corrélation BTC, patterns
-06_score.py              → Score composite 4 axes (cf. Formule ci-dessous)
+06_score.py              → Sous-scores 5 axes + ancienne formule bull_prob_7d (gardée en bull_prob_7d_legacy)
+06b_ml_score.py          → SCORE PRINCIPAL : modèle appris + régime de marché / altseason (depuis le 25/09/2026)
 07_report.py             → report.md + diff vs veille
 08_learn.py              → Mise à jour des poids via outcomes réels
 09_explosion_screen.py   → Détection de tokens en pré-explosion
 10_fetch_catalysts.py    → Catalyseurs externes (événements, listings, etc.)
 11_fetch_defi.py         → TVL via DefiLlama
 12_build_history.py      → Snapshots quotidiens pour analyse historique 30j
+13_memory.py             → Journal project_memory.md, suivi des prédictions (top 20/jour), calibration
 run_pipeline.py          → Orchestrateur principal
 ```
 
@@ -56,7 +58,32 @@ python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
 
 ---
 
-## Formule de scoring v1.2 (source of truth → methodology.md)
+## Score principal depuis le 25/09/2026 — modèle appris (06b_ml_score.py)
+
+- `score` = `outperf_prob_7d` = probabilité (%) qu'un token fasse **mieux que la médiane du marché sur 7 jours**.
+  `bull_prob_7d` contient la même valeur (compatibilité dashboard) ; l'ancienne formule est dans `bull_prob_7d_legacy`.
+- Modèle : gradient boosting (scikit-learn) sur ~40 features du pipeline, normalisées en rang par jour.
+  **Réentraîné à chaque run** sur tout l'historique `data/history/` dont le résultat à 7 j est connu.
+- Probabilités **calibrées** (ramenées vers 50 % selon les erreurs des 5 dernières semaines, facteur k dans model_report.json).
+- Garde-fou : si le top 20 bat la médiane < 45 % sur les 5 dernières semaines → règle simple (grosses caps peu volatiles).
+- Recherche (walk-forward avril→sept. 2026) : top 20 qui bat la médiane à 7 j — ancienne formule 41 %, modèle 64 %,
+  règle naïve « grosses caps peu volatiles » 61 %. 7 j = meilleur horizon testé (3/7/14/30). Paramètre `HORIZON`.
+- Point faible connu : chute à ~35-40 % pendant les changements de régime (mi-août 2026), puis remontée.
+
+### Altseason (régime de marché)
+- Indice = % des 100 plus grosses altcoins (hors BTC/stables) qui ont fait mieux que BTC sur 30 j et 90 j.
+  90 j ≥ 75 → Altseason ; ≤ 25 → Saison Bitcoin ; 30 j ≥ 75 → « Altseason en formation ». → `data/computed/market_regime.json`
+- En régime alt (indice 30 j ≥ 60) : la prime aux grosses caps s'efface et le momentum redevient payant.
+  → tant que < 30 jours d'altseason mesurés : mélange 25 % momentum (p_ma50, ret 7 j, RSI) dans le classement ;
+  → dès 30 jours mesurés : modèle dédié entraîné uniquement sur les jours d'altseason (automatique).
+- Fin septembre 2026 : indice 30 j ≈ 79 (altseason en formation), seulement 7 jours alt mesurés.
+
+### Suivi des prédictions (13_memory.py)
+- Une prédiction = un des 20 premiers du classement du jour ; jugée à 7 j et 14 j vs médiane du marché.
+- Backfill automatique depuis data/history/ ; comparaison « Ancienne formule » vs « Modèle appris » (quintiles, corrélation de rang).
+- Bug corrigé le 25/09/2026 : les prédictions en attente étaient limitées à 300 → jamais mesurées.
+
+## Ancienne formule de scoring v1.2 (conservée pour les sous-scores — source of truth → methodology.md)
 
 ```
 SCORE = 0.20 × Solidité + 0.30 × Momentum + 0.15 × Signal + 0.15 × Risque/Qualité + 0.20 × AntiScam
@@ -78,6 +105,10 @@ SCORE = 0.20 × Solidité + 0.30 × Momentum + 0.15 × Signal + 0.15 × Risque/Q
 
 | Fichier | Rôle |
 |---|---|
+| `data/learning/model_report.json` | Modèle du jour : auto-évaluation, calibration, facteurs dominants, régime |
+| `data/learning/calibration.json` | Pouvoir de classement mesuré (ancienne formule vs modèle) |
+| `data/computed/market_regime.json` | Indice altseason 30/90 j, perf BTC, largeur du marché (historique 120 j) |
+| `requirements.txt` | numpy, pandas, scikit-learn (installés par GitHub Actions) |
 | `methodology.md` | Source de vérité de la formule (versionnée) |
 | `report.md` | Dernier rapport généré par le pipeline |
 | `dashboard.html` | Explorateur interactif (charge le CSV) |
@@ -109,6 +140,12 @@ SCORE = 0.20 × Solidité + 0.30 × Momentum + 0.15 × Signal + 0.15 × Risque/Q
 ### 🟡 Améliorations identifiées mais non implementées
 - Multiplicateur macro global : utiliser le signal marché (-2/+10) pour réduire l'influence des patterns haussiers en régime baissier
 - Ajouter l'Inde comme univers secondaire (hors scope actuel)
+
+### 🟡 Pistes ouvertes (25/09/2026)
+- Actions tokenisées (MSTRB, NVDAB…) et tokens de staking (BNSOL) remontent dans le top : les exclure de l'univers ?
+- Stablecoins qui passent le filtre (TUSD, BFUSD, USTC vus en tête avant le modèle)
+- report.md n'est plus régénéré depuis le 26/06/2026 (à investiguer)
+- Git absent sur le PC Windows → push via l'interface web GitHub en attendant (winget install Git.Git)
 
 ### 🔴 Problèmes connus résiduels
 - Contradictions MACD sur certains tokens (croisements bull+bear simultanés) — anciens rapports affectés
