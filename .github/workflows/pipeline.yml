@@ -23,6 +23,9 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install dependencies (modèle appris 06b_ml_score)
+        run: pip install -r requirements.txt
+
       - name: Run pipeline complet
         run: |
           cd scripts
