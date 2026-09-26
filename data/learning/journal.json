@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260827",
-    "btc_prob": 42.0,
-    "regime": "Baissier",
-    "top_tokens": [
-      "WAXP",
-      "TRX",
-      "ALT",
-      "RARE",
-      "BFUSD"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.392,
-    "bear_signals_ok": 11
-  },
-  {
     "date": "20260828",
     "btc_prob": 70.0,
     "regime": "Haussier",
@@ -477,6 +461,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.494,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20260926",
+    "regime": "Altseason en formation",
+    "alt_index_30d": 83.0,
+    "alt_index_90d": 64.3,
+    "btc_ret_30d": 4.7,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "RENDER",
+      "ENS",
+      "LINK",
+      "WIF",
+      "SOL"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.51,
     "bear_signals_ok": 10
   }
 ]

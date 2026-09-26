@@ -1,0 +1,67 @@
+{
+ "date": "20260926",
+ "horizon_days": 7,
+ "target": "bat la médiane du marché",
+ "model_used_today": "ml_gb+alt_blend",
+ "calibration_k": 0.2,
+ "train_rows": 55234,
+ "train_days": 132,
+ "alt_days_measured": 8,
+ "min_alt_days_for_alt_model": 30,
+ "oos_last_5_weeks": {
+  "model_top20_beat": 0.501,
+  "days": 36,
+  "naive_top20_beat": 0.494,
+  "shrink_k": 0.2
+ },
+ "top_factors": [
+  {
+   "feature": "rsi_14",
+   "effect": 0.795
+  },
+  {
+   "feature": "catalyst_score",
+   "effect": -0.687
+  },
+  {
+   "feature": "p_ma50",
+   "effect": -0.527
+  },
+  {
+   "feature": "corr_btc_90d",
+   "effect": 0.447
+  },
+  {
+   "feature": "bear_signals",
+   "effect": -0.37
+  },
+  {
+   "feature": "vol_30d_ann",
+   "effect": -0.358
+  },
+  {
+   "feature": "pat_resistance_test",
+   "effect": -0.352
+  },
+  {
+   "feature": "macd_n",
+   "effect": -0.342
+  },
+  {
+   "feature": "score_signal",
+   "effect": -0.329
+  },
+  {
+   "feature": "trend_rank",
+   "effect": 0.288
+  }
+ ],
+ "regime": {
+  "alt_index_30d": 83.0,
+  "btc_ret_30d": 4.7,
+  "alt_index_90d": 64.3,
+  "btc_ret_90d": 39.6,
+  "breadth_ma50": 91.4,
+  "label": "Altseason en formation"
+ }
+}
