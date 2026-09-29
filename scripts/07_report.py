@@ -446,7 +446,7 @@ def section_explosion(rows):
             pats = (r.get("patterns") or "").replace("|", " · ")[:60]
             reasons = (r.get("explosion_label") or "") + " " + (r.get("reasons") or "")
             t.append(
-                f"| **{r['symbol']}** | {r['tier']} | {fmt(r['score_global'])} | "
+                f"| **{r['symbol']}** | {r.get('tier', '')} | {fmt(r.get('score_global', r.get('score')))} | "
                 f"**{r.get('explosion_score', 0)}** | {fmt(r.get('rsi_14'))} | "
                 f"{fmt(r.get('drawdown_90d'), 'pct')} | {fmt(r.get('vol_ratio_vs_med90'))} | "
                 f"{pats or '—'} | {reasons[:80]} |"

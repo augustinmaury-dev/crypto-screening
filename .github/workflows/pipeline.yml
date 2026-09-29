@@ -32,6 +32,7 @@ jobs:
           python run_pipeline.py --no-cg-detail
         env:
           PYTHONIOENCODING: utf-8
+          SEC_CONTACT: ${{ secrets.SEC_CONTACT }}   # e-mail exigé par la SEC (suivi des ETF)
 
       - name: Commit et push des résultats
         run: |

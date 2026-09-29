@@ -28,9 +28,12 @@ LEARNING = ROOT / "data" / "learning"
 STORE = LEARNING / "etf_filings.json"
 
 EFTS = "https://efts.sec.gov/LATEST/search-index"
-# La SEC demande un User-Agent identifiant le demandeur. Ajoute un e-mail via la variable
-# d'environnement SEC_CONTACT (secret GitHub) si la SEC se met à refuser les requêtes.
-UA = {"User-Agent": f"crypto-screening research (github.com/augustinmaury-dev/crypto-screening) {os.environ.get('SEC_CONTACT', '')}".strip()}
+# La SEC exige un User-Agent de la forme « Nom e-mail » : sans e-mail elle répond 403 (constaté le 29/09/2026
+# sur GitHub Actions). L'e-mail vient du secret GitHub SEC_CONTACT (jamais écrit dans le dépôt).
+CONTACT = os.environ.get("SEC_CONTACT", "").strip()
+UA = {"User-Agent": f"crypto-screening {CONTACT}" if CONTACT
+      else "crypto-screening research (github.com/augustinmaury-dev/crypto-screening)"}
+STATUS = LEARNING / "etf_status.json"      # dernier état de la connexion SEC (lu par 13_memory / pour diagnostic)
 LOOKBACK_DAYS = 180
 ACTIVE_DAYS   = 60      # un dossier est « actif » s'il a bougé dans les 60 derniers jours
 QUERIES = [             # (texte, formulaires)
@@ -116,9 +119,13 @@ def run():
             store[key] = {**fl, "tokens": toks, "kind": FORM_KIND.get(fl["form"], "dossier"),
                           "issuer": fl["entity"].split(" ")[0]}
         log.info(f"SEC EDGAR : {len(raw)} dépôts lus, {new} nouveaux dépôts crypto rattachés à un token")
+        status = {"date": TODAY, "ok": True, "raw": len(raw), "new": new, "contact": bool(CONTACT)}
     except Exception as e:
-        log.warning(f"SEC EDGAR injoignable ({e}) — dépôts déjà connus conservés")
+        hint = " — ajoute le secret GitHub SEC_CONTACT (ton e-mail)" if "403" in str(e) and not CONTACT else ""
+        log.warning(f"SEC EDGAR injoignable ({e}) — dépôts déjà connus conservés{hint}")
+        status = {"date": TODAY, "ok": False, "error": str(e)[:200], "contact": bool(CONTACT)}
     LEARNING.mkdir(parents=True, exist_ok=True)
+    STATUS.write_text(json.dumps(status, ensure_ascii=False), encoding="utf-8")
     STORE.write_text(json.dumps(dict(sorted(store.items(), key=lambda kv: kv[1]["date"])), ensure_ascii=False, indent=1),
                      encoding="utf-8")
 

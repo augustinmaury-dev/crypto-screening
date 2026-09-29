@@ -618,4 +618,4 @@ def run():
     hist_path = HISTORY / f"scores_{TODAY}.csv"
     if rows:
         hist_path.write_text(out_path.read_text(encoding="utf-8"), encoding="utf-8")
-    return r
+    return rows
