@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260830",
-    "btc_prob": 55.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "ZK",
-      "BAND",
-      "DOLO",
-      "ENSO",
-      "BMT"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.418,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260831",
     "btc_prob": 62.0,
     "regime": "Haussier",
@@ -487,5 +471,24 @@
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.542,
     "bear_signals_ok": 9
+  },
+  {
+    "date": "20260929",
+    "regime": "Neutre",
+    "alt_index_30d": null,
+    "alt_index_90d": null,
+    "btc_ret_30d": 7.0,
+    "score_model": "ml_gb",
+    "top_tokens": [
+      "MSTRB",
+      "NEXO",
+      "BNB",
+      "ETH",
+      "WBTC"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.545,
+    "bear_signals_ok": 8
   }
 ]

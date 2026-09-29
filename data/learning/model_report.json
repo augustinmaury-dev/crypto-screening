@@ -1,67 +1,67 @@
 {
- "date": "20260928",
+ "date": "20260929",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
- "model_used_today": "ml_gb+alt_blend",
+ "model_used_today": "ml_gb",
  "calibration_k": 0.2,
- "train_rows": 56162,
- "train_days": 134,
- "alt_days_measured": 10,
+ "train_rows": 56626,
+ "train_days": 135,
+ "alt_days_measured": 11,
  "min_alt_days_for_alt_model": 30,
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.529,
+  "model_top20_beat": 0.483,
   "days": 36,
-  "naive_top20_beat": 0.482,
+  "naive_top20_beat": 0.474,
   "shrink_k": 0.2
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.756
+   "effect": 0.732
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.702
+   "effect": -0.703
   },
   {
    "feature": "p_ma50",
-   "effect": -0.509
+   "effect": -0.488
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.46
+   "effect": 0.464
   },
   {
    "feature": "macd_n",
-   "effect": -0.334
-  },
-  {
-   "feature": "bear_signals",
-   "effect": -0.333
+   "effect": -0.332
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.327
+   "effect": -0.312
+  },
+  {
+   "feature": "bear_signals",
+   "effect": -0.309
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.319
+   "effect": -0.308
   },
   {
    "feature": "trend_rank",
-   "effect": 0.303
+   "effect": 0.296
   },
   {
-   "feature": "score_signal",
-   "effect": -0.299
+   "feature": "log_rank",
+   "effect": -0.28
   }
  ],
  "regime": {
-  "alt_index_30d": 82.0,
-  "btc_ret_30d": 6.7,
-  "alt_index_90d": 59.2,
-  "btc_ret_90d": 39.4,
-  "breadth_ma50": 81.5,
-  "label": "Altseason en formation"
+  "alt_index_30d": null,
+  "btc_ret_30d": 7.0,
+  "alt_index_90d": null,
+  "btc_ret_90d": 43.3,
+  "breadth_ma50": 87.1,
+  "label": "Neutre"
  }
 }
