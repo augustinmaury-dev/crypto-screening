@@ -341,10 +341,11 @@ function renderList(){
     const catBadge=(+r.catalyst_score>=5)?`<span style="font-size:9px;background:#bc8cff22;color:#bc8cff;border-radius:8px;padding:1px 4px;margin-left:2px">⚡</span>`:'';
     const trendBadge=(+r.trending_rank)?`<span style="font-size:9px;background:#f0883e22;color:#f0883e;border-radius:8px;padding:1px 4px;margin-left:2px">🔥</span>`:'';
     const leadBadge=(r.leader==='True')?`<span title="${r.leader_label||'Leader'} — perf 30j ${r.ret_30d_pct}% et proche du plus haut 90j" style="font-size:9px;background:#3fb95022;color:#3fb950;border-radius:8px;padding:1px 4px;margin-left:2px">🚀${r.leader_rank}</span>`:'';
+    const etfBadge=(r.etf_stage||'').match(/^(🟢|📝)/)?`<span title="${r.etf_stage} — ${r.etf_last_form} le ${r.etf_last_date}" style="font-size:9px;background:#58a6ff22;color:#58a6ff;border-radius:8px;padding:1px 4px;margin-left:2px">📑ETF</span>`:'';
     const starred=WATCHLIST.has(r.symbol);
     return `<tr class="${sel}" data-i="${i}">
       <td><button class="star-btn ${starred?'active':''}" data-sym="${r.symbol}" title="${starred?'Retirer des favoris':'Ajouter aux favoris'}">${starred?'⭐':'☆'}</button></td>
-      <td><b>${susp}${r.symbol.replace('USDT','')}</b>${catBadge}${trendBadge}${leadBadge}</td>
+      <td><b>${susp}${r.symbol.replace('USDT','')}</b>${catBadge}${trendBadge}${leadBadge}${etfBadge}</td>
       <td><span style="font-size:10px;color:${r.tier==='Etabli'?'#3fb950':r.tier==='Mid'?'#58a6ff':'#d29922'}">${r.tier}</span></td>
       <td><b style="color:${scoreColor(r.score)}">${(+r.score).toFixed(1)}</b></td>
       <td><span style="color:${biasC};font-size:11px">${r.bias||'—'}</span></td>

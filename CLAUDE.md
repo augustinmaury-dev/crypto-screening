@@ -89,6 +89,17 @@ python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
 - Un modèle ML entraîné à prédire les top 10 % a été testé : moins bon que la règle simple → non intégré.
 - Moteurs fondamentaux observés (non automatisés) : ETF spot (ZEC Grayscale 25/08, NEAR Bitwise 24/09), tokenomics (UNI fee switch + burn).
 
+### Annonces d'ETF crypto — SEC EDGAR (10b_etf_filings.py, ajouté le 29/09/2026)
+- Source : recherche plein texte EDGAR (https://efts.sec.gov/LATEST/search-index), gratuite, sans clé.
+  Dépôts suivis : S-1, S-3 (+ amendements), 424B3/4, 8-A12B (enregistrement en bourse = lancement imminent).
+- Le nom du fonds est rattaché à un token de l'univers (« Grayscale Near Trust (NEAR) » → NEAR ; fonds multi-actifs ignorés).
+  Cumul dans data/learning/etf_filings.json ; colonnes etf_stage / etf_last_form / etf_last_date / etf_days_since / etf_issuers ;
+  badge 📑 dans le dashboard ; section dans project_memory.md ; chaque dépôt suivi à 7/14 j (sélection `etf`).
+- Étude avril→sept. 2026 (24 dépôts « dossier ») : 75 % des tokens battent le marché à 7 et 14 j (excès médian +3 à +5 pts) ;
+  avant un 8-A12B : +33 pts sur 14 j → hausse souvent déjà faite. Petit échantillon, à confirmer.
+- HYPE et CRO ont des ETF mais ne sont pas dans l'univers Binance. Si la SEC refuse les requêtes : ajouter un secret
+  GitHub SEC_CONTACT (e-mail) — l'User-Agent l'inclura.
+
 ### Suivi des prédictions (13_memory.py)
 - Une prédiction = un des 20 premiers du classement du jour ; jugée à 7 j et 14 j vs médiane du marché.
 - Les leaders sont suivis à part (sélection `leaders` dans prediction_log.json), avec le flag `top10_14d`.
