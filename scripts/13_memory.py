@@ -7,7 +7,7 @@ Génère et met à jour chaque jour :
   - data/learning/project_memory.md     (mémoire complète pour dialoguer avec le projet)
 """
 from __future__ import annotations
-from common import ROOT, TODAY, COMPUTED, HISTORY, setup_logger
+from common import ROOT, TODAY, COMPUTED, HISTORY, setup_logger, is_derivative_token
 import csv, json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -153,7 +153,9 @@ def _fnum(x) -> float | None:
         return None
 
 def _is_excluded(row: dict) -> bool:
-    return str(row.get("stablecoin", "")).lower() == "true" or str(row.get("suspect", "")).lower() == "true"
+    """Stablecoins, suspects et tokens dérivés (actions tokenisées, wrapped, staked) : hors classement et hors médiane."""
+    return (str(row.get("stablecoin", "")).lower() == "true" or str(row.get("suspect", "")).lower() == "true"
+            or is_derivative_token(row.get("symbol", ""), row.get("base"), row.get("age_days")))
 
 def _median(vals: list[float]) -> float:
     s = sorted(vals); n = len(s)
@@ -559,6 +561,12 @@ def generate_memory(
         if mrep.get("calibration_k") is not None:
             a(f"- Confiance (calibration) : k = {mrep['calibration_k']:.2f} "
               f"— plus k est bas, plus mes probabilités sont ramenées vers 50 % parce que je me suis trompé récemment")
+        if mrep.get("coingecko_ranks_missing_today"):
+            a("- ⚠️ CoinGecko n'a pas répondu aujourd'hui : j'ai repris le dernier rang de capitalisation connu de chaque token")
+        d = mrep.get("derivatives_excluded") or {}
+        if d.get("count"):
+            a(f"- {d['count']} tokens dérivés exclus du classement (actions/ETF tokenisés, versions wrapped/stakées) — "
+              "liste dans `model_report.json`")
         if mrep.get("top_factors"):
             a("- Ce qui compte le plus en ce moment : " + ", ".join(
                 f"`{f['feature']}` ({'+' if f['effect'] > 0 else '−'})" for f in mrep["top_factors"][:6]))

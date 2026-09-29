@@ -27,7 +27,7 @@ Recherche ayant motivé ce choix (25/09/2026, walk-forward avril→septembre 202
 from __future__ import annotations
 import csv, json, warnings
 from datetime import datetime, timedelta
-from common import ROOT, TODAY, COMPUTED, HISTORY, setup_logger
+from common import ROOT, TODAY, COMPUTED, HISTORY, setup_logger, is_derivative_token, tier_from_rank
 
 log = setup_logger("06b_ml_score")
 warnings.filterwarnings("ignore")
@@ -78,6 +78,24 @@ def load_history(pd):
         df["date"] = pd.Timestamp(datetime.strptime(d, "%Y%m%d"))
         frames.append(df)
     return pd.concat(frames, ignore_index=True) if frames else None
+
+
+def fill_missing_ranks(pd, raw):
+    """Si CoinGecko a échoué un jour (< 50 % des tokens avec un rang), reprend le dernier
+    rang connu de chaque token. Les rangs bougent peu d'un jour à l'autre ; sans ça, l'indice
+    altseason, les tiers et la variable « taille » du modèle sont faussés (incident du 29/09/2026)."""
+    r = pd.to_numeric(raw["rank_mcap"], errors="coerce") if "rank_mcap" in raw else pd.Series(float("nan"), index=raw.index)
+    cov = r.notna().groupby(raw["date"]).mean()
+    bad = set(cov[cov < 0.5].index)
+    if not bad:
+        return raw, []
+    raw = raw.sort_values("date").copy()
+    r = r.loc[raw.index]
+    trusted = r.where(~raw["date"].isin(bad))
+    carried = trusted.groupby(raw["symbol"]).ffill()
+    is_bad = raw["date"].isin(bad)
+    raw.loc[is_bad, "rank_mcap"] = r[is_bad].fillna(carried[is_bad])
+    return raw, sorted(bad)
 
 
 def is_true(s):
@@ -198,10 +216,21 @@ def run():
     raw = pd.concat([raw, t], ignore_index=True)
     raw["price"] = pd.to_numeric(raw["price"], errors="coerce")
     raw = raw[raw["price"] > 0].drop_duplicates(["date", "symbol"], keep="last")
+    raw, carried_days = fill_missing_ranks(pd, raw)
+    today_ranks_carried = today_ts in carried_days
+    if carried_days:
+        log.warning(f"Rangs CoinGecko manquants ({len(carried_days)} jour(s), dont aujourd'hui : {today_ranks_carried}) "
+                    f"→ dernier rang connu repris")
     excluded = pd.Series(False, index=raw.index)
     for c in ("stablecoin", "suspect"):
         if c in raw: excluded |= is_true(raw[c])
-    raw = raw[~excluded]
+    deriv = pd.Series([is_derivative_token(s, b, a) for s, b, a in
+                       zip(raw["symbol"], raw.get("base", raw["symbol"]), raw.get("age_days", [None] * len(raw)))],
+                      index=raw.index)
+    derivatives_today = sorted(raw.loc[deriv & (raw["date"] == today_ts), "symbol"].str.replace("USDT", ""))
+    log.info(f"Tokens dérivés exclus (actions tokenisées, wrapped, staked) : {len(derivatives_today)}")
+    carried_rank_today = dict(zip(raw.loc[raw["date"] == today_ts, "symbol"], raw.loc[raw["date"] == today_ts, "rank_mcap"]))
+    raw = raw[~(excluded | deriv)]
     price = raw.pivot_table(index="date", columns="symbol", values="price", aggfunc="last").sort_index()
 
     # ── régime / altseason ────────────────────────────────────────────────
@@ -289,10 +318,17 @@ def run():
     with open(scores_path, encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     fields = list(rows[0].keys()) if rows else []
-    for extra in ("outperf_prob_7d", "bull_prob_7d_legacy", "score_model", "market_regime", "alt_index_30d", "alt_index_90d"):
+    for extra in ("outperf_prob_7d", "bull_prob_7d_legacy", "score_model", "market_regime", "alt_index_30d", "alt_index_90d",
+                  "derivative", "rank_source"):
         if extra not in fields: fields.append(extra)
     for r in rows:
         r["bull_prob_7d_legacy"] = r.get("bull_prob_7d_legacy") or r.get("bull_prob_7d", "")
+        r["derivative"] = is_derivative_token(r["symbol"], r.get("base"), r.get("age_days"))
+        r["rank_source"] = "coingecko" if r.get("rank_mcap") else ""
+        if today_ranks_carried and not r.get("rank_mcap"):
+            cr = carried_rank_today.get(r["symbol"])
+            if cr is not None and cr == cr:
+                r["rank_mcap"] = int(cr); r["tier"] = tier_from_rank(cr); r["rank_source"] = "dernier connu"
         p = probs.get(r["symbol"])
         if p is not None:
             r["outperf_prob_7d"] = p
@@ -303,14 +339,14 @@ def run():
                 alpha = round(p - btc_p, 1)
                 r["alpha_vs_btc"] = alpha
                 r["vs_btc_label"] = ("🟢 Surperforme BTC" if alpha >= 5 else "🔴 Sous-performe BTC" if alpha <= -5 else "≈ Neutre vs BTC")
-        else:  # stablecoins / suspects : hors modèle, rangés en bas
+        else:  # stablecoins / suspects / dérivés : hors modèle, rangés en bas
             r["outperf_prob_7d"] = ""
             r["score"] = 0
-            r["score_model"] = "exclu"
+            r["score_model"] = "exclu_derive" if r["derivative"] else "exclu"
         r["market_regime"] = reg_today["label"]
         r["alt_index_30d"] = reg_today.get("alt_index_30d")
         r["alt_index_90d"] = reg_today.get("alt_index_90d")
-    rows.sort(key=lambda r: (1 if str(r.get("stablecoin")).lower() == "true" else 0, -float(r.get("score") or 0)))
+    rows.sort(key=lambda r: (1 if (str(r.get("stablecoin")).lower() == "true" or r["derivative"]) else 0, -float(r.get("score") or 0)))
     with open(scores_path, "w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore"); w.writeheader(); w.writerows(rows)
     (HISTORY / f"scores_{TODAY}.csv").write_text(scores_path.read_text(encoding="utf-8"), encoding="utf-8")
@@ -331,6 +367,8 @@ def run():
         "model_used_today": model_name, "calibration_k": round(float(k), 3), "train_rows": int(len(train)),
         "train_days": int(train["date"].nunique()), "alt_days_measured": int(alt_days_train),
         "min_alt_days_for_alt_model": MIN_ALT_DAYS,
+        "coingecko_ranks_missing_today": bool(today_ranks_carried),
+        "derivatives_excluded": {"count": len(derivatives_today), "tokens": derivatives_today},
         "oos_last_5_weeks": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in oos.items()},
         "top_factors": [{"feature": f, "effect": round(float(c), 3)} for f, c in coefs],
         "regime": reg_today,

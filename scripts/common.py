@@ -100,3 +100,37 @@ def purge_old_raw(days: int = 30):
         if f.stat().st_mtime < cutoff:
             f.unlink(); removed += 1
     return removed
+
+
+# ── Tokens « dérivés » exclus du classement (ajouté le 29/09/2026) ────────────
+# Ce ne sont pas des cryptos à part entière mais des copies d'autres actifs :
+#   - versions emballées / stakées d'une crypto déjà présente (WBTC, BNSOL…)
+#   - actions et ETF tokenisés listés sur Binance avec un suffixe « B » (NVDAB, AAPLB, SPYB…)
+# Ils faussent le classement et la « médiane du marché » servant de référence.
+WRAPPED_OR_STAKED = {"WBTC", "WBETH", "BETH", "BNSOL", "STETH", "WSTETH", "CBBTC", "CBETH",
+                     "WEETH", "RETH", "METH", "LBTC", "SOLVBTC", "JITOSOL", "MSOL"}
+# Vraies cryptos dont le ticker finit par B (à compléter si une nouvelle crypto est exclue à tort)
+CRYPTO_ENDING_B = {"BNB", "TRB", "SHIB", "CKB", "ARB", "BB", "DGB", "YB", "MOB", "LOOMB"}
+
+
+def is_derivative_token(symbol: str, base: str | None = None, age_days=None) -> bool:
+    b = str(base or symbol.replace("USDT", "")).upper()
+    if b in WRAPPED_OR_STAKED:
+        return True
+    if len(b) >= 3 and b.endswith("B") and b not in CRYPTO_ENDING_B:
+        try:
+            a = float(age_days) if age_days not in (None, "") else float("nan")
+            young = a != a or a < 365          # âge inconnu (NaN) → considéré récent
+        except (TypeError, ValueError):
+            young = True
+        return young   # les actions tokenisées sont toutes récentes (listées en 2026)
+    return False
+
+
+def tier_from_rank(rank) -> str:
+    try:
+        r = float(rank)
+    except (TypeError, ValueError):
+        return "Speculative"
+    if r != r: return "Speculative"
+    return "Etabli" if r <= 100 else ("Mid" if r <= 500 else "Speculative")
