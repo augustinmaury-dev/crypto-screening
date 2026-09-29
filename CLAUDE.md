@@ -78,8 +78,20 @@ python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
   → dès 30 jours mesurés : modèle dédié entraîné uniquement sur les jours d'altseason (automatique).
 - Fin septembre 2026 : indice 30 j ≈ 79 (altseason en formation), seulement 7 jours alt mesurés.
 
+### Leaders (2e liste, ajoutée le 29/09/2026 — analyse NEAR / UNI / ZEC)
+- Constat : sur les 32 tokens à +100 % ou plus en 90 j (juin→sept.), le modèle principal les classait au milieu avant
+  leur hausse (percentile 0,52) puis les **pénalisait** pendant (0,31) : il vise « battre la médiane » et évite les explosions
+  (seulement 6 % de futurs top 10 % dans son top 20).
+- Règle leaders : perf 30 j ≥ 90e percentile ET à moins de 5 % du plus haut 90 j (max 15/jour). Colonnes `leader`, `leader_rank`,
+  `leader_label`, `ret_30d_pct` ; badge 🚀 dans le dashboard ; section dédiée dans project_memory.md.
+- Backtest (14 j) : 19-25 % deviennent des top 10 % (hasard 10 %), excès moyen +3 à +6 pts, médiane ≈ 0 → « loterie » hors altseason ;
+  en altseason : ~66 % battent le marché, excès moyen ≈ +20 pts. UNI devenu leader le 23/07 = jour du départ de sa hausse (+235 %).
+- Un modèle ML entraîné à prédire les top 10 % a été testé : moins bon que la règle simple → non intégré.
+- Moteurs fondamentaux observés (non automatisés) : ETF spot (ZEC Grayscale 25/08, NEAR Bitwise 24/09), tokenomics (UNI fee switch + burn).
+
 ### Suivi des prédictions (13_memory.py)
 - Une prédiction = un des 20 premiers du classement du jour ; jugée à 7 j et 14 j vs médiane du marché.
+- Les leaders sont suivis à part (sélection `leaders` dans prediction_log.json), avec le flag `top10_14d`.
 - Backfill automatique depuis data/history/ ; comparaison « Ancienne formule » vs « Modèle appris » (quintiles, corrélation de rang).
 - Bug corrigé le 25/09/2026 : les prédictions en attente étaient limitées à 300 → jamais mesurées.
 
