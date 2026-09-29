@@ -50,6 +50,18 @@ ALT_ACTIVE_30  = 60     # régime alt "actif" à court terme (utilisé pour adap
 ALT_MOMENTUM_W = 0.25   # poids du momentum mélangé au modèle en régime alt (testé : 61,5 % → 66 % sur 10 jours)
 MIN_ALT_DAYS   = 30     # nb de jours alt mesurés nécessaires pour entraîner un modèle dédié à l'altseason
 
+# LEADERS (ajouté le 29/09/2026 après l'analyse de NEAR, UNI, ZEC…)
+# Le score principal vise « battre la médiane » : il est prudent et évite les tokens qui explosent
+# (son top 20 ne contient que 6 % de futurs top 10 %). Les leaders forment une 2e liste, transparente :
+#   perf 30 j dans le top 10 % de l'univers  ET  à moins de 5 % du plus haut 90 j.
+# Backtest juin→sept. 2026 (top 20 leaders/jour, 14 j) : 19 % deviennent des top 10 % (hasard : 10 %),
+#   excès moyen +3,4 %, médiane ≈ 0 → profil « loterie » hors altseason ;
+#   en altseason : 67 % battent la médiane, excès médian +5,8 %, moyen +18,5 %.
+#   UNI est devenu leader le 23/07, jour du départ de sa hausse de +235 %.
+LEADER_PCT     = 0.90   # percentile minimum de la perf 30 j
+LEADER_DIST    = 0.05   # distance max au plus haut 90 j
+LEADER_MAX     = 15     # nombre max affiché
+
 PATS = ["uptrend", "downtrend", "macd_bullish_cross", "macd_bearish_cross", "golden_cross", "death_cross",
         "double_top_90d", "double_bottom_90d", "support_bounce", "resistance_test", "rsi_bullish_divergence",
         "rsi_bearish_divergence", "squeeze_breakout", "breakout_30d", "breakdown_30d", "bull_flag", "bear_flag"]
@@ -240,6 +252,19 @@ def run():
     log.info(f"Régime : {reg_today['label']} — altseason 30j={reg_today.get('alt_index_30d')} "
              f"90j={reg_today.get('alt_index_90d')} BTC 30j={reg_today.get('btc_ret_30d')}%")
 
+    # ── leaders (momentum 30 j + proche du plus haut 90 j) ───────────────
+    past30 = price / shifted_prices(pd, price, -30, tol=3) - 1
+    r30_today = past30.loc[today_ts].dropna() if today_ts in past30.index else pd.Series(dtype=float)
+    today_raw = raw[raw["date"] == today_ts].set_index("symbol")
+    dh_today = pd.to_numeric(today_raw["dist_to_high_90d"], errors="coerce") if "dist_to_high_90d" in today_raw else pd.Series(dtype=float)
+    r30_pct = r30_today.rank(pct=True)
+    leaders = sorted([s for s in r30_today.index
+                      if r30_pct[s] >= LEADER_PCT and dh_today.get(s, float("nan")) < LEADER_DIST],
+                     key=lambda s: -r30_today[s])[:LEADER_MAX]
+    alt_now = (reg_today.get("alt_index_30d") or 0) >= ALT_ACTIVE_30
+    leader_label = "🚀 Leader (altseason)" if alt_now else "🎲 Leader (spéculatif)"
+    log.info(f"Leaders : {len(leaders)} — {', '.join(s.replace('USDT', '') for s in leaders[:8])}")
+
     # ── features + cible ──────────────────────────────────────────────────
     Z = build_features(pd, np, raw, price)
     fwd = shifted_prices(pd, price, HORIZON) / price - 1
@@ -319,11 +344,16 @@ def run():
         rows = list(csv.DictReader(f))
     fields = list(rows[0].keys()) if rows else []
     for extra in ("outperf_prob_7d", "bull_prob_7d_legacy", "score_model", "market_regime", "alt_index_30d", "alt_index_90d",
-                  "derivative", "rank_source"):
+                  "derivative", "rank_source", "ret_30d_pct", "leader", "leader_rank", "leader_label"):
         if extra not in fields: fields.append(extra)
     for r in rows:
         r["bull_prob_7d_legacy"] = r.get("bull_prob_7d_legacy") or r.get("bull_prob_7d", "")
         r["derivative"] = is_derivative_token(r["symbol"], r.get("base"), r.get("age_days"))
+        r30 = r30_today.get(r["symbol"])
+        r["ret_30d_pct"] = round(float(r30) * 100, 1) if r30 is not None and r30 == r30 else ""
+        r["leader"] = r["symbol"] in leaders
+        r["leader_rank"] = leaders.index(r["symbol"]) + 1 if r["leader"] else ""
+        r["leader_label"] = leader_label if r["leader"] else ""
         r["rank_source"] = "coingecko" if r.get("rank_mcap") else ""
         if today_ranks_carried and not r.get("rank_mcap"):
             cr = carried_rank_today.get(r["symbol"])
@@ -369,6 +399,9 @@ def run():
         "min_alt_days_for_alt_model": MIN_ALT_DAYS,
         "coingecko_ranks_missing_today": bool(today_ranks_carried),
         "derivatives_excluded": {"count": len(derivatives_today), "tokens": derivatives_today},
+        "leaders": {"label": leader_label, "rule": f"perf 30 j ≥ percentile {LEADER_PCT:.0%} et ≤ {LEADER_DIST:.0%} du plus haut 90 j",
+                    "tokens": [{"symbol": s.replace("USDT", ""), "ret_30d_pct": round(float(r30_today[s]) * 100, 1),
+                                "dist_high_90d_pct": round(float(dh_today.get(s, 0)) * 100, 1)} for s in leaders]},
         "oos_last_5_weeks": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in oos.items()},
         "top_factors": [{"feature": f, "effect": round(float(c), 3)} for f, c in coefs],
         "regime": reg_today,

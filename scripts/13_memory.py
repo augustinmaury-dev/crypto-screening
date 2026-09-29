@@ -25,6 +25,9 @@ SNAPSHOT_TOLERANCE = 2  # si le snapshot J+H manque, on accepte J+H+1 ou J+H+2
 MAX_PENDING_AGE  = 30   # une prédiction non mesurable après 30 j (token délisté…) est abandonnée
 MAX_JOURNAL_DAYS = 30   # jours de journal conservés
 N_QUINTILES = 5
+# Leaders (cf. 06b_ml_score.py) : perf 30 j top 10 % ET à moins de 5 % du plus haut 90 j — suivis à part
+LEADER_PCT, LEADER_DIST, LEADER_MAX = 0.90, 0.05, 15
+SELECTIONS = (f"top{TOP_N_PRED}", "leaders")
 
 def model_group(row: dict) -> str:
     """Ancienne formule manuelle vs modèle appris (06b_ml_score.py)."""
@@ -163,6 +166,16 @@ def _median(vals: list[float]) -> float:
     return s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2
 
 _median_cache: dict[tuple, float | None] = {}
+_q90_cache: dict[tuple, float | None] = {}
+
+def _quantile(vals: list[float], q: float) -> float:
+    s = sorted(vals); k = (len(s) - 1) * q; f = int(k); c = min(f + 1, len(s) - 1)
+    return s[f] + (s[c] - s[f]) * (k - f)
+
+def universe_q90_return(d0: str, d1: str) -> float | None:
+    """Seuil (%) des 10 % de meilleurs tokens de l'univers entre deux snapshots."""
+    universe_median_return(d0, d1)
+    return _q90_cache.get((d0, d1))
 
 def universe_median_return(d0: str, d1: str) -> float | None:
     """Return médian (%) de tout l'univers (hors stablecoins/suspects) entre deux snapshots."""
@@ -179,6 +192,7 @@ def universe_median_return(d0: str, d1: str) -> float | None:
                 if p0 and p1 and p0 > 0:
                     rets.append((p1 / p0 - 1) * 100)
             _median_cache[key] = _median(rets) if rets else None
+            _q90_cache[key] = _quantile(rets, 0.9) if rets else None
     return _median_cache[key]
 
 def find_outcome_snapshot(date: str, horizon: int) -> str | None:
@@ -191,14 +205,42 @@ def find_outcome_snapshot(date: str, horizon: int) -> str | None:
             return d
     return None
 
+def past_return(sym: str, date: str, days: int = 30) -> float | None:
+    """Return (%) d'un token sur les `days` jours précédant `date` (snapshot J-days, tolérance 3 j)."""
+    for extra in range(4):
+        snap = load_snapshot(shift_date(date, -(days + extra)))
+        if snap and sym in snap:
+            p0 = _fnum(snap[sym].get("price")); now = _fnum((load_snapshot(date) or {}).get(sym, {}).get("price"))
+            if p0 and now and p0 > 0:
+                return (now / p0 - 1) * 100
+            return None
+    return None
+
+def leaders_of_day(date: str, rows: list[dict]) -> list[dict]:
+    """Même règle que 06b : perf 30 j ≥ 90e percentile ET ≤ 5 % du plus haut 90 j (top LEADER_MAX)."""
+    if rows and "leader" in rows[0] and date == TODAY:   # jour courant : on reprend la liste de 06b
+        L = [r for r in rows if str(r.get("leader")).lower() == "true"]
+        return sorted(L, key=lambda r: float(_fnum(r.get("leader_rank")) or 99))
+    elig = [r for r in rows if not _is_excluded(r) and _fnum(r.get("price"))]
+    r30 = {r["symbol"]: past_return(r["symbol"], date) for r in elig}
+    vals = sorted(v for v in r30.values() if v is not None)
+    if len(vals) < 50:
+        return []
+    thr = _quantile(vals, LEADER_PCT)
+    L = [r for r in elig if r30[r["symbol"]] is not None and r30[r["symbol"]] >= thr
+         and (_fnum(r.get("dist_to_high_90d")) if _fnum(r.get("dist_to_high_90d")) is not None else 9) < LEADER_DIST]
+    L.sort(key=lambda r: -r30[r["symbol"]])
+    for r in L: r["_r30"] = r30[r["symbol"]]
+    return L[:LEADER_MAX]
+
 def history_dates() -> list[str]:
     return sorted(p.stem.replace("scores_", "") for p in HISTORY.glob("scores_*.csv"))
 
-def make_prediction(date: str, row: dict, rank: int = 0) -> dict:
+def make_prediction(date: str, row: dict, rank: int = 0, selection: str = "") -> dict:
     score = float(row.get("score") or 0)
     return {
         "date":           date,
-        "selection":      f"top{TOP_N_PRED}",
+        "selection":      selection or f"top{TOP_N_PRED}",
         "rank":           rank,
         "model":          model_group(row),
         "score_model":    row.get("score_model", ""),
@@ -234,6 +276,8 @@ def measure(p: dict) -> bool:
         p[f"excess_{h}d"]      = round(ret - med, 2) if med is not None else None
         p[f"correct_{h}d"]     = ret > 0
         p[f"beat_market_{h}d"] = (ret > med) if med is not None else None
+        q90 = universe_q90_return(p["date"], d_out)
+        p[f"top10_{h}d"] = (ret >= q90) if q90 is not None else None
         p[f"measured_{h}d"]    = d_out
         changed = True
     # Champs historiques (compatibilité dashboard) = horizon principal
@@ -257,8 +301,8 @@ def update_prediction_log(today_scores: list[dict]) -> list[dict]:
     log_path = LEARNING / "prediction_log.json"
     pred_log: list[dict] = load_json(log_path, [])
     # Les entrées de l'ancienne règle (score >= 70) sont reconstruites selon la règle actuelle
-    pred_log = [p for p in pred_log if p.get("selection") == f"top{TOP_N_PRED}"]
-    existing_keys = {(p["date"], p["symbol"]) for p in pred_log}
+    pred_log = [p for p in pred_log if p.get("selection") in SELECTIONS]
+    existing_keys = {(p["date"], p["symbol"], p["selection"]) for p in pred_log}
 
     # ── 1. Nouvelles prédictions : snapshots historiques + aujourd'hui ─────
     new_count = 0
@@ -270,12 +314,20 @@ def update_prediction_log(today_scores: list[dict]) -> list[dict]:
         eligible = [r for r in rows if not _is_excluded(r) and _fnum(r.get("price"))]
         eligible.sort(key=lambda r: -float(_fnum(r.get("score")) or 0))
         for rank, row in enumerate(eligible[:TOP_N_PRED], 1):
-            key = (date, row.get("symbol", ""))
+            key = (date, row.get("symbol", ""), f"top{TOP_N_PRED}")
             if key in existing_keys:
                 continue
             pred_log.append(make_prediction(date, row, rank))
             existing_keys.add(key)
             new_count += 1
+        if not any(k[0] == date and k[2] == "leaders" for k in existing_keys) or date == TODAY:
+            for rank, row in enumerate(leaders_of_day(date, rows), 1):
+                key = (date, row.get("symbol", ""), "leaders")
+                if key in existing_keys:
+                    continue
+                pr = make_prediction(date, row, rank, "leaders")
+                pr["ret_30d_pct"] = round(float(row.get("_r30") if row.get("_r30") is not None else (_fnum(row.get("ret_30d_pct")) or 0)), 1)
+                pred_log.append(pr); existing_keys.add(key); new_count += 1
     log.info(f"Nouvelles prédictions enregistrées (backfill inclus) : {new_count}")
 
     # ── 2. Mesure des résultats ────────────────────────────────────────────
@@ -289,7 +341,7 @@ def update_prediction_log(today_scores: list[dict]) -> list[dict]:
     if len(pred_log) < before:
         log.info(f"Prédictions abandonnées (non mesurables après {MAX_PENDING_AGE} j) : {before - len(pred_log)}")
 
-    pred_log.sort(key=lambda p: (p["date"], p["symbol"]))
+    pred_log.sort(key=lambda p: (p["date"], p.get("selection", ""), p["symbol"]))
     save_json(log_path, pred_log)
     return pred_log
 
@@ -596,7 +648,7 @@ def generate_memory(
 
     # Précision sur les prédictions mesurées (horizon principal = 7 j)
     H = MAIN_HORIZON
-    measured = [p for p in pred_log if p.get(f"return_{H}d") is not None]
+    measured = [p for p in pred_log if p.get(f"return_{H}d") is not None and p.get("selection") == f"top{TOP_N_PRED}"]
     if measured:
         correct = sum(1 for p in measured if p.get(f"correct_{H}d"))
         accuracy = correct / len(measured) * 100
@@ -692,9 +744,52 @@ def generate_memory(
         a(f"*Aucune prédiction mesurée pour l'instant ({H} jours de recul nécessaires).*")
 
     a("")
-    pending = [p for p in pred_log if p.get(f"return_{H}d") is None]
+    pending = [p for p in pred_log if p.get(f"return_{H}d") is None and p.get("selection") == f"top{TOP_N_PRED}"]
     if pending:
         a(f"**{len(pending)} prédictions en attente de résultat (< {H} jours).**")
+    a("")
+    a("---")
+    a("")
+
+    # ── Leaders ────────────────────────────────────────────────────────────
+    a("## 🚀 Les leaders du moment (2e liste, indépendante du score)")
+    a("")
+    a(f"*Règle : perf 30 j dans le top 10 % de l'univers **et** à moins de 5 % de son plus haut 90 j. "
+      "Le score principal est prudent et évite les tokens qui explosent ; cette liste fait l'inverse. "
+      "Hors altseason, c'est un pari « loterie » : la plupart retombent, quelques-uns explosent. "
+      "En altseason, les leaders ont historiquement surperformé nettement (backtest : 67 % battent le marché à 14 j).*")
+    a("")
+    reg_hist = {h["date"]: h for h in (load_json(COMPUTED / "market_regime.json", {}) or {}).get("history", [])}
+    lead_m = [p for p in pred_log if p.get("selection") == "leaders" and p.get("return_14d") is not None]
+    if lead_m:
+        a("**Suivi réel des leaders (jugés à 14 j) :**")
+        a("")
+        a("| Régime au moment du signal | Signaux | Ont battu le marché | Sont devenus des top 10 % | Excès moyen | Excès médian |")
+        a("|---|---|---|---|---|---|")
+        def alt_of(p):
+            v = (reg_hist.get(p["date"]) or {}).get("alt_index_30d")
+            return None if v is None else v >= 60
+        for name, grp in (("Tous", lead_m), ("Altseason (indice 30 j ≥ 60)", [p for p in lead_m if alt_of(p) is True]),
+                          ("Hors altseason", [p for p in lead_m if alt_of(p) is False])):
+            ex = [p["excess_14d"] for p in grp if p.get("excess_14d") is not None]
+            if not ex: continue
+            bm = sum(1 for p in grp if p.get("beat_market_14d")) / len(grp)
+            t10 = sum(1 for p in grp if p.get("top10_14d")) / len(grp)
+            a(f"| {name} | {len(grp)} | {bm:.0%} | {t10:.0%} (hasard : 10 %) | {sum(ex)/len(ex):+.1f} pts | {_median(ex):+.1f} pts |")
+        a("")
+    leaders_today = sorted([r for r in today_scores if str(r.get("leader")).lower() == "true"],
+                           key=lambda r: float(_fnum(r.get("leader_rank")) or 99))
+    if leaders_today:
+        a(f"**Leaders aujourd'hui — {leaders_today[0].get('leader_label', '')}** :")
+        a("")
+        a("| # | Token | Tier | Perf 30 j | Score principal | Exit risk |")
+        a("|---|-------|------|-----------|-----------------|-----------|")
+        for r in leaders_today:
+            er = int(float(r.get("exit_risk") or 0))
+            a(f"| {r.get('leader_rank')} | **{r['symbol'].replace('USDT','')}** | {r.get('tier','')} | {float(_fnum(r.get('ret_30d_pct')) or 0):+.0f}% | "
+              f"{float(_fnum(r.get('score')) or 0):.1f}% | {'⚠️ ' if er >= 4 else ''}{er} |")
+        a("")
+        a("*Exit risk élevé = surachat / essoufflement possible. Un leader peut perdre 30 % en quelques jours.*")
     a("")
     a("---")
     a("")
