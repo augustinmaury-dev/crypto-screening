@@ -2,66 +2,143 @@
  "date": "20260929",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
- "model_used_today": "ml_gb",
- "calibration_k": 0.2,
- "train_rows": 56626,
+ "model_used_today": "ml_gb+alt_blend",
+ "calibration_k": 0.437,
+ "train_rows": 53745,
  "train_days": 135,
  "alt_days_measured": 11,
  "min_alt_days_for_alt_model": 30,
+ "coingecko_ranks_missing_today": true,
+ "derivatives_excluded": {
+  "count": 71,
+  "tokens": [
+   "AAOIB",
+   "AAPLB",
+   "ALABB",
+   "AMATB",
+   "AMDB",
+   "AMZNB",
+   "ARMB",
+   "ASMLB",
+   "ASTSB",
+   "AVGOB",
+   "AXTIB",
+   "BABAB",
+   "BEB",
+   "BMNRB",
+   "BNSOL",
+   "CBRSB",
+   "COHRB",
+   "COINB",
+   "CRCLB",
+   "CRDOB",
+   "CRWVB",
+   "DELLB",
+   "DJTB",
+   "DRAMB",
+   "EWYB",
+   "FLNCB",
+   "GLWB",
+   "GMEB",
+   "GOOGLB",
+   "GSB",
+   "HOODB",
+   "IBMB",
+   "INTCB",
+   "INTWB",
+   "IRENB",
+   "KORUB",
+   "LITEB",
+   "METAB",
+   "MRVLB",
+   "MSFTB",
+   "MSTRB",
+   "MUB",
+   "MUUB",
+   "MVLLB",
+   "NBISB",
+   "NFLXB",
+   "NOKB",
+   "NVDAB",
+   "ORCLB",
+   "PLTRB",
+   "PYPLB",
+   "QCOMB",
+   "QNTB",
+   "QQQB",
+   "RKLBB",
+   "SKHYB",
+   "SMCIB",
+   "SMHB",
+   "SNDKB",
+   "SNXXB",
+   "SOXLB",
+   "SOXSB",
+   "SPCXB",
+   "SPYB",
+   "TQQQB",
+   "TSLAB",
+   "TSMB",
+   "USARB",
+   "WBETH",
+   "WBTC",
+   "WDCB"
+  ]
+ },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.483,
+  "model_top20_beat": 0.528,
   "days": 36,
-  "naive_top20_beat": 0.474,
-  "shrink_k": 0.2
+  "naive_top20_beat": 0.468,
+  "shrink_k": 0.437
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.732
+   "effect": 0.877
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.703
+   "effect": -0.679
   },
   {
    "feature": "p_ma50",
-   "effect": -0.488
+   "effect": -0.596
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.464
-  },
-  {
-   "feature": "macd_n",
-   "effect": -0.332
-  },
-  {
-   "feature": "vol_30d_ann",
-   "effect": -0.312
-  },
-  {
-   "feature": "bear_signals",
-   "effect": -0.309
-  },
-  {
-   "feature": "pat_resistance_test",
-   "effect": -0.308
-  },
-  {
-   "feature": "trend_rank",
-   "effect": 0.296
+   "effect": 0.385
   },
   {
    "feature": "log_rank",
-   "effect": -0.28
+   "effect": -0.354
+  },
+  {
+   "feature": "trend_rank",
+   "effect": 0.352
+  },
+  {
+   "feature": "vol_30d_ann",
+   "effect": -0.346
+  },
+  {
+   "feature": "pat_resistance_test",
+   "effect": -0.335
+  },
+  {
+   "feature": "macd_n",
+   "effect": -0.331
+  },
+  {
+   "feature": "bear_signals",
+   "effect": -0.316
   }
  ],
  "regime": {
-  "alt_index_30d": null,
-  "btc_ret_30d": 7.0,
-  "alt_index_90d": null,
-  "btc_ret_90d": 43.3,
-  "breadth_ma50": 87.1,
-  "label": "Neutre"
+  "alt_index_30d": 84.0,
+  "btc_ret_30d": 5.7,
+  "alt_index_90d": 58.2,
+  "btc_ret_90d": 41.6,
+  "breadth_ma50": 88.8,
+  "label": "Altseason en formation"
  }
 }

@@ -16,22 +16,25 @@ Je surveille aussi le **régime de marché** (altseason ou saison Bitcoin), car 
 
 ## Mon auto-évaluation
 
-### Régime de marché : 🟡 Neutre
+### Régime de marché : 🌱 Altseason en formation
 
-- **Indice altseason** : None sur 30 j, None sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)
-- **BTC** : 7.0 % sur 30 j · **Tokens au-dessus de leur MA50** : 87.1 %
+- **Indice altseason** : 84.0 sur 30 j, 58.2 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)
+- **BTC** : 5.7 % sur 30 j · **Tokens au-dessus de leur MA50** : 88.8 %
+- ⚠️ **En altseason, les règles changent** : la prime aux grosses caps peu volatiles (ce que j'ai surtout appris) s'efface et le momentum redevient payant. J'intègre donc une part de momentum dans le classement, et j'entraînerai un modèle dédié à l'altseason dès que j'aurai 30 jours d'altseason mesurés (actuellement : 11).
 
-### Mon modèle aujourd'hui : `ml_gb`
+### Mon modèle aujourd'hui : `ml_gb+alt_blend`
 
-- Entraîné sur 56626 observations (135 jours), horizon 7 j
-- **Test sur les 5 dernières semaines (données jamais vues)** : mon top 20 a battu la médiane **48%** du temps (règle simple « grosses caps peu volatiles » : 47% ; hasard : 50 %)
-- Confiance (calibration) : k = 0.20 — plus k est bas, plus mes probabilités sont ramenées vers 50 % parce que je me suis trompé récemment
-- Ce qui compte le plus en ce moment : `rsi_14` (+), `catalyst_score` (−), `p_ma50` (−), `corr_btc_90d` (+), `macd_n` (−), `vol_30d_ann` (−)
+- Entraîné sur 53745 observations (135 jours), horizon 7 j
+- **Test sur les 5 dernières semaines (données jamais vues)** : mon top 20 a battu la médiane **53%** du temps (règle simple « grosses caps peu volatiles » : 47% ; hasard : 50 %)
+- Confiance (calibration) : k = 0.44 — plus k est bas, plus mes probabilités sont ramenées vers 50 % parce que je me suis trompé récemment
+- ⚠️ CoinGecko n'a pas répondu aujourd'hui : j'ai repris le dernier rang de capitalisation connu de chaque token
+- 71 tokens dérivés exclus du classement (actions/ETF tokenisés, versions wrapped/stakées) — liste dans `model_report.json`
+- Ce qui compte le plus en ce moment : `rsi_14` (+), `catalyst_score` (−), `p_ma50` (−), `corr_btc_90d` (+), `log_rank` (−), `trend_rank` (+)
 
 **Signaux haussiers fiables (>50%) :** squeeze_breakout ✅
 **Signaux baissiers fiables (>50%) :** 8 / 11
 
-**Mon top 20 quotidien, jugé à 7 j :** 2640 prédictions mesurées — 47% ont monté, **50% ont battu la médiane du marché** (50% = hasard)
+**Mon top 20 quotidien, jugé à 7 j :** 2660 prédictions mesurées — 47% ont monté, **50% ont battu la médiane du marché** (50% = hasard)
 
 ### ⏳ Le modèle appris est trop récent pour être jugé en conditions réelles (il faut ≥ 10 jours mesurés).
 Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trompe souvent sur 7 jours.
@@ -81,11 +84,11 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 
 | Mois | Modèle | Prédictions | Ont monté (7 j) | Ont battu le marché (7 j) | Return médian (7 j) |
 |------|--------|-------------|-----------------|---------------------------|---------------------|
-| 2026-05 | Ancienne formule | 480 | 32% | 61% | -4.4% |
+| 2026-05 | Ancienne formule | 481 | 32% | 61% | -4.3% |
 | 2026-06 | Ancienne formule | 480 | 47% | 46% | -0.6% |
-| 2026-07 | Ancienne formule | 620 | 43% | 54% | -1.0% |
-| 2026-08 | Ancienne formule | 620 | 52% | 42% | +0.4% |
-| 2026-09 | Ancienne formule | 440 | 62% | 45% | +3.1% |
+| 2026-07 | Ancienne formule | 621 | 43% | 54% | -1.0% |
+| 2026-08 | Ancienne formule | 630 | 53% | 42% | +0.4% |
+| 2026-09 | Ancienne formule | 448 | 62% | 46% | +3.2% |
 
 **Dernières prédictions mesurées :**
 
@@ -112,7 +115,7 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 | 22 sep 2026 | **WIN** | 74% | 3.962e-05 | +19.8% | ✅ +17.0pp | … |
 | 22 sep 2026 | **XVS** | 74% | 3.27 | +3.3% | ✅ +0.4pp | … |
 
-**140 prédictions en attente de résultat (< 7 jours).**
+**160 prédictions en attente de résultat (< 7 jours).**
 
 ---
 
@@ -122,7 +125,7 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 
 | Modèle | Jours | Corrélation de rang | Top 20 bat le marché | Q1 | Q2 | Q3 | Q4 | Q5 |
 |--------|-------|---------------------|----------------------|----|----|----|----|----|
-| Ancienne formule | 132 | -0.001 | 50% | 50% | 51% | 50% | 50% | 48% |
+| Ancienne formule | 132 | +0.001 | 50% | 50% | 51% | 51% | 50% | 48% |
 
 *(Pourcentages Q1…Q5 = part des tokens du groupe qui ont battu la médiane du marché. Hasard = 50 %.)*
 
@@ -201,21 +204,21 @@ C'est pourquoi le score principal vient désormais d'un modèle appris (voir plu
 
 ## Aujourd'hui — 29 sep 2026
 
-**Régime :** 🟡 Neutre (indice altseason 30 j : None)
+**Régime :** 🌱 Altseason en formation (indice altseason 30 j : 84.0)
 
-**Top 12 du jour** — score = probabilité de battre la médiane du marché sur 7 j (modèle : `ml_gb`) :
+**Top 12 du jour** — score = probabilité de battre la médiane du marché sur 7 j (modèle : `ml_gb+alt_blend`) :
 
 | Token | Tier | Score | vs BTC | Exit risk | Catalyseurs |
 |-------|------|-------|--------|-----------|-------------|
-| **MSTRB** | Speculative | 54.3% | +0.6pp | ⚠️ 5 |  |
-| **NEXO** | Speculative | 54.0% | +0.3pp | ⚠️ 5 |  |
-| **BNB** | Speculative | 53.9% | +0.2pp | ⚠️ 5 |  |
-| **ETH** | Speculative | 53.9% | +0.2pp | ⚠️ 5 | 🔥 Trending #14 sur CoinGecko |
-| **WBTC** | Speculative | 53.8% | +0.1pp | ⚠️ 4 |  |
-| **BTC** | Speculative | 53.7% | +0.0pp | ⚠️ 7 | 🔥 Trending #8 sur CoinGecko |
-| **LUNC** | Speculative | 53.5% | -0.2pp | 0 |  |
-| **BNSOL** | Speculative | 53.4% | -0.3pp | ⚠️ 4 |  |
-| **LPT** | Speculative | 53.2% | -0.5pp | 2 |  |
-| **PEPE** | Speculative | 53.1% | -0.6pp | 0 |  |
-| **TAO** | Speculative | 53.1% | -0.6pp | 2 |  |
-| **FLOKI** | Speculative | 53.1% | -0.6pp | 0 |  |
+| **RENDER** | Etabli | 57.2% | +3.3pp | 0 |  |
+| **XLM** | Etabli | 56.9% | +3.0pp | 0 |  |
+| **BAT** | Mid | 56.8% | +2.9pp | 0 |  |
+| **SOL** | Etabli | 56.8% | +2.9pp | 2 | 🔥 Trending #15 sur CoinGecko |
+| **AXL** | Mid | 56.8% | +2.9pp | 0 |  |
+| **KAIA** | Mid | 56.8% | +2.9pp | 0 |  |
+| **ETC** | Etabli | 56.7% | +2.8pp | 0 |  |
+| **TAO** | Etabli | 56.3% | +2.4pp | 2 |  |
+| **LPT** | Mid | 56.3% | +2.4pp | 0 |  |
+| **WOO** | Speculative | 56.1% | +2.2pp | 0 |  |
+| **ENS** | Mid | 56.0% | +2.1pp | 2 |  |
+| **CAKE** | Etabli | 55.5% | +1.6pp | 3 |  |
