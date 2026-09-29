@@ -18,15 +18,15 @@ Je surveille aussi le **régime de marché** (altseason ou saison Bitcoin), car 
 
 ### Régime de marché : 🌱 Altseason en formation
 
-- **Indice altseason** : 84.0 sur 30 j, 58.2 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)
-- **BTC** : 5.7 % sur 30 j · **Tokens au-dessus de leur MA50** : 88.8 %
+- **Indice altseason** : 85.0 sur 30 j, 59.2 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)
+- **BTC** : 6.1 % sur 30 j · **Tokens au-dessus de leur MA50** : 89.6 %
 - ⚠️ **En altseason, les règles changent** : la prime aux grosses caps peu volatiles (ce que j'ai surtout appris) s'efface et le momentum redevient payant. J'intègre donc une part de momentum dans le classement, et j'entraînerai un modèle dédié à l'altseason dès que j'aurai 30 jours d'altseason mesurés (actuellement : 11).
 
 ### Mon modèle aujourd'hui : `ml_gb+alt_blend`
 
 - Entraîné sur 53745 observations (135 jours), horizon 7 j
 - **Test sur les 5 dernières semaines (données jamais vues)** : mon top 20 a battu la médiane **53%** du temps (règle simple « grosses caps peu volatiles » : 47% ; hasard : 50 %)
-- Confiance (calibration) : k = 0.44 — plus k est bas, plus mes probabilités sont ramenées vers 50 % parce que je me suis trompé récemment
+- Confiance (calibration) : k = 0.43 — plus k est bas, plus mes probabilités sont ramenées vers 50 % parce que je me suis trompé récemment
 - ⚠️ CoinGecko n'a pas répondu aujourd'hui : j'ai repris le dernier rang de capitalisation connu de chaque token
 - 71 tokens dérivés exclus du classement (actions/ETF tokenisés, versions wrapped/stakées) — liste dans `model_report.json`
 - Ce qui compte le plus en ce moment : `rsi_14` (+), `catalyst_score` (−), `p_ma50` (−), `corr_btc_90d` (+), `log_rank` (−), `trend_rank` (+)
@@ -115,7 +115,39 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 | 22 sep 2026 | **WIN** | 74% | 3.962e-05 | +19.8% | ✅ +17.0pp | … |
 | 22 sep 2026 | **XVS** | 74% | 3.27 | +3.3% | ✅ +0.4pp | … |
 
-**160 prédictions en attente de résultat (< 7 jours).**
+**165 prédictions en attente de résultat (< 7 jours).**
+
+---
+
+## 🚀 Les leaders du moment (2e liste, indépendante du score)
+
+*Règle : perf 30 j dans le top 10 % de l'univers **et** à moins de 5 % de son plus haut 90 j. Le score principal est prudent et évite les tokens qui explosent ; cette liste fait l'inverse. Hors altseason, c'est un pari « loterie » : la plupart retombent, quelques-uns explosent. En altseason, les leaders ont historiquement surperformé nettement (backtest : 67 % battent le marché à 14 j).*
+
+**Suivi réel des leaders (jugés à 14 j) :**
+
+| Régime au moment du signal | Signaux | Ont battu le marché | Sont devenus des top 10 % | Excès moyen | Excès médian |
+|---|---|---|---|---|---|
+| Tous | 776 | 50% | 25% (hasard : 10 %) | +5.7 pts | -0.2 pts |
+| Altseason (indice 30 j ≥ 60) | 41 | 66% | 24% (hasard : 10 %) | +22.5 pts | +4.8 pts |
+| Hors altseason | 725 | 49% | 25% (hasard : 10 %) | +4.9 pts | -0.4 pts |
+
+**Leaders aujourd'hui — 🚀 Leader (altseason)** :
+
+| # | Token | Tier | Perf 30 j | Score principal | Exit risk |
+|---|-------|------|-----------|-----------------|-----------|
+| 1 | **ARK** | Mid | +118% | 47.9% | ⚠️ 4 |
+| 2 | **0G** | Mid | +99% | 46.5% | ⚠️ 6 |
+| 3 | **INIT** | Speculative | +84% | 46.9% | ⚠️ 6 |
+| 4 | **RUNE** | Mid | +60% | 47.6% | ⚠️ 4 |
+| 5 | **AVAX** | Etabli | +52% | 47.6% | 2 |
+
+*Exit risk élevé = surachat / essoufflement possible. Un leader peut perdre 30 % en quelques jours.*
+
+---
+
+## 📑 Annonces d'ETF crypto (SEC EDGAR)
+
+*Tout ETF crypto américain dépose ses documents à la SEC avant son lancement : dossier S-1/S-3 et ses amendements, puis enregistrement en bourse (8-A12B) quelques jours avant la cotation. ZEC et NEAR ont fortement monté autour de leurs ETF. Étude du 29/09/2026 : après un dépôt de dossier, 75 % des tokens ont battu le marché à 7 et 14 j ; avant un 8-A12B, la hausse était souvent déjà faite (+33 pts sur les 14 j précédents). Petit échantillon : suivi réel ci-dessous.*
 
 ---
 
@@ -204,21 +236,21 @@ C'est pourquoi le score principal vient désormais d'un modèle appris (voir plu
 
 ## Aujourd'hui — 29 sep 2026
 
-**Régime :** 🌱 Altseason en formation (indice altseason 30 j : 84.0)
+**Régime :** 🌱 Altseason en formation (indice altseason 30 j : 85.0)
 
 **Top 12 du jour** — score = probabilité de battre la médiane du marché sur 7 j (modèle : `ml_gb+alt_blend`) :
 
 | Token | Tier | Score | vs BTC | Exit risk | Catalyseurs |
 |-------|------|-------|--------|-----------|-------------|
-| **RENDER** | Etabli | 57.2% | +3.3pp | 0 |  |
-| **XLM** | Etabli | 56.9% | +3.0pp | 0 |  |
-| **BAT** | Mid | 56.8% | +2.9pp | 0 |  |
-| **SOL** | Etabli | 56.8% | +2.9pp | 2 | 🔥 Trending #15 sur CoinGecko |
-| **AXL** | Mid | 56.8% | +2.9pp | 0 |  |
-| **KAIA** | Mid | 56.8% | +2.9pp | 0 |  |
-| **ETC** | Etabli | 56.7% | +2.8pp | 0 |  |
-| **TAO** | Etabli | 56.3% | +2.4pp | 2 |  |
-| **LPT** | Mid | 56.3% | +2.4pp | 0 |  |
-| **WOO** | Speculative | 56.1% | +2.2pp | 0 |  |
-| **ENS** | Mid | 56.0% | +2.1pp | 2 |  |
-| **CAKE** | Etabli | 55.5% | +1.6pp | 3 |  |
+| **RENDER** | Etabli | 57.3% | +3.7pp | 0 |  |
+| **XLM** | Etabli | 57.2% | +3.6pp | 2 |  |
+| **KAIA** | Mid | 56.8% | +3.2pp | 0 |  |
+| **SOL** | Etabli | 56.7% | +3.1pp | 2 |  |
+| **AXL** | Mid | 56.7% | +3.1pp | 0 |  |
+| **BCH** | Etabli | 56.3% | +2.7pp | 0 |  |
+| **LPT** | Mid | 56.2% | +2.6pp | 0 |  |
+| **ETC** | Etabli | 56.1% | +2.5pp | 0 |  |
+| **WOO** | Speculative | 56.0% | +2.4pp | 0 |  |
+| **TAO** | Etabli | 56.0% | +2.4pp | 2 |  |
+| **ADA** | Etabli | 55.9% | +2.3pp | 0 |  |
+| **CFX** | Mid | 55.7% | +2.1pp | 2 |  |
