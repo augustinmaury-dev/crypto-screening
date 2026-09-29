@@ -129,6 +129,11 @@ def main():
     ml = importlib.import_module("06b_ml_score")
     step("ml_score", ml.run)
 
+    # --- 10b Annonces d'ETF crypto (SEC EDGAR) : dossiers S-1/S-3, enregistrements 8-A12B ---
+    if not args.skip_fetch:
+        etf = importlib.import_module("10b_etf_filings")
+        step("etf_filings", etf.run)
+
     # --- 09 Explosion screen (avant le report pour enrichir le CSV) ---
     expl = importlib.import_module("09_explosion_screen")
     step("explosion_screen", expl.run)

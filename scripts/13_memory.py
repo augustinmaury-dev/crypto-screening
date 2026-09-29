@@ -8,7 +8,7 @@ Génère et met à jour chaque jour :
 """
 from __future__ import annotations
 from common import ROOT, TODAY, COMPUTED, HISTORY, setup_logger, is_derivative_token
-import csv, json
+import csv, json, re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -27,7 +27,7 @@ MAX_JOURNAL_DAYS = 30   # jours de journal conservés
 N_QUINTILES = 5
 # Leaders (cf. 06b_ml_score.py) : perf 30 j top 10 % ET à moins de 5 % du plus haut 90 j — suivis à part
 LEADER_PCT, LEADER_DIST, LEADER_MAX = 0.90, 0.05, 15
-SELECTIONS = (f"top{TOP_N_PRED}", "leaders")
+SELECTIONS = (f"top{TOP_N_PRED}", "leaders", "etf")   # etf = token au jour d'un dépôt SEC (10b_etf_filings.py)
 
 def model_group(row: dict) -> str:
     """Ancienne formule manuelle vs modèle appris (06b_ml_score.py)."""
@@ -233,6 +233,25 @@ def leaders_of_day(date: str, rows: list[dict]) -> list[dict]:
     for r in L: r["_r30"] = r30[r["symbol"]]
     return L[:LEADER_MAX]
 
+def etf_events() -> list[dict]:
+    """Dépôts SEC rattachés à un token (data/learning/etf_filings.json), 1 événement par token et par jour."""
+    store = load_json(LEARNING / "etf_filings.json", {}) or {}
+    seen, out = set(), []
+    for fl in sorted(store.values(), key=lambda x: x.get("date", "")):
+        for t in fl.get("tokens", []):
+            k = (t, fl["date"])
+            if k in seen: continue
+            seen.add(k); out.append({**fl, "token": t})
+    return out
+
+def snapshot_on_or_after(date_iso: str, tol: int = 3) -> str | None:
+    d = date_iso.replace("-", "")
+    for e in range(tol + 1):
+        dd = shift_date(d, e)
+        if dd > TODAY: return None
+        if load_snapshot(dd): return dd
+    return None
+
 def history_dates() -> list[str]:
     return sorted(p.stem.replace("scores_", "") for p in HISTORY.glob("scores_*.csv"))
 
@@ -328,6 +347,16 @@ def update_prediction_log(today_scores: list[dict]) -> list[dict]:
                 pr = make_prediction(date, row, rank, "leaders")
                 pr["ret_30d_pct"] = round(float(row.get("_r30") if row.get("_r30") is not None else (_fnum(row.get("ret_30d_pct")) or 0)), 1)
                 pred_log.append(pr); existing_keys.add(key); new_count += 1
+    # ── Événements ETF (SEC) : chaque dépôt devient une « prédiction » suivie à 7 et 14 j ──
+    for ev in etf_events():
+        d = snapshot_on_or_after(ev["date"])
+        sym = ev["token"] + "USDT"
+        row = (load_snapshot(d) or {}).get(sym) if d else None
+        if not row or (d, sym, "etf") in existing_keys:
+            continue
+        pr = make_prediction(d, row, 0, "etf")
+        pr.update({"etf_form": ev.get("form"), "etf_kind": ev.get("kind"), "etf_date": ev["date"], "etf_entity": ev.get("entity", "")})
+        pred_log.append(pr); existing_keys.add((d, sym, "etf")); new_count += 1
     log.info(f"Nouvelles prédictions enregistrées (backfill inclus) : {new_count}")
 
     # ── 2. Mesure des résultats ────────────────────────────────────────────
@@ -791,6 +820,58 @@ def generate_memory(
         a("")
         a("*Exit risk élevé = surachat / essoufflement possible. Un leader peut perdre 30 % en quelques jours.*")
     a("")
+    a("---")
+    a("")
+
+    # ── Annonces ETF (SEC) ─────────────────────────────────────────────────
+    a("## 📑 Annonces d'ETF crypto (SEC EDGAR)")
+    a("")
+    a("*Tout ETF crypto américain dépose ses documents à la SEC avant son lancement : dossier S-1/S-3 et ses amendements, "
+      "puis enregistrement en bourse (8-A12B) quelques jours avant la cotation. ZEC et NEAR ont fortement monté autour de leurs ETF. "
+      "Étude du 29/09/2026 : après un dépôt de dossier, 75 % des tokens ont battu le marché à 7 et 14 j ; "
+      "avant un 8-A12B, la hausse était souvent déjà faite (+33 pts sur les 14 j précédents). Petit échantillon : suivi réel ci-dessous.*")
+    a("")
+    etf_m = [p for p in pred_log if p.get("selection") == "etf" and p.get("return_7d") is not None]
+    if etf_m:
+        a("| Type de dépôt | Événements | Battent le marché à 7 j | Excès médian 7 j | Battent le marché à 14 j | Excès médian 14 j |")
+        a("|---|---|---|---|---|---|")
+        for kind, label in (("dossier", "Dossier / amendement (S-1, S-3)"), ("prospectus", "Prospectus définitif (424B)"),
+                            ("listing", "Enregistrement en bourse (8-A12B)")):
+            g = [p for p in etf_m if p.get("etf_kind") == kind]
+            if not g: continue
+            g14 = [p for p in g if p.get("excess_14d") is not None]
+            b7 = sum(1 for p in g if p.get("beat_market_7d")) / len(g)
+            m7 = _median([p["excess_7d"] for p in g if p.get("excess_7d") is not None] or [0])
+            b14 = (sum(1 for p in g14 if p.get("beat_market_14d")) / len(g14)) if g14 else float("nan")
+            m14 = _median([p["excess_14d"] for p in g14] or [0])
+            a(f"| {label} | {len(g)} | {b7:.0%} | {m7:+.1f} pts | {b14:.0%} | {m14:+.1f} pts |")
+        a("")
+    recent = sorted([e for e in etf_events() if e["date"].replace("-", "") >= shift_date(TODAY, -30)],
+                    key=lambda e: e["date"], reverse=True)
+    if recent:
+        a("**Dépôts des 30 derniers jours :**")
+        a("")
+        a("| Date | Token | Dépôt | Fonds | Depuis le dépôt (vs marché) |")
+        a("|---|---|---|---|---|")
+        for e in recent[:20]:
+            d0 = snapshot_on_or_after(e["date"]); sym = e["token"] + "USDT"
+            perf = "…"
+            if d0 and d0 < TODAY:
+                p0 = _fnum((load_snapshot(d0) or {}).get(sym, {}).get("price"))
+                p1 = _fnum((load_snapshot(TODAY) or {}).get(sym, {}).get("price")) or \
+                     _fnum(next((r.get("price") for r in today_scores if r.get("symbol") == sym), None))
+                med = universe_median_return(d0, TODAY)
+                if p0 and p1 and med is not None:
+                    perf = f"{(p1 / p0 - 1) * 100:+.0f}% ({(p1 / p0 - 1) * 100 - med:+.0f} pts)"
+            fund = re.sub(r"\s*\(CIK.*", "", e.get("entity", ""))
+            a(f"| {e['date']} | **{e['token']}** | {e.get('form')} | {fund} | {perf} |")
+        a("")
+    active = [r for r in today_scores if (r.get("etf_stage") or "").startswith(("🟢", "📝"))]
+    if active:
+        a("**Tokens avec un ETF en préparation ou en lancement :** " + ", ".join(
+            f"{r['symbol'].replace('USDT', '')} ({r['etf_stage'].split(' ')[0]} {r.get('etf_last_form')} le {r.get('etf_last_date')})"
+            for r in sorted(active, key=lambda r: r.get("etf_last_date", ""), reverse=True)))
+        a("")
     a("---")
     a("")
 
