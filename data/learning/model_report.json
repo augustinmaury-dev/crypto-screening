@@ -1,14 +1,14 @@
 {
- "date": "20260929",
+ "date": "20260930",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb+alt_blend",
- "calibration_k": 0.431,
- "train_rows": 53745,
- "train_days": 135,
- "alt_days_measured": 11,
+ "calibration_k": 0.395,
+ "train_rows": 54139,
+ "train_days": 136,
+ "alt_days_measured": 12,
  "min_alt_days_for_alt_model": 30,
- "coingecko_ranks_missing_today": true,
+ "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
   "count": 71,
   "tokens": [
@@ -90,86 +90,136 @@
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
-    "symbol": "ARK",
-    "ret_30d_pct": 118.4,
-    "dist_high_90d_pct": 4.7
-   },
-   {
-    "symbol": "0G",
-    "ret_30d_pct": 98.7,
+    "symbol": "QNT",
+    "ret_30d_pct": 395.3,
     "dist_high_90d_pct": 0.0
    },
    {
+    "symbol": "ARK",
+    "ret_30d_pct": 252.0,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "NEAR",
+    "ret_30d_pct": 186.3,
+    "dist_high_90d_pct": 0.7
+   },
+   {
+    "symbol": "RAY",
+    "ret_30d_pct": 159.5,
+    "dist_high_90d_pct": 4.7
+   },
+   {
+    "symbol": "NIGHT",
+    "ret_30d_pct": 104.2,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "MOVR",
+    "ret_30d_pct": 92.7,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "SOMI",
+    "ret_30d_pct": 86.9,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "SUPER",
+    "ret_30d_pct": 86.5,
+    "dist_high_90d_pct": 2.6
+   },
+   {
     "symbol": "INIT",
-    "ret_30d_pct": 83.8,
+    "ret_30d_pct": 81.8,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "ENA",
+    "ret_30d_pct": 77.2,
+    "dist_high_90d_pct": 2.1
+   },
+   {
+    "symbol": "AERO",
+    "ret_30d_pct": 74.2,
+    "dist_high_90d_pct": 3.1
+   },
+   {
+    "symbol": "ZRO",
+    "ret_30d_pct": 71.9,
     "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "RUNE",
-    "ret_30d_pct": 59.5,
-    "dist_high_90d_pct": 2.6
+    "ret_30d_pct": 69.4,
+    "dist_high_90d_pct": 0.0
    },
    {
-    "symbol": "AVAX",
-    "ret_30d_pct": 51.5,
-    "dist_high_90d_pct": 0.9
+    "symbol": "RED",
+    "ret_30d_pct": 69.3,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "PYTH",
+    "ret_30d_pct": 67.6,
+    "dist_high_90d_pct": 4.9
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.528,
+  "model_top20_beat": 0.529,
   "days": 36,
-  "naive_top20_beat": 0.468,
-  "shrink_k": 0.431
+  "naive_top20_beat": 0.467,
+  "shrink_k": 0.395
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.873
+   "effect": 0.849
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.675
+   "effect": -0.676
   },
   {
    "feature": "p_ma50",
-   "effect": -0.591
+   "effect": -0.585
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.384
+   "effect": 0.389
   },
   {
    "feature": "log_rank",
-   "effect": -0.357
+   "effect": -0.355
   },
   {
    "feature": "trend_rank",
-   "effect": 0.35
+   "effect": 0.342
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.342
-  },
-  {
-   "feature": "pat_resistance_test",
-   "effect": -0.336
+   "effect": -0.33
   },
   {
    "feature": "macd_n",
-   "effect": -0.331
+   "effect": -0.327
   },
   {
-   "feature": "bear_signals",
-   "effect": -0.313
+   "feature": "pat_resistance_test",
+   "effect": -0.322
+  },
+  {
+   "feature": "pat_bear_flag",
+   "effect": -0.307
   }
  ],
  "regime": {
-  "alt_index_30d": 85.0,
-  "btc_ret_30d": 6.1,
-  "alt_index_90d": 59.2,
-  "btc_ret_90d": 42.1,
-  "breadth_ma50": 89.6,
+  "alt_index_30d": 88.0,
+  "btc_ret_30d": 8.8,
+  "alt_index_90d": 64.3,
+  "btc_ret_90d": 39.4,
+  "breadth_ma50": 93.1,
   "label": "Altseason en formation"
  }
 }
