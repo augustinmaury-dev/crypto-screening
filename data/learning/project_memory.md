@@ -18,8 +18,8 @@ Je surveille aussi le **régime de marché** (altseason ou saison Bitcoin), car 
 
 ### Régime de marché : 🌱 Altseason en formation
 
-- **Indice altseason** : 88.0 sur 30 j, 64.3 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)
-- **BTC** : 8.8 % sur 30 j · **Tokens au-dessus de leur MA50** : 93.1 %
+- **Indice altseason** : 87.0 sur 30 j, 63.3 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)
+- **BTC** : 7.0 % sur 30 j · **Tokens au-dessus de leur MA50** : 91.6 %
 - ⚠️ **En altseason, les règles changent** : la prime aux grosses caps peu volatiles (ce que j'ai surtout appris) s'efface et le momentum redevient payant. J'intègre donc une part de momentum dans le classement, et j'entraînerai un modèle dédié à l'altseason dès que j'aurai 30 jours d'altseason mesurés (actuellement : 12).
 
 ### Mon modèle aujourd'hui : `ml_gb+alt_blend`
@@ -63,8 +63,8 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 | Pattern | Hit rate | Échantillons | Tendance |
 |---------|----------|--------------|---------|
 | `squeeze_breakout` | 54.5% | 396 | 📈 |
-| `golden_cross` | 47.9% | 654 | 📈 |
 | `uptrend` | 47.9% | 11184 | 📈 |
+| `golden_cross` | 47.9% | 654 | 📈 |
 | `hammer_4h` | 46.1% | 297 | 📈 |
 | `rsi_bullish_divergence` | 44.6% | 2492 | → |
 | `bullish_engulfing_4h` | 44.2% | 1103 | 📈 |
@@ -114,7 +114,7 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 | 23 sep 2026 | **TWT** | 74% | 0.5717 | +5.3% | ✅ +4.1pp | … |
 | 23 sep 2026 | **VET** | 74% | 0.009492 | -3.1% | ❌ -4.3pp | … |
 
-**165 prédictions en attente de résultat (< 7 jours).**
+**172 prédictions en attente de résultat (< 7 jours).**
 
 ---
 
@@ -134,21 +134,19 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 
 | # | Token | Tier | Perf 30 j | Score principal | Exit risk |
 |---|-------|------|-----------|-----------------|-----------|
-| 1 | **QNT** | Etabli | +395% | 46.2% | ⚠️ 8 |
-| 2 | **ARK** | Mid | +252% | 46.1% | ⚠️ 6 |
-| 3 | **NEAR** | Etabli | +186% | 48.3% | ⚠️ 4 |
-| 4 | **RAY** | Mid | +160% | 47.7% | ⚠️ 5 |
-| 5 | **NIGHT** | Mid | +104% | 46.3% | ⚠️ 6 |
-| 6 | **MOVR** | Speculative | +93% | 46.0% | ⚠️ 4 |
-| 7 | **SOMI** | Speculative | +87% | 46.8% | ⚠️ 6 |
-| 8 | **SUPER** | Mid | +86% | 48.4% | ⚠️ 4 |
-| 9 | **INIT** | Speculative | +82% | 47.0% | ⚠️ 6 |
-| 10 | **ENA** | Etabli | +77% | 47.7% | 2 |
-| 11 | **AERO** | Etabli | +74% | 48.9% | ⚠️ 4 |
-| 12 | **ZRO** | Mid | +72% | 47.1% | ⚠️ 6 |
-| 13 | **RUNE** | Mid | +69% | 48.3% | ⚠️ 6 |
-| 14 | **RED** | Mid | +69% | 48.6% | ⚠️ 4 |
-| 15 | **PYTH** | Mid | +68% | 47.5% | ⚠️ 4 |
+| 1 | **QNT** | Etabli | +386% | 46.3% | ⚠️ 8 |
+| 2 | **NEAR** | Etabli | +186% | 48.4% | ⚠️ 4 |
+| 3 | **NIGHT** | Mid | +114% | 46.7% | ⚠️ 6 |
+| 4 | **MOVR** | Speculative | +112% | 46.3% | ⚠️ 6 |
+| 5 | **SUPER** | Mid | +84% | 49.1% | ⚠️ 4 |
+| 6 | **INIT** | Speculative | +79% | 47.6% | ⚠️ 4 |
+| 7 | **SOMI** | Speculative | +77% | 46.8% | ⚠️ 4 |
+| 8 | **ENA** | Etabli | +74% | 48.8% | 2 |
+| 9 | **RUNE** | Mid | +73% | 47.3% | ⚠️ 6 |
+| 10 | **RED** | Mid | +67% | 47.5% | ⚠️ 4 |
+| 11 | **REZ** | Speculative | +62% | 47.2% | ⚠️ 4 |
+| 12 | **ZRO** | Mid | +61% | 47.2% | ⚠️ 6 |
+| 13 | **CVC** | Speculative | +58% | 48.3% | ⚠️ 5 |
 
 *Exit risk élevé = surachat / essoufflement possible. Un leader peut perdre 30 % en quelques jours.*
 
@@ -157,6 +155,26 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 ## 📑 Annonces d'ETF crypto (SEC EDGAR)
 
 *Tout ETF crypto américain dépose ses documents à la SEC avant son lancement : dossier S-1/S-3 et ses amendements, puis enregistrement en bourse (8-A12B) quelques jours avant la cotation. ZEC et NEAR ont fortement monté autour de leurs ETF. Étude du 29/09/2026 : après un dépôt de dossier, 75 % des tokens ont battu le marché à 7 et 14 j ; avant un 8-A12B, la hausse était souvent déjà faite (+33 pts sur les 14 j précédents). Petit échantillon : suivi réel ci-dessous.*
+
+| Type de dépôt | Événements | Battent le marché à 7 j | Excès médian 7 j | Battent le marché à 14 j | Excès médian 14 j |
+|---|---|---|---|---|---|
+| Dossier / amendement (S-1, S-3) | 33 | 79% | +4.0 pts | 87% | +6.5 pts |
+| Enregistrement en bourse (8-A12B) | 8 | 50% | +0.6 pts | 62% | +1.9 pts |
+
+**Dépôts des 30 derniers jours :**
+
+| Date | Token | Dépôt | Fonds | Depuis le dépôt (vs marché) |
+|---|---|---|---|---|
+| 2026-09-24 | **INJ** | S-1/A | Canary Staked INJ ETF | -9% (-12 pts) |
+| 2026-09-24 | **NEAR** | 8-A12B | Bitwise NEAR ETF  (NRR) | +21% (+18 pts) |
+| 2026-09-18 | **INJ** | S-1/A | 21Shares Injective ETF | +9% (-3 pts) |
+| 2026-09-16 | **NEAR** | S-1/A | Bitwise NEAR ETF | +117% (+96 pts) |
+| 2026-09-15 | **SEI** | S-1/A | Canary Staked SEI ETF | +68% (+51 pts) |
+| 2026-09-11 | **LTC** | S-3/A | Grayscale Litecoin Trust (LTC)  (LTCN) | +27% (+6 pts) |
+| 2026-09-11 | **BCH** | S-3/A | Grayscale Bitcoin Cash Trust (BCH)  (BCHG) | +37% (+16 pts) |
+| 2026-09-08 | **TRX** | 8-A12B | Canary Staked TRX ETF  (TRXS) | -0% (-13 pts) |
+
+**Tokens avec un ETF en préparation ou en lancement :** INJ (📝 S-1/A le 2026-09-24), NEAR (🟢 8-A12B le 2026-09-24), SEI (📝 S-1/A le 2026-09-15), BCH (📝 S-3/A le 2026-09-11), LTC (📝 S-3/A le 2026-09-11), TRX (🟢 8-A12B/A le 2026-09-08), ZEC (🟢 8-A12B le 2026-08-24), ETH (📝 S-3/A le 2026-08-19), ARK (🟢 8-A12B le 2026-08-12)
 
 ---
 
@@ -245,21 +263,21 @@ C'est pourquoi le score principal vient désormais d'un modèle appris (voir plu
 
 ## Aujourd'hui — 30 sep 2026
 
-**Régime :** 🌱 Altseason en formation (indice altseason 30 j : 88.0)
+**Régime :** 🌱 Altseason en formation (indice altseason 30 j : 87.0)
 
 **Top 12 du jour** — score = probabilité de battre la médiane du marché sur 7 j (modèle : `ml_gb+alt_blend`) :
 
 | Token | Tier | Score | vs BTC | Exit risk | Catalyseurs |
 |-------|------|-------|--------|-----------|-------------|
-| **RENDER** | Etabli | 57.0% | +1.8pp | 2 |  |
-| **ENS** | Mid | 56.4% | +1.2pp | ⚠️ 4 |  |
-| **SOL** | Etabli | 56.3% | +1.1pp | ⚠️ 4 |  |
-| **XLM** | Etabli | 55.9% | +0.7pp | 2 |  |
-| **TAO** | Etabli | 55.8% | +0.6pp | 2 |  |
-| **WIF** | Mid | 55.5% | +0.3pp | ⚠️ 4 |  |
-| **KAIA** | Mid | 55.5% | +0.3pp | 2 |  |
-| **ADA** | Etabli | 55.3% | +0.1pp | ⚠️ 4 |  |
-| **NEO** | Mid | 55.2% | +0.0pp | ⚠️ 4 |  |
-| **BTC** | Etabli | 55.2% | +0.0pp | ⚠️ 5 | 🔥 Trending #11 sur CoinGecko |
-| **WOO** | Speculative | 55.1% | -0.1pp | 2 |  |
-| **AXL** | Mid | 55.0% | -0.2pp | 2 |  |
+| **RENDER** | Etabli | 56.9% | +4.3pp | 0 |  |
+| **ENS** | Mid | 56.5% | +3.9pp | 2 |  |
+| **LPT** | Mid | 56.1% | +3.5pp | 2 |  |
+| **TAO** | Etabli | 56.0% | +3.4pp | ⚠️ 4 |  |
+| **XLM** | Etabli | 55.2% | +2.6pp | 2 |  |
+| **WIF** | Mid | 55.0% | +2.4pp | ⚠️ 4 |  |
+| **KAIA** | Mid | 55.0% | +2.4pp | 2 |  |
+| **THETA** | Mid | 54.9% | +2.3pp | ⚠️ 5 |  |
+| **ADA** | Etabli | 54.9% | +2.3pp | 0 |  |
+| **NEO** | Mid | 54.8% | +2.2pp | ⚠️ 6 |  |
+| **CFX** | Mid | 54.7% | +2.1pp | ⚠️ 4 |  |
+| **WAL** | Mid | 54.4% | +1.8pp | 3 |  |
