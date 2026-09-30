@@ -819,6 +819,12 @@ def generate_memory(
               f"{float(_fnum(r.get('score')) or 0):.1f}% | {'⚠️ ' if er >= 4 else ''}{er} |")
         a("")
         a("*Exit risk élevé = surachat / essoufflement possible. Un leader peut perdre 30 % en quelques jours.*")
+    sw = ((mrep or {}).get("already_exploded") or {}).get("leaders_removed_second_wave") or []
+    if sw:
+        a("")
+        a(f"**Écartés aujourd'hui — « 2e vague »** (déjà +100 % ou plus dans les 6 mois avant la hausse actuelle) : "
+          f"{', '.join(sw)}. *Sur 2 ans de données, ces leaders n'ont battu le marché que 43 % du temps à 7 j "
+          f"(32 % à 30 j), contre 50 % / 51 % pour les leaders dans leur 1re hausse.*")
     a("")
     a("---")
     a("")

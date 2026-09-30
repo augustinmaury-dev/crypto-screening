@@ -89,6 +89,17 @@ python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
 - Un modèle ML entraîné à prédire les top 10 % a été testé : moins bon que la règle simple → non intégré.
 - Moteurs fondamentaux observés (non automatisés) : ETF spot (ZEC Grayscale 25/08, NEAR Bitwise 24/09), tokenomics (UNI fee switch + burn).
 
+### « Déjà explosé » (ajouté le 30/09/2026, idée d'Augustin)
+- Hypothèse : une crypto qui a déjà explosé a moins de chances d'exploser à nouveau. Testée sur 2 ans de cours Binance
+  (juil. 2024 → sept. 2026, 391 tokens, relevés hebdo, 21 900 cas) : après une hausse ≥ +100 % dans les 180 j, un token bat
+  le marché à 30 j dans 40-47 % des cas (53 % sinon) et refait +100 % en 90 j deux fois moins souvent. Vrai dans les deux moitiés
+  de la période, dans tous les régimes, et d'autant plus net que l'explosion passée était forte.
+- Nuance : un token proche de son plus haut SANS explosion passée (hausse régulière) bat le marché 67 % du temps à 30 j.
+- Intégration (06b) : colonnes runup_180d_pct / already_exploded ; badge 💥 dans le dashboard ; les leaders « 2e vague »
+  (déjà +100 % dans les 180 j AVANT les 30 derniers jours) sont retirés de la liste (43 % à 7 j / 32 % à 30 j contre 50 % / 51 %
+  pour une 1re hausse ; sur l'historique du projet : 37 % à 14 j, excès moyen −15 pts). Ajouté comme variable du modèle principal,
+  ça n'apportait rien (62,7 % → 62,0 %) : le modèle évite déjà ces tokens → non ajouté.
+
 ### Annonces d'ETF crypto — SEC EDGAR (10b_etf_filings.py, ajouté le 29/09/2026)
 - Source : recherche plein texte EDGAR (https://efts.sec.gov/LATEST/search-index), gratuite, sans clé.
   Dépôts suivis : S-1, S-3 (+ amendements), 424B3/4, 8-A12B (enregistrement en bourse = lancement imminent).
@@ -97,8 +108,8 @@ python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
   badge 📑 dans le dashboard ; section dans project_memory.md ; chaque dépôt suivi à 7/14 j (sélection `etf`).
 - Étude avril→sept. 2026 (24 dépôts « dossier ») : 75 % des tokens battent le marché à 7 et 14 j (excès médian +3 à +5 pts) ;
   avant un 8-A12B : +33 pts sur 14 j → hausse souvent déjà faite. Petit échantillon, à confirmer.
-- HYPE et CRO ont des ETF mais ne sont pas dans l'univers Binance. Si la SEC refuse les requêtes : ajouter un secret
-  GitHub SEC_CONTACT (e-mail) — l'User-Agent l'inclura.
+- HYPE et CRO ont des ETF mais ne sont pas dans l'univers Binance. La SEC exige un e-mail dans l'User-Agent (403 sinon) :
+  il vient du secret GitHub SEC_CONTACT (créé le 30/09/2026). État de la connexion : data/learning/etf_status.json.
 
 ### Suivi des prédictions (13_memory.py)
 - Une prédiction = un des 20 premiers du classement du jour ; jugée à 7 j et 14 j vs médiane du marché.

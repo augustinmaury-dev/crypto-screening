@@ -62,6 +62,21 @@ LEADER_PCT     = 0.90   # percentile minimum de la perf 30 j
 LEADER_DIST    = 0.05   # distance max au plus haut 90 j
 LEADER_MAX     = 15     # nombre max affiché
 
+# DÉJÀ EXPLOSÉ (ajouté le 30/09/2026, idée d'Augustin : « une crypto qui a déjà explosé a moins de chances
+# d'exploser à nouveau »). Vérifié sur 2 ans de cours Binance (juil. 2024 → sept. 2026, 391 tokens, 21 900 cas) :
+#   hausse ≥ +100 % dans les 180 derniers jours → bat le marché à 30 j dans 40-47 % des cas (vs 53 % sinon),
+#   refait +100 % en 90 j deux fois moins souvent (1-2 % vs 3,5 %). Vrai dans les deux moitiés de la période
+#   et dans tous les régimes ; plus l'explosion passée est forte, plus l'effet est net.
+#   Leaders (bat le marché à 7 j / 30 j) : 1re hausse 50 % / 51 % ; avec une explosion AVANT la hausse actuelle
+#   (runup_prev ≥ 100 %) 43 % / 32 % → ces « 2e vagues » sont retirées de la liste des leaders.
+#   Confirmé sur l'historique du projet (juin→sept. 2026) : 2e vagues 37 % à 14 j (excès moyen −15 pts),
+#   1res hausses 52 % (+8 pts). En revanche, ajouté comme variable du modèle principal, ça n'apporte rien
+#   (top 20 : 62,7 % → 62,0 %) : le modèle évite déjà ces tokens (seulement 6 % de son top 20). On s'en sert
+#   donc pour les leaders et pour l'affichage (colonnes runup_180d_pct / already_exploded, badge 💥).
+RUNUP_WINDOW   = 180    # jours regardés en arrière
+RUNUP_RECENT   = 30     # runup_prev = explosion terminée avant les 30 derniers jours (≠ hausse en cours)
+EXPLODED_RUNUP = 1.0    # +100 % = « a explosé »
+
 PATS = ["uptrend", "downtrend", "macd_bullish_cross", "macd_bearish_cross", "golden_cross", "death_cross",
         "double_top_90d", "double_bottom_90d", "support_bounce", "resistance_test", "rsi_bullish_divergence",
         "rsi_bearish_divergence", "squeeze_breakout", "breakout_30d", "breakdown_30d", "bull_flag", "bear_flag"]
@@ -125,6 +140,26 @@ def shifted_prices(pd, price, offset_days, tol=2):
             if t in idx:
                 rows[d] = price.loc[t]; break
     return pd.DataFrame(rows).T.reindex(price.index)
+
+
+def runup_tables(pd, np, price):
+    """Pour chaque (date, token) : la plus forte hausse (plus haut / plus bas qui le précède, − 1) sur les
+    RUNUP_WINDOW derniers jours (runup_180d), et la même chose en s'arrêtant RUNUP_RECENT jours avant (runup_prev)."""
+    days = ((price.index - price.index[0]) / pd.Timedelta(days=1)).astype(int).to_numpy()
+    vals = price.to_numpy(dtype=float)
+    run = np.full(vals.shape, np.nan); prev = np.full(vals.shape, np.nan)
+    for j in range(vals.shape[1]):
+        col = vals[:, j]
+        for i in range(len(days)):
+            if not col[i] > 0:
+                continue
+            m = (days >= days[i] - RUNUP_WINDOW) & (days <= days[i]) & (col > 0)
+            w = col[m]
+            run[i, j] = float((w / np.minimum.accumulate(w)).max() - 1)
+            wp = col[m & (days <= days[i] - RUNUP_RECENT)]
+            prev[i, j] = float((wp / np.minimum.accumulate(wp)).max() - 1) if len(wp) else 0.0
+    return (pd.DataFrame(run, index=price.index, columns=price.columns),
+            pd.DataFrame(prev, index=price.index, columns=price.columns))
 
 
 def build_features(pd, np, raw, price):
@@ -258,9 +293,15 @@ def run():
     today_raw = raw[raw["date"] == today_ts].set_index("symbol")
     dh_today = pd.to_numeric(today_raw["dist_to_high_90d"], errors="coerce") if "dist_to_high_90d" in today_raw else pd.Series(dtype=float)
     r30_pct = r30_today.rank(pct=True)
-    leaders = sorted([s for s in r30_today.index
-                      if r30_pct[s] >= LEADER_PCT and dh_today.get(s, float("nan")) < LEADER_DIST],
-                     key=lambda s: -r30_today[s])[:LEADER_MAX]
+    runups = runup_tables(pd, np, price)
+    run_today = runups[0].loc[today_ts] if today_ts in runups[0].index else pd.Series(dtype=float)
+    prev_today = runups[1].loc[today_ts] if today_ts in runups[1].index else pd.Series(dtype=float)
+    candidates = [s for s in r30_today.index
+                  if r30_pct[s] >= LEADER_PCT and dh_today.get(s, float("nan")) < LEADER_DIST]
+    second_wave = sorted(s for s in candidates if prev_today.get(s, 0) >= EXPLODED_RUNUP)
+    leaders = sorted([s for s in candidates if s not in second_wave], key=lambda s: -r30_today[s])[:LEADER_MAX]
+    if second_wave:
+        log.info(f"Leaders écartés (déjà explosé avant la hausse actuelle) : {', '.join(s.replace('USDT', '') for s in second_wave)}")
     alt_now = (reg_today.get("alt_index_30d") or 0) >= ALT_ACTIVE_30
     leader_label = "🚀 Leader (altseason)" if alt_now else "🎲 Leader (spéculatif)"
     log.info(f"Leaders : {len(leaders)} — {', '.join(s.replace('USDT', '') for s in leaders[:8])}")
@@ -344,7 +385,8 @@ def run():
         rows = list(csv.DictReader(f))
     fields = list(rows[0].keys()) if rows else []
     for extra in ("outperf_prob_7d", "bull_prob_7d_legacy", "score_model", "market_regime", "alt_index_30d", "alt_index_90d",
-                  "derivative", "rank_source", "ret_30d_pct", "leader", "leader_rank", "leader_label"):
+                  "derivative", "rank_source", "ret_30d_pct", "leader", "leader_rank", "leader_label",
+                  "runup_180d_pct", "already_exploded"):
         if extra not in fields: fields.append(extra)
     for r in rows:
         r["bull_prob_7d_legacy"] = r.get("bull_prob_7d_legacy") or r.get("bull_prob_7d", "")
@@ -354,6 +396,9 @@ def run():
         r["leader"] = r["symbol"] in leaders
         r["leader_rank"] = leaders.index(r["symbol"]) + 1 if r["leader"] else ""
         r["leader_label"] = leader_label if r["leader"] else ""
+        ru = run_today.get(r["symbol"])
+        r["runup_180d_pct"] = round(float(ru) * 100) if ru is not None and ru == ru else ""
+        r["already_exploded"] = bool(ru is not None and ru == ru and ru >= EXPLODED_RUNUP)
         r["rank_source"] = "coingecko" if r.get("rank_mcap") else ""
         if today_ranks_carried and not r.get("rank_mcap"):
             cr = carried_rank_today.get(r["symbol"])
@@ -399,6 +444,9 @@ def run():
         "min_alt_days_for_alt_model": MIN_ALT_DAYS,
         "coingecko_ranks_missing_today": bool(today_ranks_carried),
         "derivatives_excluded": {"count": len(derivatives_today), "tokens": derivatives_today},
+        "already_exploded": {"rule": f"hausse ≥ +{EXPLODED_RUNUP:.0%} sur {RUNUP_WINDOW} j",
+                             "count_today": int((run_today >= EXPLODED_RUNUP).sum()),
+                             "leaders_removed_second_wave": [s.replace("USDT", "") for s in second_wave]},
         "leaders": {"label": leader_label, "rule": f"perf 30 j ≥ percentile {LEADER_PCT:.0%} et ≤ {LEADER_DIST:.0%} du plus haut 90 j",
                     "tokens": [{"symbol": s.replace("USDT", ""), "ret_30d_pct": round(float(r30_today[s]) * 100, 1),
                                 "dist_high_90d_pct": round(float(dh_today.get(s, 0)) * 100, 1)} for s in leaders]},

@@ -56,7 +56,8 @@ NAME_TO_TICKER = [
     ("mantra", "OM"), ("flare", "FLR"), ("monero", "XMR"), ("berachain", "BERA"), ("story", "IP"),
 ]
 STOP = {"ETF", "TRUST", "FUND", "FUNDS", "USD", "THE", "NEW", "ONE", "INC", "LLC", "CIK", "SERIES", "SHARES",
-        "STAKED", "STAKING", "INCOME", "PREMIUM", "ACTIVE", "CRYPTO", "DIGITAL", "INDEX", "AND", "FOR", "ALL"}
+        "STAKED", "STAKING", "INCOME", "PREMIUM", "ACTIVE", "CRYPTO", "DIGITAL", "INDEX", "AND", "FOR", "ALL",
+        "ARK"}   # ARK = ARK Invest (gestionnaire d'ETF), pas le token ARK
 
 
 def fetch_filings() -> list[dict]:
@@ -106,6 +107,10 @@ def run():
     if STORE.exists():
         try: store = json.loads(STORE.read_text(encoding="utf-8"))
         except Exception: store = {}
+    for k in list(store):   # re-vérifie les dépôts déjà connus si les règles de rattachement ont changé
+        toks = match_tokens(store[k].get("entity", ""), universe | set(store[k].get("tokens", [])))
+        if toks: store[k]["tokens"] = toks
+        else: del store[k]
     try:
         raw = fetch_filings()
         new = 0
