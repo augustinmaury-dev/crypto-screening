@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260901",
-    "btc_prob": 56.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "STRAX",
-      "NOT",
-      "SOMI",
-      "ONT",
-      "ENSO"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.43,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260902",
     "btc_prob": 67.0,
     "regime": "Haussier",
@@ -493,5 +477,24 @@
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.545,
     "bear_signals_ok": 8
+  },
+  {
+    "date": "20261001",
+    "regime": "Altseason en formation",
+    "alt_index_30d": 83.0,
+    "alt_index_90d": 59.2,
+    "btc_ret_30d": 7.2,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "RENDER",
+      "TAO",
+      "WIF",
+      "XLM",
+      "LPT"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.545,
+    "bear_signals_ok": 9
   }
 ]
