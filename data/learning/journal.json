@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260902",
-    "btc_prob": 67.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "ANKR",
-      "SOPH",
-      "TUSD",
-      "SUSHI",
-      "LA"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.434,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260903",
     "btc_prob": 56.0,
     "regime": "Haussier",
@@ -496,5 +480,24 @@
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.545,
     "bear_signals_ok": 9
+  },
+  {
+    "date": "20261002",
+    "regime": "Altseason en formation",
+    "alt_index_30d": 82.0,
+    "alt_index_90d": 60.2,
+    "btc_ret_30d": 13.0,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "RENDER",
+      "KAIA",
+      "LPT",
+      "WIF",
+      "IOTA"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.552,
+    "bear_signals_ok": 7
   }
 ]
