@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260904",
-    "btc_prob": 51.0,
-    "regime": "Neutre",
-    "top_tokens": [
-      "HIVE",
-      "PROM",
-      "ZKP",
-      "LISTA",
-      "LPT"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.44,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260905",
     "btc_prob": 58.0,
     "regime": "Haussier",
@@ -501,6 +485,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.559,
+    "bear_signals_ok": 7
+  },
+  {
+    "date": "20261004",
+    "regime": "Altseason en formation",
+    "alt_index_30d": 81.0,
+    "alt_index_90d": 64.3,
+    "btc_ret_30d": 4.7,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "KAIA",
+      "RENDER",
+      "SUI",
+      "WIF",
+      "BCH"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.564,
     "bear_signals_ok": 7
   }
 ]
