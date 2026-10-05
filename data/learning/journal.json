@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260905",
-    "btc_prob": 58.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "AIXBT",
-      "1000CAT",
-      "ZKP",
-      "CATI",
-      "DIA"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.435,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260906",
     "btc_prob": 54.0,
     "regime": "Neutre",
@@ -504,6 +488,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.564,
+    "bear_signals_ok": 7
+  },
+  {
+    "date": "20261005",
+    "regime": "Altseason en formation",
+    "alt_index_30d": 77.0,
+    "alt_index_90d": 64.3,
+    "btc_ret_30d": 7.4,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "RENDER",
+      "EIGEN",
+      "CHZ",
+      "SUI",
+      "BCH"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.567,
     "bear_signals_ok": 7
   }
 ]
