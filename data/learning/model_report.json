@@ -1,12 +1,12 @@
 {
- "date": "20261005",
+ "date": "20261006",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb+alt_blend",
- "calibration_k": 0.472,
- "train_rows": 56109,
- "train_days": 141,
- "alt_days_measured": 17,
+ "calibration_k": 0.427,
+ "train_rows": 56502,
+ "train_days": 142,
+ "alt_days_measured": 18,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
@@ -91,11 +91,13 @@
  },
  "already_exploded": {
   "rule": "hausse ≥ +100% sur 180 j",
-  "count_today": 128,
+  "count_today": 129,
   "leaders_removed_second_wave": [
-   "MINA",
+   "INJ",
    "MUBARAK",
-   "ORCA"
+   "ORCA",
+   "PUMP",
+   "RAY"
   ]
  },
  "leaders": {
@@ -103,121 +105,136 @@
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
-    "symbol": "GTC",
-    "ret_30d_pct": 161.6,
+    "symbol": "RLC",
+    "ret_30d_pct": 176.9,
     "dist_high_90d_pct": 0.0
    },
    {
+    "symbol": "NEAR",
+    "ret_30d_pct": 115.3,
+    "dist_high_90d_pct": 4.2
+   },
+   {
     "symbol": "NIGHT",
-    "ret_30d_pct": 118.8,
-    "dist_high_90d_pct": 3.4
+    "ret_30d_pct": 115.1,
+    "dist_high_90d_pct": 3.1
    },
    {
     "symbol": "ZRO",
-    "ret_30d_pct": 92.4,
+    "ret_30d_pct": 101.1,
     "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "SENT",
-    "ret_30d_pct": 80.9,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "RLC",
-    "ret_30d_pct": 75.5,
+    "ret_30d_pct": 88.5,
     "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "INIT",
-    "ret_30d_pct": 74.7,
-    "dist_high_90d_pct": 2.7
+    "ret_30d_pct": 77.2,
+    "dist_high_90d_pct": 0.2
    },
    {
-    "symbol": "C",
-    "ret_30d_pct": 73.4,
+    "symbol": "NMR",
+    "ret_30d_pct": 76.8,
     "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "AERO",
-    "ret_30d_pct": 66.3,
-    "dist_high_90d_pct": 2.5
-   },
-   {
-    "symbol": "RUNE",
-    "ret_30d_pct": 62.4,
-    "dist_high_90d_pct": 2.6
-   },
-   {
-    "symbol": "BEAMX",
-    "ret_30d_pct": 60.4,
-    "dist_high_90d_pct": 1.7
    },
    {
     "symbol": "FLUX",
-    "ret_30d_pct": 57.3,
+    "ret_30d_pct": 70.4,
     "dist_high_90d_pct": 0.0
    },
    {
-    "symbol": "VELODROME",
-    "ret_30d_pct": 55.9,
-    "dist_high_90d_pct": 3.6
+    "symbol": "SOMI",
+    "ret_30d_pct": 65.6,
+    "dist_high_90d_pct": 2.8
+   },
+   {
+    "symbol": "C",
+    "ret_30d_pct": 60.6,
+    "dist_high_90d_pct": 4.8
+   },
+   {
+    "symbol": "0G",
+    "ret_30d_pct": 58.2,
+    "dist_high_90d_pct": 3.9
+   },
+   {
+    "symbol": "RUNE",
+    "ret_30d_pct": 57.6,
+    "dist_high_90d_pct": 3.4
+   },
+   {
+    "symbol": "AR",
+    "ret_30d_pct": 56.7,
+    "dist_high_90d_pct": 3.3
+   },
+   {
+    "symbol": "BEAMX",
+    "ret_30d_pct": 56.5,
+    "dist_high_90d_pct": 2.4
+   },
+   {
+    "symbol": "RAD",
+    "ret_30d_pct": 50.4,
+    "dist_high_90d_pct": 0.0
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.536,
+  "model_top20_beat": 0.518,
   "days": 36,
-  "naive_top20_beat": 0.467,
-  "shrink_k": 0.472
+  "naive_top20_beat": 0.463,
+  "shrink_k": 0.427
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.82
+   "effect": 0.815
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.693
+   "effect": -0.698
   },
   {
    "feature": "p_ma50",
-   "effect": -0.556
+   "effect": -0.545
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.396
+   "effect": 0.402
   },
   {
    "feature": "log_rank",
-   "effect": -0.347
+   "effect": -0.328
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.308
-  },
-  {
-   "feature": "trend_rank",
-   "effect": 0.306
-  },
-  {
-   "feature": "macd_n",
-   "effect": -0.305
-  },
-  {
-   "feature": "vol_30d_ann",
-   "effect": -0.293
+   "effect": -0.304
   },
   {
    "feature": "bear_signals",
-   "effect": -0.279
+   "effect": -0.295
+  },
+  {
+   "feature": "macd_n",
+   "effect": -0.295
+  },
+  {
+   "feature": "trend_rank",
+   "effect": 0.29
+  },
+  {
+   "feature": "vol_30d_ann",
+   "effect": -0.287
   }
  ],
  "regime": {
-  "alt_index_30d": 77.0,
-  "btc_ret_30d": 7.4,
-  "alt_index_90d": 64.3,
-  "btc_ret_90d": 35.0,
-  "breadth_ma50": 90.6,
+  "alt_index_30d": 76.0,
+  "btc_ret_30d": 8.1,
+  "alt_index_90d": 67.3,
+  "btc_ret_90d": 39.9,
+  "breadth_ma50": 90.3,
   "label": "Altseason en formation"
  }
 }
