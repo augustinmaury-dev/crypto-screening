@@ -1,12 +1,12 @@
 {
- "date": "20261006",
+ "date": "20261007",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb+alt_blend",
- "calibration_k": 0.427,
- "train_rows": 56502,
- "train_days": 142,
- "alt_days_measured": 18,
+ "calibration_k": 0.464,
+ "train_rows": 56895,
+ "train_days": 143,
+ "alt_days_measured": 19,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
@@ -93,11 +93,10 @@
   "rule": "hausse ≥ +100% sur 180 j",
   "count_today": 129,
   "leaders_removed_second_wave": [
-   "INJ",
    "MUBARAK",
-   "ORCA",
    "PUMP",
-   "RAY"
+   "RAY",
+   "WIN"
   ]
  },
  "leaders": {
@@ -106,135 +105,90 @@
   "tokens": [
    {
     "symbol": "RLC",
-    "ret_30d_pct": 176.9,
-    "dist_high_90d_pct": 0.0
+    "ret_30d_pct": 129.8,
+    "dist_high_90d_pct": 1.7
    },
    {
-    "symbol": "NEAR",
-    "ret_30d_pct": 115.3,
-    "dist_high_90d_pct": 4.2
-   },
-   {
-    "symbol": "NIGHT",
-    "ret_30d_pct": 115.1,
-    "dist_high_90d_pct": 3.1
-   },
-   {
-    "symbol": "ZRO",
-    "ret_30d_pct": 101.1,
-    "dist_high_90d_pct": 0.0
+    "symbol": "GTC",
+    "ret_30d_pct": 119.2,
+    "dist_high_90d_pct": 4.7
    },
    {
     "symbol": "SENT",
-    "ret_30d_pct": 88.5,
-    "dist_high_90d_pct": 0.0
+    "ret_30d_pct": 73.9,
+    "dist_high_90d_pct": 4.3
    },
    {
     "symbol": "INIT",
-    "ret_30d_pct": 77.2,
-    "dist_high_90d_pct": 0.2
-   },
-   {
-    "symbol": "NMR",
-    "ret_30d_pct": 76.8,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "FLUX",
-    "ret_30d_pct": 70.4,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "SOMI",
-    "ret_30d_pct": 65.6,
-    "dist_high_90d_pct": 2.8
-   },
-   {
-    "symbol": "C",
-    "ret_30d_pct": 60.6,
-    "dist_high_90d_pct": 4.8
-   },
-   {
-    "symbol": "0G",
-    "ret_30d_pct": 58.2,
-    "dist_high_90d_pct": 3.9
-   },
-   {
-    "symbol": "RUNE",
-    "ret_30d_pct": 57.6,
-    "dist_high_90d_pct": 3.4
-   },
-   {
-    "symbol": "AR",
-    "ret_30d_pct": 56.7,
-    "dist_high_90d_pct": 3.3
+    "ret_30d_pct": 70.0,
+    "dist_high_90d_pct": 3.2
    },
    {
     "symbol": "BEAMX",
-    "ret_30d_pct": 56.5,
-    "dist_high_90d_pct": 2.4
+    "ret_30d_pct": 62.2,
+    "dist_high_90d_pct": 0.4
    },
    {
-    "symbol": "RAD",
-    "ret_30d_pct": 50.4,
-    "dist_high_90d_pct": 0.0
+    "symbol": "AVAX",
+    "ret_30d_pct": 40.0,
+    "dist_high_90d_pct": 2.5
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.518,
+  "model_top20_beat": 0.558,
   "days": 36,
-  "naive_top20_beat": 0.463,
-  "shrink_k": 0.427
+  "naive_top20_beat": 0.471,
+  "shrink_k": 0.464
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.815
+   "effect": 0.826
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.698
+   "effect": -0.691
   },
   {
    "feature": "p_ma50",
-   "effect": -0.545
+   "effect": -0.547
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.402
+   "effect": 0.399
   },
   {
    "feature": "log_rank",
-   "effect": -0.328
-  },
-  {
-   "feature": "pat_bear_flag",
-   "effect": -0.304
+   "effect": -0.322
   },
   {
    "feature": "bear_signals",
-   "effect": -0.295
-  },
-  {
-   "feature": "macd_n",
-   "effect": -0.295
-  },
-  {
-   "feature": "trend_rank",
-   "effect": 0.29
+   "effect": -0.311
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.287
+   "effect": -0.297
+  },
+  {
+   "feature": "macd_n",
+   "effect": -0.294
+  },
+  {
+   "feature": "pat_bear_flag",
+   "effect": -0.293
+  },
+  {
+   "feature": "trend_rank",
+   "effect": 0.272
   }
  ],
  "regime": {
-  "alt_index_30d": 76.0,
-  "btc_ret_30d": 8.1,
-  "alt_index_90d": 67.3,
-  "btc_ret_90d": 39.9,
-  "breadth_ma50": 90.3,
-  "label": "Altseason en formation"
+  "alt_index_30d": 64.0,
+  "btc_ret_30d": 4.6,
+  "alt_index_90d": 63.3,
+  "btc_ret_90d": 32.2,
+  "breadth_ma50": 71.6,
+  "label": "Neutre"
  }
 }

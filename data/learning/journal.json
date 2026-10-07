@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260907",
-    "btc_prob": 64.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "YGG",
-      "USTC",
-      "ILV",
-      "1000CAT",
-      "FIDA"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.436,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260908",
     "btc_prob": 69.0,
     "regime": "Haussier",
@@ -506,6 +490,25 @@
       "WIF",
       "KAIA",
       "SOL"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.57,
+    "bear_signals_ok": 7
+  },
+  {
+    "date": "20261007",
+    "regime": "Neutre",
+    "alt_index_30d": 64.0,
+    "alt_index_90d": 63.3,
+    "btc_ret_30d": 4.6,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "KAIA",
+      "IOTA",
+      "JASMY",
+      "SUI",
+      "ALGO"
     ],
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
