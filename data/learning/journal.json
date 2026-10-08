@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260908",
-    "btc_prob": 69.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "ORCA",
-      "1000CAT",
-      "UMA",
-      "RAY",
-      "SAHARA"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.436,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260909",
     "btc_prob": 69.0,
     "regime": "Haussier",
@@ -513,6 +497,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.57,
+    "bear_signals_ok": 7
+  },
+  {
+    "date": "20261008",
+    "regime": "Neutre",
+    "alt_index_30d": 60.0,
+    "alt_index_90d": 63.3,
+    "btc_ret_30d": 5.3,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "IOTA",
+      "ENJ",
+      "SUI",
+      "ADA",
+      "RENDER"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.572,
     "bear_signals_ok": 7
   }
 ]
