@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260909",
-    "btc_prob": 69.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "HOLO",
-      "ORCA",
-      "GLM",
-      "G",
-      "OSMO"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.436,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260910",
     "btc_prob": 69.0,
     "regime": "Haussier",
@@ -517,5 +501,24 @@
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.572,
     "bear_signals_ok": 7
+  },
+  {
+    "date": "20261009",
+    "regime": "Neutre",
+    "alt_index_30d": 58.0,
+    "alt_index_90d": 57.1,
+    "btc_ret_30d": 4.2,
+    "score_model": "ml_gb",
+    "top_tokens": [
+      "SUI",
+      "ENJ",
+      "DOGE",
+      "WIF",
+      "SHIB"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.569,
+    "bear_signals_ok": 6
   }
 ]
