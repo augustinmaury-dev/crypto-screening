@@ -1,12 +1,12 @@
 {
- "date": "20261009",
+ "date": "20261010",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
- "model_used_today": "ml_gb",
- "calibration_k": 0.325,
- "train_rows": 57681,
- "train_days": 145,
- "alt_days_measured": 21,
+ "model_used_today": "ml_gb+alt_blend",
+ "calibration_k": 0.413,
+ "train_rows": 58074,
+ "train_days": 146,
+ "alt_days_measured": 22,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
@@ -91,122 +91,129 @@
  },
  "already_exploded": {
   "rule": "hausse ≥ +100% sur 180 j",
-  "count_today": 133,
+  "count_today": 136,
   "leaders_removed_second_wave": [
-   "MET",
-   "RAY"
+   "MUBARAK",
+   "NEAR",
+   "RAY",
+   "VELODROME"
   ]
  },
  "leaders": {
-  "label": "🎲 Leader (spéculatif)",
+  "label": "🚀 Leader (altseason)",
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
-    "symbol": "RLC",
-    "ret_30d_pct": 247.1,
-    "dist_high_90d_pct": 0.0
-   },
-   {
     "symbol": "STRK",
-    "ret_30d_pct": 123.4,
-    "dist_high_90d_pct": 0.0
+    "ret_30d_pct": 144.3,
+    "dist_high_90d_pct": 1.6
    },
    {
-    "symbol": "KAIA",
-    "ret_30d_pct": 76.3,
-    "dist_high_90d_pct": 0.0
+    "symbol": "INIT",
+    "ret_30d_pct": 82.8,
+    "dist_high_90d_pct": 0.2
    },
    {
     "symbol": "W",
-    "ret_30d_pct": 71.1,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "MAGIC",
-    "ret_30d_pct": 69.0,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "BEAMX",
-    "ret_30d_pct": 66.0,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "PYTH",
-    "ret_30d_pct": 56.3,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "C",
-    "ret_30d_pct": 55.9,
-    "dist_high_90d_pct": 3.9
-   },
-   {
-    "symbol": "S",
-    "ret_30d_pct": 47.8,
+    "ret_30d_pct": 81.4,
     "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "BAT",
-    "ret_30d_pct": 45.6,
+    "ret_30d_pct": 77.9,
+    "dist_high_90d_pct": 3.3
+   },
+   {
+    "symbol": "BEAMX",
+    "ret_30d_pct": 74.7,
+    "dist_high_90d_pct": 1.7
+   },
+   {
+    "symbol": "FLUX",
+    "ret_30d_pct": 62.6,
+    "dist_high_90d_pct": 0.5
+   },
+   {
+    "symbol": "AERO",
+    "ret_30d_pct": 62.4,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "IMX",
+    "ret_30d_pct": 59.2,
+    "dist_high_90d_pct": 1.5
+   },
+   {
+    "symbol": "S",
+    "ret_30d_pct": 57.8,
+    "dist_high_90d_pct": 3.0
+   },
+   {
+    "symbol": "LUMIA",
+    "ret_30d_pct": 54.2,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "OPG",
+    "ret_30d_pct": 52.4,
     "dist_high_90d_pct": 0.0
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.519,
+  "model_top20_beat": 0.55,
   "days": 36,
-  "naive_top20_beat": 0.475,
-  "shrink_k": 0.325
+  "naive_top20_beat": 0.481,
+  "shrink_k": 0.413
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.819
+   "effect": 0.815
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.664
+   "effect": -0.66
   },
   {
    "feature": "p_ma50",
-   "effect": -0.535
+   "effect": -0.537
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.375
-  },
-  {
-   "feature": "bear_signals",
-   "effect": -0.327
-  },
-  {
-   "feature": "log_rank",
-   "effect": -0.325
+   "effect": 0.362
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.313
+   "effect": -0.326
+  },
+  {
+   "feature": "bear_signals",
+   "effect": -0.322
+  },
+  {
+   "feature": "log_rank",
+   "effect": -0.317
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.291
+   "effect": -0.288
   },
   {
    "feature": "macd_n",
-   "effect": -0.285
+   "effect": -0.284
   },
   {
-   "feature": "score_signal",
-   "effect": -0.266
+   "feature": "pat_resistance_test",
+   "effect": -0.282
   }
  ],
  "regime": {
-  "alt_index_30d": 58.0,
-  "btc_ret_30d": 4.2,
-  "alt_index_90d": 57.1,
-  "btc_ret_90d": 28.6,
-  "breadth_ma50": 57.6,
+  "alt_index_30d": 71.0,
+  "btc_ret_30d": 6.4,
+  "alt_index_90d": 64.3,
+  "btc_ret_90d": 29.4,
+  "breadth_ma50": 75.1,
   "label": "Neutre"
  }
 }
