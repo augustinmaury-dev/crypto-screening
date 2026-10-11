@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260911",
-    "btc_prob": 69.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "MET",
-      "ORCA",
-      "THETA",
-      "RLUSD",
-      "RUNE"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "rsi_bullish_divergence",
-    "best_bull_rate": 0.435,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260912",
     "btc_prob": 66.0,
     "regime": "Haussier",
@@ -523,5 +507,24 @@
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.567,
     "bear_signals_ok": 7
+  },
+  {
+    "date": "20261011",
+    "regime": "Altseason en formation",
+    "alt_index_30d": 76.0,
+    "alt_index_90d": 65.3,
+    "btc_ret_30d": 7.9,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "PARTI",
+      "ADA",
+      "RENDER",
+      "SUI",
+      "JST"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.565,
+    "bear_signals_ok": 8
   }
 ]
