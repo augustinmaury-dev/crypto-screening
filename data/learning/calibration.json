@@ -38,18 +38,18 @@
       "Modèle appris": {
         "n_obs": 3933,
         "n_days": 10,
-        "spearman_excess": 0.0082,
+        "spearman_excess": 0.0072,
         "top_beat_rate": 0.435,
         "quintiles": [
           {
             "q": 1,
             "beat_market_rate": 0.485,
-            "median_return": -2.8
+            "median_return": -2.83
           },
           {
             "q": 2,
             "beat_market_rate": 0.504,
-            "median_return": -2.83
+            "median_return": -2.99
           },
           {
             "q": 3,
@@ -59,12 +59,12 @@
           {
             "q": 4,
             "beat_market_rate": 0.497,
-            "median_return": -2.61
+            "median_return": -2.63
           },
           {
             "q": 5,
             "beat_market_rate": 0.499,
-            "median_return": -2.7
+            "median_return": -2.71
           }
         ]
       }
@@ -106,18 +106,18 @@
       "Modèle appris": {
         "n_obs": 1179,
         "n_days": 3,
-        "spearman_excess": 0.0982,
+        "spearman_excess": 0.0945,
         "top_beat_rate": 0.5,
         "quintiles": [
           {
             "q": 1,
             "beat_market_rate": 0.536,
-            "median_return": -3.76
+            "median_return": -4.04
           },
           {
             "q": 2,
-            "beat_market_rate": 0.519,
-            "median_return": -3.66
+            "beat_market_rate": 0.515,
+            "median_return": -4.0
           },
           {
             "q": 3,
@@ -131,8 +131,43 @@
           },
           {
             "q": 5,
-            "beat_market_rate": 0.415,
-            "median_return": -5.39
+            "beat_market_rate": 0.419,
+            "median_return": -5.58
+          }
+        ]
+      }
+    },
+    "30": {
+      "Ancienne formule": {
+        "n_obs": 48513,
+        "n_days": 122,
+        "spearman_excess": 0.0138,
+        "top_beat_rate": 0.507,
+        "quintiles": [
+          {
+            "q": 1,
+            "beat_market_rate": 0.52,
+            "median_return": -1.12
+          },
+          {
+            "q": 2,
+            "beat_market_rate": 0.486,
+            "median_return": -1.77
+          },
+          {
+            "q": 3,
+            "beat_market_rate": 0.502,
+            "median_return": -0.72
+          },
+          {
+            "q": 4,
+            "beat_market_rate": 0.51,
+            "median_return": 0.0
+          },
+          {
+            "q": 5,
+            "beat_market_rate": 0.479,
+            "median_return": -1.16
           }
         ]
       }
