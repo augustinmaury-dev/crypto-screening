@@ -100,6 +100,18 @@ python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
   pour une 1re hausse ; sur l'historique du projet : 37 % à 14 j, excès moyen −15 pts). Ajouté comme variable du modèle principal,
   ça n'apportait rien (62,7 % → 62,0 %) : le modèle évite déjà ces tokens → non ajouté.
 
+### Prévision à 30 jours (06c_score_30d.py, ajoutée le 12/10/2026)
+- Même boucle que le 7 j (variables techniques → apprentissage → analyse des erreurs), mais sur ~1000 j de cours Binance
+  (klines longues téléchargées par 06c, cache 12 h ; repli sur les klines 365 j de 02) car les snapshots (avril 2026) sont trop courts.
+- Chaque jour : modèle appris (boosting, fenêtre 1 an, purge 30 j) vs règle simple « peu volatil + gros volume », testés sur les
+  120 derniers jours mesurables → le meilleur est utilisé (mélange si écart < 2 pts). Probabilité = taux de réussite observé par décile.
+- Colonnes outperf_prob_30d / rank_30d / method_30d ; data/learning/model_report_30d.json ; top 20 suivi à 30 j (sélection
+  `top20_30d`) ; section 🗓️ dans project_memory.md ; colonne « % Bat marché 30j » dans le dashboard. Toutes les sélections sont
+  désormais aussi mesurées à 30 j.
+- Étude (janv. 2025 → sept. 2026, 206 dates) : la faible volatilité prédit le mieux le 30 j (corr. −0,18) ; règle simple 68 %,
+  modèle logistique 63 % ; momentum 30 j négatif (39 %). Sur 30 j le token médian perd ~10 % : battre le marché = souvent perdre moins.
+- Sur les snapshots du projet (juil.–août 2026, 61 dates) : modèle boosting 56 %, règle simple 65 %.
+
 ### Annonces d'ETF crypto — SEC EDGAR (10b_etf_filings.py, ajouté le 29/09/2026)
 - Source : recherche plein texte EDGAR (https://efts.sec.gov/LATEST/search-index), gratuite, sans clé.
   Dépôts suivis : S-1, S-3 (+ amendements), 424B3/4, 8-A12B (enregistrement en bourse = lancement imminent).

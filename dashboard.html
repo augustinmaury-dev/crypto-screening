@@ -180,6 +180,7 @@ section.block h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;col
           <th data-col="symbol">Symbol</th>
           <th data-col="tier">Tier</th>
           <th data-col="score" title="Probabilité de faire mieux que la médiane du marché sur 7 jours (modèle appris)">% Bat marché 7j</th>
+          <th data-col="outperf_prob_30d" title="Prévision à 30 jours : taux de réussite réellement observé (120 derniers jours mesurés) pour la tranche de classement du token">% Bat marché 30j</th>
           <th data-col="bias">Biais</th>
           <th data-col="rsi_14">RSI</th>
           <th data-col="change_24h_pct">Δ24h</th>
@@ -203,7 +204,7 @@ section.block h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;col
 <script>
 // ── Constantes ────────────────────────────────────────────────────────────────
 const NUM = new Set([
-  'score','score_quality','score_solidity','score_momentum','score_risk','score_antiscam','score_signal',
+  'score','outperf_prob_30d','score_quality','score_solidity','score_momentum','score_risk','score_antiscam','score_signal',
   'explosion_score','rsi_14','macd_hist','ma_50','ma_200','ma_20','vol_30d_ann',
   'drawdown_90d','dist_to_high_90d','vol_ratio_vs_med90','corr_btc_90d',
   'price','vol_24h_usd','change_24h_pct','age_days','rank_mcap',
@@ -314,6 +315,7 @@ function applyFilters(){
   });
 
   FILTERED.sort((a,b)=>{
+    if(SORT.col==='outperf_prob_30d') return ((+a.rank_30d||1e9)-(+b.rank_30d||1e9))*(-SORT.dir); // probas par tranche : on trie par rang 30 j
     const A=a[SORT.col],B=b[SORT.col];
     if(NUM.has(SORT.col))return((+A||(-Infinity))-(+B||(-Infinity)))*SORT.dir;
     return(A||'').localeCompare(B||'')*SORT.dir;
@@ -349,6 +351,7 @@ function renderList(){
       <td><b>${susp}${r.symbol.replace('USDT','')}</b>${catBadge}${trendBadge}${leadBadge}${etfBadge}${explBadge}</td>
       <td><span style="font-size:10px;color:${r.tier==='Etabli'?'#3fb950':r.tier==='Mid'?'#58a6ff':'#d29922'}">${r.tier}</span></td>
       <td><b style="color:${scoreColor(r.score)}">${(+r.score).toFixed(1)}</b></td>
+      <td title="${r.method_30d||''}${r.rank_30d?' — rang '+r.rank_30d:''}">${r.outperf_prob_30d!==undefined&&r.outperf_prob_30d!==''?`<b style="color:${scoreColor(r.outperf_prob_30d)}">${(+r.outperf_prob_30d).toFixed(0)}</b>`:'<span style="color:#6e7681">—</span>'}</td>
       <td><span style="color:${biasC};font-size:11px">${r.bias||'—'}</span></td>
       <td style="color:${rsiColor(r.rsi_14)}">${fmtNum(r.rsi_14)}</td>
       <td>${d24s}</td>
@@ -1068,24 +1071,6 @@ document.querySelectorAll('th[data-col]').forEach(th=>{
     if(SORT.col===c) SORT.dir*=-1; else SORT={col:c,dir:NUM.has(c)?-1:1};
     document.querySelectorAll('th').forEach(t=>t.classList.remove('asc','desc'));
     th.classList.add(SORT.dir>0?'asc':'desc');
-    applyFilters();
-  };
-});
-
-document.addEventListener('keydown',e=>{
-  if(!SELECTED)return;
-  const idx=FILTERED.findIndex(x=>x.symbol===SELECTED.symbol);
-  if(e.key==='ArrowDown'&&idx<FILTERED.length-1){SELECTED=FILTERED[idx+1];renderList();renderDetail(SELECTED);e.preventDefault();}
-  if(e.key==='ArrowUp'&&idx>0){SELECTED=FILTERED[idx-1];renderList();renderDetail(SELECTED);e.preventDefault();}
-});
-
-// Init
-updateWatchlistCount();
-autoLoad();
-</script>
-</body>
-</html>
-?'asc':'desc');
     applyFilters();
   };
 });

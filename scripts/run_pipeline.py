@@ -129,6 +129,10 @@ def main():
     ml = importlib.import_module("06b_ml_score")
     step("ml_score", ml.run)
 
+    # --- 06c Prévision à 30 jours (cours Binance ~1000 j, modèle vs règle simple, choix selon les erreurs récentes) ---
+    m30 = importlib.import_module("06c_score_30d")
+    step("score_30d", m30.run)
+
     # --- 10b Annonces d'ETF crypto (SEC EDGAR) : dossiers S-1/S-3, enregistrements 8-A12B ---
     if not args.skip_fetch:
         etf = importlib.import_module("10b_etf_filings")

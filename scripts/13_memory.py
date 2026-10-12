@@ -19,7 +19,7 @@ TOP_N_PRED       = 20   # une "prédiction" = un des 20 tokens les mieux classé
 # (avant le 25/09/2026 : score >= 70 ; le score appris n'atteint plus ces valeurs, on suit donc le top du classement)
 # bull_prob_7d est une prédiction à 7 jours → on la juge à 7 jours.
 # 14 jours est mesuré en complément.
-OUTCOME_HORIZONS = (7, 14)
+OUTCOME_HORIZONS = (7, 14, 30)   # 30 j ajouté le 12/10/2026 (prévision à 30 j, 06c_score_30d.py)
 MAIN_HORIZON     = 7
 SNAPSHOT_TOLERANCE = 2  # si le snapshot J+H manque, on accepte J+H+1 ou J+H+2
 MAX_PENDING_AGE  = 30   # une prédiction non mesurable après 30 j (token délisté…) est abandonnée
@@ -27,7 +27,8 @@ MAX_JOURNAL_DAYS = 30   # jours de journal conservés
 N_QUINTILES = 5
 # Leaders (cf. 06b_ml_score.py) : perf 30 j top 10 % ET à moins de 5 % du plus haut 90 j — suivis à part
 LEADER_PCT, LEADER_DIST, LEADER_MAX = 0.90, 0.05, 15
-SELECTIONS = (f"top{TOP_N_PRED}", "leaders", "etf")   # etf = token au jour d'un dépôt SEC (10b_etf_filings.py)
+SELECTIONS = (f"top{TOP_N_PRED}", "leaders", "etf", "top20_30d")
+# etf = token au jour d'un dépôt SEC (10b_etf_filings.py) ; top20_30d = 20 premiers de la prévision à 30 j (06c)
 
 def model_group(row: dict) -> str:
     """Ancienne formule manuelle vs modèle appris (06b_ml_score.py)."""
@@ -347,6 +348,18 @@ def update_prediction_log(today_scores: list[dict]) -> list[dict]:
                 pr = make_prediction(date, row, rank, "leaders")
                 pr["ret_30d_pct"] = round(float(row.get("_r30") if row.get("_r30") is not None else (_fnum(row.get("ret_30d_pct")) or 0)), 1)
                 pred_log.append(pr); existing_keys.add(key); new_count += 1
+        # ── Prévision à 30 j (06c) : top 20 du classement 30 j, jugé à 30 j ──
+        if "outperf_prob_30d" in rows[0]:
+            r30 = [r for r in eligible if _fnum(r.get("outperf_prob_30d")) is not None and _fnum(r.get("rank_30d"))]
+            r30.sort(key=lambda r: float(_fnum(r.get("rank_30d"))))
+            for rank, row in enumerate(r30[:TOP_N_PRED], 1):
+                key = (date, row.get("symbol", ""), "top20_30d")
+                if key in existing_keys:
+                    continue
+                pr = make_prediction(date, row, rank, "top20_30d")
+                pr["score"] = float(_fnum(row.get("outperf_prob_30d")))
+                pr["method_30d"] = row.get("method_30d", "")
+                pred_log.append(pr); existing_keys.add(key); new_count += 1
     # ── Événements ETF (SEC) : chaque dépôt devient une « prédiction » suivie à 7 et 14 j ──
     for ev in etf_events():
         d = snapshot_on_or_after(ev["date"])
@@ -605,6 +618,7 @@ def generate_memory(
     a("Depuis le 26/09/2026, mon `score` est la **probabilité qu'un token fasse mieux que la médiane du marché sur 7 jours**,")
     a("calculée par un modèle réentraîné chaque jour sur toutes mes prédictions passées déjà mesurées (`06b_ml_score.py`).")
     a("Je surveille aussi le **régime de marché** (altseason ou saison Bitcoin), car ce qui marche change selon le régime.")
+    a("Depuis le 12/10/2026, je fais aussi une **prévision à 30 jours** (section 🗓️), jugée à 30 jours, avec le même principe d'apprentissage.")
     a("")
     a("---")
     a("")
@@ -828,6 +842,61 @@ def generate_memory(
     a("")
     a("---")
     a("")
+
+    # ── Prévision à 30 jours (06c) ─────────────────────────────────────────
+    m30 = load_json(LEARNING / "model_report_30d.json", {}) or {}
+    if m30:
+        a("## 🗓️ Prévision à 30 jours")
+        a("")
+        a("*Même principe que le score à 7 j, sur 30 j : variables techniques → apprentissage sur ~1000 jours de cours Binance "
+          "→ analyse des erreurs. Chaque jour, le modèle appris et une règle simple (« peu volatil + gros volume ») sont testés "
+          "sur les 120 derniers jours déjà mesurables ; le meilleur est utilisé (mélange des deux s'ils sont proches). "
+          "La probabilité affichée est le taux de réussite **réellement observé** pour la tranche de classement du token.*")
+        a("")
+        ev = m30.get("eval", {})
+        win = m30.get("eval_window", ["?", "?"])
+        a(f"**Méthode du jour : {m30.get('method_label', '?')}** — auto-évaluation du {win[0]} au {win[1]} "
+          f"({(ev.get('model') or {}).get('days', '?')} jours jamais vus) :")
+        a("")
+        a("| Candidat | Top 20 bat le marché à 30 j | Corrélation de rang |")
+        a("|---|---|---|")
+        for k, lab in (("model", "Modèle appris"), ("rule", "Règle simple"), ("blend", "Mélange")):
+            e = ev.get(k) or {}
+            if e.get("top20_beat") is not None:
+                a(f"| {lab}{' ✅' if k == m30.get('method_used_today') else ''} | {e['top20_beat']:.0%} | {e.get('ic', 0):+.3f} |")
+        a("")
+        if m30.get("universe_median_return_eval_pct") is not None:
+            a(f"⚠️ Sur cette période, le token médian a fait **{m30['universe_median_return_eval_pct']:+.1f} %** en 30 j et seuls "
+              f"**{m30.get('universe_up_rate_eval', 0):.0%}** des tokens ont fini en hausse : « battre le marché » peut vouloir dire « perdre moins ».")
+            a("")
+        tf = m30.get("top_factors") or []
+        if tf:
+            a("Ce qui compte le plus à 30 j : " + ", ".join(f"`{f['feature']}` ({'+' if f['effect'] > 0 else '−'})" for f in tf[:6]))
+            a("")
+        m30_meas = [p for p in pred_log if p.get("selection") == "top20_30d" and p.get("return_30d") is not None]
+        m30_pend = [p for p in pred_log if p.get("selection") == "top20_30d" and p.get("return_30d") is None]
+        if m30_meas:
+            bm = sum(1 for p in m30_meas if p.get("beat_market_30d")) / len(m30_meas)
+            up = sum(1 for p in m30_meas if p.get("correct_30d")) / len(m30_meas)
+            a(f"**Suivi réel (jugé à 30 j)** : {len(m30_meas)} prédictions — **{bm:.0%} ont battu le marché**, {up:.0%} ont monté, "
+              f"return médian {_median([p['return_30d'] for p in m30_meas]):+.1f} %.")
+        elif m30_pend:
+            first = min(p["date"] for p in m30_pend)
+            a(f"**Suivi réel** : {len(m30_pend)} prédictions en attente — premiers résultats à partir du {fmt_date(shift_date(first, 30))}.")
+        a("")
+        top30 = sorted([r for r in today_scores if _fnum(r.get("rank_30d")) and _fnum(r.get("outperf_prob_30d")) is not None],
+                       key=lambda r: float(_fnum(r.get("rank_30d"))))[:12]
+        if top30:
+            a("| # | Token | Tier | Prob. de battre le marché à 30 j | Score 7 j | Perf 30 j passée |")
+            a("|---|---|---|---|---|---|")
+            for r in top30:
+                pv = _fnum(r.get("ret_30d_pct"))
+                perf = f"{pv:+.0f} %" if pv is not None else "—"
+                a(f"| {int(float(r['rank_30d']))} | **{r['symbol'].replace('USDT','')}** | {r.get('tier','')} | "
+                  f"{float(r['outperf_prob_30d']):.0f} % | {float(_fnum(r.get('score')) or 0):.1f} % | {perf} |")
+            a("")
+        a("---")
+        a("")
 
     # ── Annonces ETF (SEC) ─────────────────────────────────────────────────
     a("## 📑 Annonces d'ETF crypto (SEC EDGAR)")
