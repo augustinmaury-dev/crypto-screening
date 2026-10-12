@@ -108,7 +108,8 @@ def purge_old_raw(days: int = 30):
 #   - actions et ETF tokenisés listés sur Binance avec un suffixe « B » (NVDAB, AAPLB, SPYB…)
 # Ils faussent le classement et la « médiane du marché » servant de référence.
 WRAPPED_OR_STAKED = {"WBTC", "WBETH", "BETH", "BNSOL", "STETH", "WSTETH", "CBBTC", "CBETH",
-                     "WEETH", "RETH", "METH", "LBTC", "SOLVBTC", "JITOSOL", "MSOL"}
+                     "WEETH", "RETH", "METH", "LBTC", "SOLVBTC", "JITOSOL", "MSOL",
+                     "PAXG", "XAUT"}   # PAXG / XAUT = or tokenisé (suit le prix de l'or, pas une crypto ; ajouté le 12/10/2026)
 # Vraies cryptos dont le ticker finit par B (à compléter si une nouvelle crypto est exclue à tort)
 CRYPTO_ENDING_B = {"BNB", "TRB", "SHIB", "CKB", "ARB", "BB", "DGB", "YB", "MOB", "LOOMB"}
 
