@@ -1,25 +1,25 @@
 {
   "NEARUSDT": {
-    "tvl": 218710008,
-    "tvl_fmt": "$219M",
-    "change_1d": -6.77,
-    "change_7d": -3.82,
+    "tvl": 220989718,
+    "tvl_fmt": "$221M",
+    "change_1d": 0.52,
+    "change_7d": -1.61,
     "category": "Bridge",
     "chains": [
       "Near",
       "Ethereum",
-      "Bitcoin",
       "Tron",
+      "Bitcoin",
       "Binance"
     ],
     "slug": "near-intents",
     "name": "NEAR Intents"
   },
   "BNBUSDT": {
-    "tvl": 172204604200,
-    "tvl_fmt": "$172.2B",
-    "change_1d": -0.94,
-    "change_7d": -3.71,
+    "tvl": 171968656690,
+    "tvl_fmt": "$172.0B",
+    "change_1d": -0.26,
+    "change_7d": -1.53,
     "category": "CEX",
     "chains": [
       "Ethereum",
@@ -31,23 +31,11 @@
     "slug": "binance-cex",
     "name": "Binance CEX"
   },
-  "ENAUSDT": {
-    "tvl": 4755546625,
-    "tvl_fmt": "$4.8B",
-    "change_1d": 0.11,
-    "change_7d": -4.23,
-    "category": "Basis Trading",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "ethena-usde",
-    "name": "Ethena USDe"
-  },
   "UNIUSDT": {
-    "tvl": 1620790451,
+    "tvl": 1616154752,
     "tvl_fmt": "$1.6B",
-    "change_1d": -0.93,
-    "change_7d": -5.1,
+    "change_1d": 0.75,
+    "change_7d": -2.69,
     "category": "Dexs",
     "chains": [
       "Ethereum",
@@ -59,11 +47,37 @@
     "slug": "uniswap-v3",
     "name": "Uniswap V3"
   },
+  "ENAUSDT": {
+    "tvl": 4779588494,
+    "tvl_fmt": "$4.8B",
+    "change_1d": 0.31,
+    "change_7d": -3.57,
+    "category": "Basis Trading",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "ethena-usde",
+    "name": "Ethena USDe"
+  },
+  "OPUSDT": {
+    "tvl": 840081667,
+    "tvl_fmt": "$840M",
+    "change_1d": 1.34,
+    "change_7d": 13.64,
+    "category": "Canonical Bridge",
+    "chains": [
+      "Ethereum",
+      "Base",
+      "PGN"
+    ],
+    "slug": "optimism-bridge",
+    "name": "Optimism Bridge"
+  },
   "STRKUSDT": {
-    "tvl": 437625813,
-    "tvl_fmt": "$438M",
-    "change_1d": -13.57,
-    "change_7d": 57.07,
+    "tvl": 392677431,
+    "tvl_fmt": "$393M",
+    "change_1d": -10.18,
+    "change_7d": 45.19,
     "category": "Canonical Bridge",
     "chains": [
       "Ethereum"
@@ -72,10 +86,10 @@
     "name": "Starknet Bridge"
   },
   "AVAXUSDT": {
-    "tvl": 143943969,
-    "tvl_fmt": "$144M",
-    "change_1d": -0.85,
-    "change_7d": 0.05,
+    "tvl": 143320958,
+    "tvl_fmt": "$143M",
+    "change_1d": -0.82,
+    "change_7d": 1.84,
     "category": "Canonical Bridge",
     "chains": [
       "Ethereum",
@@ -84,23 +98,23 @@
     "slug": "avalanche-core-bridge",
     "name": "Avalanche Core Bridge"
   },
-  "PUMPUSDT": {
-    "tvl": 352917566,
-    "tvl_fmt": "$353M",
-    "change_1d": -5.53,
-    "change_7d": -12.45,
+  "WALUSDT": {
+    "tvl": 3659535,
+    "tvl_fmt": "$4M",
+    "change_1d": -0.1,
+    "change_7d": -0.2,
     "category": "Dexs",
     "chains": [
-      "Solana"
+      "EOS"
     ],
-    "slug": "pumpswap",
-    "name": "PumpSwap"
+    "slug": "whaleex",
+    "name": "WhaleEx"
   },
   "HYPEUSDT": {
-    "tvl": 6895340144,
+    "tvl": 6881063145,
     "tvl_fmt": "$6.9B",
-    "change_1d": -1.41,
-    "change_7d": -3.84,
+    "change_1d": 0.08,
+    "change_7d": -3.26,
     "category": "Bridge",
     "chains": [
       "Hyperliquid L1",
@@ -109,41 +123,11 @@
     "slug": "hyperliquid-bridge",
     "name": "Hyperliquid Bridge"
   },
-  "OGNUSDT": {
-    "tvl": 60601819,
-    "tvl_fmt": "$61M",
-    "change_1d": -1.29,
-    "change_7d": -7.45,
-    "category": "Liquid Staking",
-    "chains": [
-      "Ethereum",
-      "Base",
-      "Plume Mainnet"
-    ],
-    "slug": "origin-ether",
-    "name": "Origin Ether"
-  },
-  "ZROUSDT": {
-    "tvl": 11153158950,
-    "tvl_fmt": "$11.2B",
-    "change_1d": -2.91,
-    "change_7d": -4.3,
-    "category": "Bridge",
-    "chains": [
-      "Ethereum",
-      "Polygon",
-      "ApeChain",
-      "Base",
-      "Arbitrum"
-    ],
-    "slug": "layerzero-v2",
-    "name": "LayerZero V2"
-  },
   "INJUSDT": {
-    "tvl": 4959815,
+    "tvl": 4961850,
     "tvl_fmt": "$5M",
-    "change_1d": -0.22,
-    "change_7d": -1.7,
+    "change_1d": -0.05,
+    "change_7d": -1.62,
     "category": "Bridge",
     "chains": [
       "Ethereum"
@@ -151,11 +135,35 @@
     "slug": "injective-bridge",
     "name": "Injective Bridge"
   },
+  "PUMPUSDT": {
+    "tvl": 359684482,
+    "tvl_fmt": "$360M",
+    "change_1d": -0.68,
+    "change_7d": -8.78,
+    "category": "Dexs",
+    "chains": [
+      "Solana"
+    ],
+    "slug": "pumpswap",
+    "name": "PumpSwap"
+  },
+  "ARBUSDT": {
+    "tvl": 3557892595,
+    "tvl_fmt": "$3.6B",
+    "change_1d": -0.55,
+    "change_7d": -2.5,
+    "category": "Canonical Bridge",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "arbitrum-bridge",
+    "name": "Arbitrum Bridge"
+  },
   "AAVEUSDT": {
-    "tvl": 17473490789,
+    "tvl": 17458620072,
     "tvl_fmt": "$17.5B",
-    "change_1d": -1.14,
-    "change_7d": -5.16,
+    "change_1d": -0.48,
+    "change_7d": -2.07,
     "category": "Lending",
     "chains": [
       "Ethereum",
@@ -167,646 +175,11 @@
     "slug": "aave-v3",
     "name": "Aave V3"
   },
-  "WUSDT": {
-    "tvl": 1688982906,
-    "tvl_fmt": "$1.7B",
-    "change_1d": -3.77,
-    "change_7d": -14.13,
-    "category": "Bridge",
-    "chains": [
-      "Ethereum",
-      "Algorand",
-      "Binance",
-      "Solana",
-      "Near"
-    ],
-    "slug": "portal",
-    "name": "Portal"
-  },
-  "DOTUSDT": {
-    "tvl": 2786860,
-    "tvl_fmt": "$3M",
-    "change_1d": -7.42,
-    "change_7d": -4.11,
-    "category": "Liquid Staking",
-    "chains": [
-      "Acala"
-    ],
-    "slug": "acala-lcdot",
-    "name": "Acala LCDOT"
-  },
-  "POLUSDT": {
-    "tvl": 2757511127,
-    "tvl_fmt": "$2.8B",
-    "change_1d": -2.17,
-    "change_7d": -4.45,
-    "category": "Chain",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "polygon-bridge",
-    "name": "Polygon Bridge"
-  },
-  "ARBUSDT": {
-    "tvl": 3552190942,
-    "tvl_fmt": "$3.6B",
-    "change_1d": -2.19,
-    "change_7d": -6.59,
-    "category": "Canonical Bridge",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "arbitrum-bridge",
-    "name": "Arbitrum Bridge"
-  },
-  "RSRUSDT": {
-    "tvl": 48806141,
-    "tvl_fmt": "$49M",
-    "change_1d": 27.51,
-    "change_7d": 22.22,
-    "category": "Indexes",
-    "chains": [
-      "Ethereum",
-      "Base",
-      "Binance",
-      "Arbitrum"
-    ],
-    "slug": "reserve-protocol",
-    "name": "Reserve Protocol"
-  },
-  "BLURUSDT": {
-    "tvl": 17282558,
-    "tvl_fmt": "$17M",
-    "change_1d": -3.73,
-    "change_7d": -6.77,
-    "category": "NFT Marketplace",
-    "chains": [
-      "Ethereum",
-      "Blast"
-    ],
-    "slug": "blur-bids",
-    "name": "Blur Bids"
-  },
-  "ASTERUSDT": {
-    "tvl": 111279014,
-    "tvl_fmt": "$111M",
-    "change_1d": -0.05,
-    "change_7d": 0.04,
-    "category": "Basis Trading",
-    "chains": [
-      "Binance"
-    ],
-    "slug": "aster-usdf",
-    "name": "Aster USDF"
-  },
-  "OPUSDT": {
-    "tvl": 826162197,
-    "tvl_fmt": "$826M",
-    "change_1d": -0.43,
-    "change_7d": 8.26,
-    "category": "Canonical Bridge",
-    "chains": [
-      "Ethereum",
-      "Base",
-      "PGN"
-    ],
-    "slug": "optimism-bridge",
-    "name": "Optimism Bridge"
-  },
-  "OSMOUSDT": {
-    "tvl": 11874172,
-    "tvl_fmt": "$12M",
-    "change_1d": 7.4,
-    "change_7d": 7.18,
-    "category": "Dexs",
-    "chains": [
-      "Osmosis"
-    ],
-    "slug": "osmosis-dex",
-    "name": "Osmosis DEX"
-  },
-  "ZAMAUSDT": {
-    "tvl": 117398721,
-    "tvl_fmt": "$117M",
-    "change_1d": 2.7,
-    "change_7d": 12.61,
-    "category": "Privacy",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "zama",
-    "name": "Zama"
-  },
-  "ETHFIUSDT": {
-    "tvl": 4768965040,
-    "tvl_fmt": "$4.8B",
-    "change_1d": -1.73,
-    "change_7d": -8.43,
-    "category": "Liquid Staking",
-    "chains": [
-      "Base",
-      "Berachain",
-      "Optimism",
-      "Scroll",
-      "Ethereum"
-    ],
-    "slug": "ether.fi-stake",
-    "name": "ether.fi Stake"
-  },
-  "RAYUSDT": {
-    "tvl": 1213205454,
-    "tvl_fmt": "$1.2B",
-    "change_1d": -3.62,
-    "change_7d": -9.29,
-    "category": "Dexs",
-    "chains": [
-      "Solana"
-    ],
-    "slug": "raydium-amm",
-    "name": "Raydium AMM"
-  },
-  "LDOUSDT": {
-    "tvl": 24190734659,
-    "tvl_fmt": "$24.2B",
-    "change_1d": -1.74,
-    "change_7d": -9.03,
-    "category": "Liquid Staking",
-    "chains": [
-      "Ethereum",
-      "Solana",
-      "Terra",
-      "Moonriver",
-      "Moonbeam"
-    ],
-    "slug": "lido",
-    "name": "Lido"
-  },
-  "CRVUSDT": {
-    "tvl": 1232445410,
-    "tvl_fmt": "$1.2B",
-    "change_1d": -0.89,
-    "change_7d": -4.14,
-    "category": "Dexs",
-    "chains": [
-      "Ethereum",
-      "Fraxtal",
-      "Monad",
-      "Etherlink",
-      "Base"
-    ],
-    "slug": "curve-dex",
-    "name": "Curve DEX"
-  },
-  "AMPUSDT": {
-    "tvl": 1142215,
-    "tvl_fmt": "$1M",
-    "change_1d": 6.98,
-    "change_7d": 6.28,
-    "category": "Payments",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "flexa",
-    "name": "Flexa"
-  },
-  "AEROUSDT": {
-    "tvl": 224583063,
-    "tvl_fmt": "$225M",
-    "change_1d": -2.44,
-    "change_7d": -0.4,
-    "category": "Dexs",
-    "chains": [
-      "Base"
-    ],
-    "slug": "aerodrome-slipstream",
-    "name": "Aerodrome Slipstream"
-  },
-  "DODOUSDT": {
-    "tvl": 12489714,
-    "tvl_fmt": "$12M",
-    "change_1d": 0.12,
-    "change_7d": -3.09,
-    "category": "Dexs",
-    "chains": [
-      "Binance",
-      "Ethereum",
-      "Polygon",
-      "Avalanche",
-      "Arbitrum"
-    ],
-    "slug": "dodo-amm",
-    "name": "DODO AMM"
-  },
-  "CAKEUSDT": {
-    "tvl": 1601611099,
-    "tvl_fmt": "$1.6B",
-    "change_1d": -10.14,
-    "change_7d": -15.22,
-    "category": "Dexs",
-    "chains": [
-      "Binance",
-      "Ethereum",
-      "Aptos",
-      "Base",
-      "Arbitrum"
-    ],
-    "slug": "pancakeswap-amm",
-    "name": "PancakeSwap AMM"
-  },
-  "JTOUSDT": {
-    "tvl": 1106207238,
-    "tvl_fmt": "$1.1B",
-    "change_1d": -4.58,
-    "change_7d": -11.96,
-    "category": "Liquid Staking",
-    "chains": [
-      "Solana"
-    ],
-    "slug": "jito-liquid-staking",
-    "name": "Jito Liquid Staking"
-  },
-  "CHIPUSDT": {
-    "tvl": 347427235,
-    "tvl_fmt": "$347M",
-    "change_1d": 0.3,
-    "change_7d": 2.45,
-    "category": "RWA",
-    "chains": [
-      "Arbitrum"
-    ],
-    "slug": "usd-ai",
-    "name": "USD AI"
-  },
-  "GPSUSDT": {
-    "tvl": 31298374,
-    "tvl_fmt": "$31M",
-    "change_1d": -1.94,
-    "change_7d": -6.77,
-    "category": "Token Locker",
-    "chains": [
-      "Binance",
-      "Base",
-      "Ethereum",
-      "Arbitrum"
-    ],
-    "slug": "goplus-locker-v3",
-    "name": "GoPlus Locker V3"
-  },
-  "EIGENUSDT": {
-    "tvl": 6445023361,
-    "tvl_fmt": "$6.4B",
-    "change_1d": -2.13,
-    "change_7d": -9.15,
-    "category": "Restaking",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "eigencloud",
-    "name": "EigenCloud"
-  },
-  "JSTUSDT": {
-    "tvl": 3761564157,
-    "tvl_fmt": "$3.8B",
-    "change_1d": -0.71,
-    "change_7d": -3.92,
-    "category": "Lending",
-    "chains": [
-      "Tron"
-    ],
-    "slug": "justlend-v1",
-    "name": "JustLend V1"
-  },
-  "WBTCUSDT": {
-    "tvl": 9687053447,
-    "tvl_fmt": "$9.7B",
-    "change_1d": -0.39,
-    "change_7d": -3.52,
-    "category": "Bridge",
-    "chains": [
-      "Bitcoin"
-    ],
-    "slug": "wbtc",
-    "name": "WBTC"
-  },
-  "PENDLEUSDT": {
-    "tvl": 1231846835,
-    "tvl_fmt": "$1.2B",
-    "change_1d": 1.2,
-    "change_7d": -1.83,
-    "category": "Yield",
-    "chains": [
-      "Ethereum",
-      "Arbitrum",
-      "Monad",
-      "X Layer",
-      "Plasma"
-    ],
-    "slug": "pendle-v2",
-    "name": "Pendle V2"
-  },
-  "MANTAUSDT": {
-    "tvl": 25684167,
-    "tvl_fmt": "$26M",
-    "change_1d": -1.42,
-    "change_7d": -4.77,
-    "category": "Canonical Bridge",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "manta-pacific",
-    "name": "Manta Pacific"
-  },
-  "MORPHOUSDT": {
-    "tvl": 11271786053,
-    "tvl_fmt": "$11.3B",
-    "change_1d": -0.8,
-    "change_7d": -1.85,
-    "category": "Lending",
-    "chains": [
-      "Ethereum",
-      "Base",
-      "Robinhood Chain",
-      "Arc",
-      "Monad"
-    ],
-    "slug": "morpho-blue",
-    "name": "Morpho Blue"
-  },
-  "METISUSDT": {
-    "tvl": 30899173,
-    "tvl_fmt": "$31M",
-    "change_1d": -3.97,
-    "change_7d": 2.82,
-    "category": "Canonical Bridge",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "metis-bridge",
-    "name": "Metis Bridge"
-  },
-  "METUSDT": {
-    "tvl": 167154383,
-    "tvl_fmt": "$167M",
-    "change_1d": -8.7,
-    "change_7d": -12.76,
-    "category": "Dexs",
-    "chains": [
-      "Solana"
-    ],
-    "slug": "meteora-dlmm",
-    "name": "Meteora DLMM"
-  },
-  "API3USDT": {
-    "tvl": 19675329,
-    "tvl_fmt": "$20M",
-    "change_1d": 4.74,
-    "change_7d": 6.68,
-    "category": "Risk Curators",
-    "chains": [
-      "Ethereum",
-      "Base"
-    ],
-    "slug": "api3",
-    "name": "Api3"
-  },
-  "AXLUSDT": {
-    "tvl": 150107836,
-    "tvl_fmt": "$150M",
-    "change_1d": -2.02,
-    "change_7d": -4.77,
-    "category": "Bridge",
-    "chains": [
-      "Ethereum",
-      "Binance",
-      "Ripple",
-      "Optimism",
-      "Base"
-    ],
-    "slug": "axelar",
-    "name": "Axelar"
-  },
-  "ORCAUSDT": {
-    "tvl": 302567635,
-    "tvl_fmt": "$303M",
-    "change_1d": -3.35,
-    "change_7d": -6.66,
-    "category": "Dexs",
-    "chains": [
-      "Solana",
-      "Eclipse"
-    ],
-    "slug": "orca-dex",
-    "name": "Orca DEX"
-  },
-  "OPNUSDT": {
-    "tvl": 3162181,
-    "tvl_fmt": "$3M",
-    "change_1d": 1.02,
-    "change_7d": -1.63,
-    "category": "Prediction Market",
-    "chains": [
-      "Binance"
-    ],
-    "slug": "opinion",
-    "name": "OPINION"
-  },
-  "RUNEUSDT": {
-    "tvl": 66002743,
-    "tvl_fmt": "$66M",
-    "change_1d": -2.15,
-    "change_7d": -10.11,
-    "category": "Dexs",
-    "chains": [
-      "Thorchain",
-      "Bitcoin",
-      "Ethereum",
-      "Binance",
-      "Bitcoincash"
-    ],
-    "slug": "thorchain-dex",
-    "name": "THORChain DEX"
-  },
-  "SYNUSDT": {
-    "tvl": 9659799,
-    "tvl_fmt": "$10M",
-    "change_1d": -0.2,
-    "change_7d": -2.46,
-    "category": "Cross Chain Bridge",
-    "chains": [
-      "Ethereum",
-      "Avalanche",
-      "Blast",
-      "Arbitrum",
-      "Binance"
-    ],
-    "slug": "synapse-cross-chain-bridge",
-    "name": "Synapse Cross Chain Bridge"
-  },
-  "SKYUSDT": {
-    "tvl": 5854073523,
-    "tvl_fmt": "$5.9B",
-    "change_1d": -1.33,
-    "change_7d": -2.96,
-    "category": "CDP",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "sky-lending",
-    "name": "Sky Lending"
-  },
-  "BONKUSDT": {
-    "tvl": 10200211,
-    "tvl_fmt": "$10M",
-    "change_1d": -4.16,
-    "change_7d": -12.13,
-    "category": "Liquid Staking",
-    "chains": [
-      "Solana"
-    ],
-    "slug": "bonk-staked-sol",
-    "name": "Bonk Staked SOL"
-  },
-  "WALUSDT": {
-    "tvl": 3656943,
-    "tvl_fmt": "$4M",
-    "change_1d": 0.02,
-    "change_7d": -1.25,
-    "category": "Dexs",
-    "chains": [
-      "EOS"
-    ],
-    "slug": "whaleex",
-    "name": "WhaleEx"
-  },
-  "FLOWUSDT": {
-    "tvl": 2950542,
-    "tvl_fmt": "$3M",
-    "change_1d": -33.88,
-    "change_7d": -31.14,
-    "category": "Dexs",
-    "chains": [
-      "Flow"
-    ],
-    "slug": "flowswap-v3",
-    "name": "FlowSwap V3"
-  },
-  "FLOKIUSDT": {
-    "tvl": 12612300,
-    "tvl_fmt": "$13M",
-    "change_1d": -2.62,
-    "change_7d": -8.78,
-    "category": "Token Locker",
-    "chains": [
-      "Binance",
-      "Ethereum",
-      "Base",
-      "Cronos",
-      "Arbitrum"
-    ],
-    "slug": "flokifi-locker",
-    "name": "FlokiFi Locker"
-  },
-  "DYDXUSDT": {
-    "tvl": 70856320,
-    "tvl_fmt": "$71M",
-    "change_1d": -0.0,
-    "change_7d": 0.5,
-    "category": "Derivatives",
-    "chains": [
-      "dYdX"
-    ],
-    "slug": "dydx-v4",
-    "name": "dYdX V4"
-  },
-  "HYPERUSDT": {
-    "tvl": 75520120,
-    "tvl_fmt": "$76M",
-    "change_1d": -5.74,
-    "change_7d": -11.41,
-    "category": "Cross Chain Bridge",
-    "chains": [
-      "Binance",
-      "Ethereum",
-      "Base",
-      "Arbitrum",
-      "Optimism"
-    ],
-    "slug": "hyperlane",
-    "name": "Hyperlane"
-  },
-  "BANKUSDT": {
-    "tvl": 500818714,
-    "tvl_fmt": "$501M",
-    "change_1d": 0.05,
-    "change_7d": -3.63,
-    "category": "Bridge",
-    "chains": [
-      "Bitcoin"
-    ],
-    "slug": "lorenzo-enzobtc",
-    "name": "Lorenzo enzoBTC"
-  },
-  "BIOUSDT": {
-    "tvl": 3616827,
-    "tvl_fmt": "$4M",
-    "change_1d": -5.8,
-    "change_7d": -12.57,
-    "category": "Launchpad",
-    "chains": [
-      "Ethereum",
-      "Base"
-    ],
-    "slug": "bio-protocol",
-    "name": "Bio Protocol"
-  },
-  "HUMAUSDT": {
-    "tvl": 406616425,
-    "tvl_fmt": "$407M",
-    "change_1d": -0.63,
-    "change_7d": -1.35,
-    "category": "RWA",
-    "chains": [
-      "Solana",
-      "Ethereum",
-      "Stellar",
-      "Monad"
-    ],
-    "slug": "huma",
-    "name": "Huma"
-  },
-  "2ZUSDT": {
-    "tvl": 74026556,
-    "tvl_fmt": "$74M",
-    "change_1d": -4.1,
-    "change_7d": -11.65,
-    "category": "Liquid Staking",
-    "chains": [
-      "Solana"
-    ],
-    "slug": "doublezero-staked-sol",
-    "name": "DoubleZero Staked SOL"
-  },
-  "COMPUSDT": {
-    "tvl": 1440933228,
-    "tvl_fmt": "$1.4B",
-    "change_1d": -1.04,
-    "change_7d": -5.67,
-    "category": "Lending",
-    "chains": [
-      "Ethereum",
-      "Arbitrum",
-      "Base",
-      "Optimism",
-      "Polygon"
-    ],
-    "slug": "compound-v3",
-    "name": "Compound V3"
-  },
   "GNSUSDT": {
-    "tvl": 8294202,
+    "tvl": 8239806,
     "tvl_fmt": "$8M",
-    "change_1d": -2.6,
-    "change_7d": -4.5,
+    "change_1d": -3.04,
+    "change_7d": -3.46,
     "category": "Derivatives",
     "chains": [
       "Arbitrum",
@@ -818,255 +191,343 @@
     "slug": "gains-network",
     "name": "Gains Network"
   },
-  "FFUSDT": {
-    "tvl": 1643016387,
-    "tvl_fmt": "$1.6B",
-    "change_1d": -0.64,
-    "change_7d": -0.69,
-    "category": "Basis Trading",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "falcon-finance",
-    "name": "Falcon Finance"
-  },
-  "HEMIUSDT": {
-    "tvl": 44150524,
-    "tvl_fmt": "$44M",
-    "change_1d": -1.3,
-    "change_7d": -7.51,
-    "category": "Farm",
-    "chains": [
-      "Hemi"
-    ],
-    "slug": "hemi-staking",
-    "name": "Hemi Staking"
-  },
-  "SPKUSDT": {
-    "tvl": 5245336840,
-    "tvl_fmt": "$5.2B",
-    "change_1d": -0.1,
-    "change_7d": -7.49,
-    "category": "Lending",
+  "WUSDT": {
+    "tvl": 1652856765,
+    "tvl_fmt": "$1.7B",
+    "change_1d": -3.15,
+    "change_7d": -11.96,
+    "category": "Bridge",
     "chains": [
       "Ethereum",
-      "xDai"
+      "Algorand",
+      "Binance",
+      "Solana",
+      "Near"
     ],
-    "slug": "sparklend",
-    "name": "SparkLend"
+    "slug": "portal",
+    "name": "Portal"
   },
-  "SUNUSDT": {
-    "tvl": 261283564,
-    "tvl_fmt": "$261M",
-    "change_1d": 0.25,
-    "change_7d": -1.35,
+  "CAKEUSDT": {
+    "tvl": 1603416327,
+    "tvl_fmt": "$1.6B",
+    "change_1d": 0.3,
+    "change_7d": -13.95,
     "category": "Dexs",
-    "chains": [
-      "Tron"
-    ],
-    "slug": "sunswap-v2",
-    "name": "SUNSwap V2"
-  },
-  "YBUSDT": {
-    "tvl": 131101260,
-    "tvl_fmt": "$131M",
-    "change_1d": -0.84,
-    "change_7d": -5.0,
-    "category": "Leveraged Farming",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "yield-basis",
-    "name": "Yield Basis"
-  },
-  "ZBTUSDT": {
-    "tvl": 61020821,
-    "tvl_fmt": "$61M",
-    "change_1d": -0.01,
-    "change_7d": 0.04,
-    "category": "Basis Trading",
     "chains": [
       "Binance",
       "Ethereum",
+      "Aptos",
       "Base",
-      "Arbitrum",
-      "Optimism"
+      "Arbitrum"
     ],
-    "slug": "zerobase-cedefi",
-    "name": "ZEROBASE CeDeFi"
+    "slug": "pancakeswap-amm",
+    "name": "PancakeSwap AMM"
   },
-  "STOUSDT": {
-    "tvl": 19570047,
-    "tvl_fmt": "$20M",
-    "change_1d": -1.36,
-    "change_7d": -8.89,
+  "DOTUSDT": {
+    "tvl": 2693639,
+    "tvl_fmt": "$3M",
+    "change_1d": -3.1,
+    "change_7d": 1.57,
     "category": "Liquid Staking",
     "chains": [
-      "Ethereum"
+      "Acala"
     ],
-    "slug": "stakestone-stone",
-    "name": "StakeStone STONE"
+    "slug": "acala-lcdot",
+    "name": "Acala LCDOT"
   },
-  "CVXUSDT": {
-    "tvl": 577759516,
-    "tvl_fmt": "$578M",
-    "change_1d": -2.49,
-    "change_7d": -6.14,
-    "category": "Yield",
+  "ZROUSDT": {
+    "tvl": 11024112493,
+    "tvl_fmt": "$11.0B",
+    "change_1d": -1.61,
+    "change_7d": -5.11,
+    "category": "Bridge",
     "chains": [
       "Ethereum",
-      "Fraxtal",
-      "Arbitrum",
-      "Polygon"
+      "Polygon",
+      "ApeChain",
+      "Base",
+      "Arbitrum"
     ],
-    "slug": "convex-finance",
-    "name": "Convex Finance"
+    "slug": "layerzero-v2",
+    "name": "LayerZero V2"
   },
-  "BABYUSDT": {
-    "tvl": 3389655327,
-    "tvl_fmt": "$3.4B",
-    "change_1d": 0.87,
-    "change_7d": -3.05,
-    "category": "Restaking",
-    "chains": [
-      "Bitcoin"
-    ],
-    "slug": "babylon-protocol",
-    "name": "Babylon Protocol"
-  },
-  "KMNOUSDT": {
-    "tvl": 1309346150,
-    "tvl_fmt": "$1.3B",
-    "change_1d": -1.8,
-    "change_7d": -6.52,
-    "category": "Lending",
-    "chains": [
-      "Solana"
-    ],
-    "slug": "kamino-lend",
-    "name": "Kamino Lend"
-  },
-  "SSVUSDT": {
-    "tvl": 13058158344,
-    "tvl_fmt": "$13.1B",
-    "change_1d": -1.71,
-    "change_7d": -8.03,
-    "category": "Staking Pool",
+  "AMPUSDT": {
+    "tvl": 1149791,
+    "tvl_fmt": "$1M",
+    "change_1d": 1.67,
+    "change_7d": 16.44,
+    "category": "Payments",
     "chains": [
       "Ethereum"
     ],
-    "slug": "ssv-network",
-    "name": "SSV Network"
+    "slug": "flexa",
+    "name": "Flexa"
   },
-  "IMXUSDT": {
-    "tvl": 30616936,
-    "tvl_fmt": "$31M",
-    "change_1d": -4.31,
-    "change_7d": -4.96,
+  "POLUSDT": {
+    "tvl": 2748883192,
+    "tvl_fmt": "$2.7B",
+    "change_1d": -1.42,
+    "change_7d": -2.8,
     "category": "Chain",
     "chains": [
       "Ethereum"
     ],
-    "slug": "immutable-zkevm",
-    "name": "Immutable zkEVM"
+    "slug": "polygon-bridge",
+    "name": "Polygon Bridge"
   },
-  "USUALUSDT": {
-    "tvl": 83734193,
-    "tvl_fmt": "$84M",
-    "change_1d": -0.26,
-    "change_7d": -0.85,
-    "category": "RWA",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "usual-usd0",
-    "name": "Usual USD0"
-  },
-  "EULUSDT": {
-    "tvl": 301242993,
-    "tvl_fmt": "$301M",
-    "change_1d": -0.58,
-    "change_7d": -12.21,
-    "category": "Lending",
-    "chains": [
-      "Monad",
-      "Ethereum",
-      "Base",
-      "BOB",
-      "Avalanche"
-    ],
-    "slug": "euler-v2",
-    "name": "Euler V2"
-  },
-  "MAVUSDT": {
-    "tvl": 1162689,
-    "tvl_fmt": "$1M",
-    "change_1d": -1.78,
-    "change_7d": -11.22,
-    "category": "Dexs",
-    "chains": [
-      "Ethereum",
-      "Base",
-      "zkSync Era",
-      "Arbitrum",
-      "Binance"
-    ],
-    "slug": "maverick-v2",
-    "name": "Maverick V2"
-  },
-  "MMTUSDT": {
-    "tvl": 3940053,
-    "tvl_fmt": "$4M",
-    "change_1d": -2.13,
-    "change_7d": -7.05,
-    "category": "Dexs",
-    "chains": [
-      "Sui"
-    ],
-    "slug": "momentum",
-    "name": "Momentum"
-  },
-  "THEUSDT": {
-    "tvl": 2528510,
-    "tvl_fmt": "$3M",
-    "change_1d": 0.14,
-    "change_7d": -6.16,
-    "category": "Dexs",
+  "ASTERUSDT": {
+    "tvl": 111158786,
+    "tvl_fmt": "$111M",
+    "change_1d": -0.11,
+    "change_7d": -0.15,
+    "category": "Basis Trading",
     "chains": [
       "Binance"
     ],
-    "slug": "thena-integral",
-    "name": "THENA INTEGRAL"
+    "slug": "aster-usdf",
+    "name": "Aster USDF"
   },
-  "AVNTUSDT": {
-    "tvl": 11441470,
-    "tvl_fmt": "$11M",
-    "change_1d": -0.79,
-    "change_7d": 0.53,
-    "category": "Derivatives",
+  "OGNUSDT": {
+    "tvl": 60656160,
+    "tvl_fmt": "$61M",
+    "change_1d": -0.05,
+    "change_7d": -2.78,
+    "category": "Liquid Staking",
+    "chains": [
+      "Ethereum",
+      "Base",
+      "Plume Mainnet"
+    ],
+    "slug": "origin-ether",
+    "name": "Origin Ether"
+  },
+  "BLURUSDT": {
+    "tvl": 16126764,
+    "tvl_fmt": "$16M",
+    "change_1d": -6.43,
+    "change_7d": -7.48,
+    "category": "NFT Marketplace",
+    "chains": [
+      "Ethereum",
+      "Blast"
+    ],
+    "slug": "blur-bids",
+    "name": "Blur Bids"
+  },
+  "LDOUSDT": {
+    "tvl": 24273572575,
+    "tvl_fmt": "$24.3B",
+    "change_1d": -0.37,
+    "change_7d": -4.15,
+    "category": "Liquid Staking",
+    "chains": [
+      "Ethereum",
+      "Solana",
+      "Terra",
+      "Moonriver",
+      "Moonbeam"
+    ],
+    "slug": "lido",
+    "name": "Lido"
+  },
+  "WBTCUSDT": {
+    "tvl": 9711051896,
+    "tvl_fmt": "$9.7B",
+    "change_1d": -0.24,
+    "change_7d": -0.45,
+    "category": "Bridge",
+    "chains": [
+      "Bitcoin"
+    ],
+    "slug": "wbtc",
+    "name": "WBTC"
+  },
+  "AEROUSDT": {
+    "tvl": 240310775,
+    "tvl_fmt": "$240M",
+    "change_1d": 7.9,
+    "change_7d": 7.81,
+    "category": "Dexs",
     "chains": [
       "Base"
     ],
-    "slug": "veranta",
-    "name": "Veranta"
+    "slug": "aerodrome-slipstream",
+    "name": "Aerodrome Slipstream"
   },
-  "GUSDT": {
-    "tvl": 13734534,
-    "tvl_fmt": "$14M",
-    "change_1d": -5.93,
-    "change_7d": -15.03,
-    "category": "Canonical Bridge",
+  "PENDLEUSDT": {
+    "tvl": 1230773010,
+    "tvl_fmt": "$1.2B",
+    "change_1d": -0.12,
+    "change_7d": -1.75,
+    "category": "Yield",
+    "chains": [
+      "Ethereum",
+      "Arbitrum",
+      "Monad",
+      "X Layer",
+      "Plasma"
+    ],
+    "slug": "pendle-v2",
+    "name": "Pendle V2"
+  },
+  "ZAMAUSDT": {
+    "tvl": 122530015,
+    "tvl_fmt": "$123M",
+    "change_1d": 4.22,
+    "change_7d": 16.52,
+    "category": "Privacy",
     "chains": [
       "Ethereum"
     ],
-    "slug": "gravity-by-galxe",
-    "name": "Gravity by Galxe"
+    "slug": "zama",
+    "name": "Zama"
+  },
+  "BONKUSDT": {
+    "tvl": 10255950,
+    "tvl_fmt": "$10M",
+    "change_1d": -0.59,
+    "change_7d": -10.01,
+    "category": "Liquid Staking",
+    "chains": [
+      "Solana"
+    ],
+    "slug": "bonk-staked-sol",
+    "name": "Bonk Staked SOL"
+  },
+  "CRVUSDT": {
+    "tvl": 1231864441,
+    "tvl_fmt": "$1.2B",
+    "change_1d": -0.32,
+    "change_7d": -2.55,
+    "category": "Dexs",
+    "chains": [
+      "Ethereum",
+      "Fraxtal",
+      "Monad",
+      "Etherlink",
+      "Base"
+    ],
+    "slug": "curve-dex",
+    "name": "Curve DEX"
+  },
+  "ETHFIUSDT": {
+    "tvl": 4774535938,
+    "tvl_fmt": "$4.8B",
+    "change_1d": -0.61,
+    "change_7d": -4.51,
+    "category": "Liquid Staking",
+    "chains": [
+      "Ethereum",
+      "Base",
+      "Arbitrum",
+      "Berachain",
+      "Scroll"
+    ],
+    "slug": "ether.fi-stake",
+    "name": "ether.fi Stake"
+  },
+  "RAYUSDT": {
+    "tvl": 1206421642,
+    "tvl_fmt": "$1.2B",
+    "change_1d": -0.56,
+    "change_7d": -8.58,
+    "category": "Dexs",
+    "chains": [
+      "Solana"
+    ],
+    "slug": "raydium-amm",
+    "name": "Raydium AMM"
+  },
+  "EIGENUSDT": {
+    "tvl": 6459083067,
+    "tvl_fmt": "$6.5B",
+    "change_1d": -0.48,
+    "change_7d": -5.21,
+    "category": "Restaking",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "eigencloud",
+    "name": "EigenCloud"
+  },
+  "RSRUSDT": {
+    "tvl": 48617659,
+    "tvl_fmt": "$49M",
+    "change_1d": -0.53,
+    "change_7d": 26.06,
+    "category": "Indexes",
+    "chains": [
+      "Ethereum",
+      "Base",
+      "Binance",
+      "Arbitrum"
+    ],
+    "slug": "reserve-protocol",
+    "name": "Reserve Protocol"
+  },
+  "GPSUSDT": {
+    "tvl": 31320619,
+    "tvl_fmt": "$31M",
+    "change_1d": -0.6,
+    "change_7d": -4.87,
+    "category": "Token Locker",
+    "chains": [
+      "Binance",
+      "Base",
+      "Ethereum",
+      "Arbitrum"
+    ],
+    "slug": "goplus-locker-v3",
+    "name": "GoPlus Locker V3"
+  },
+  "AXLUSDT": {
+    "tvl": 151079108,
+    "tvl_fmt": "$151M",
+    "change_1d": 0.16,
+    "change_7d": -3.98,
+    "category": "Bridge",
+    "chains": [
+      "Ethereum",
+      "Binance",
+      "Ripple",
+      "Optimism",
+      "Base"
+    ],
+    "slug": "axelar",
+    "name": "Axelar"
+  },
+  "HUMAUSDT": {
+    "tvl": 404368747,
+    "tvl_fmt": "$404M",
+    "change_1d": -0.64,
+    "change_7d": -1.52,
+    "category": "RWA",
+    "chains": [
+      "Solana",
+      "Ethereum",
+      "Stellar",
+      "Monad"
+    ],
+    "slug": "huma",
+    "name": "Huma"
+  },
+  "CHIPUSDT": {
+    "tvl": 348747434,
+    "tvl_fmt": "$349M",
+    "change_1d": 0.39,
+    "change_7d": 1.52,
+    "category": "RWA",
+    "chains": [
+      "Arbitrum"
+    ],
+    "slug": "usd-ai",
+    "name": "USD AI"
   },
   "MITOUSDT": {
-    "tvl": 1335667,
+    "tvl": 1336371,
     "tvl_fmt": "$1M",
-    "change_1d": -1.08,
-    "change_7d": -5.91,
+    "change_1d": 0.18,
+    "change_7d": -3.26,
     "category": "Onchain Capital Allocator",
     "chains": [
       "Binance",
@@ -1078,155 +539,76 @@
     "slug": "mitosis",
     "name": "Mitosis"
   },
-  "FRAXUSDT": {
-    "tvl": 39391861,
-    "tvl_fmt": "$39M",
-    "change_1d": -0.1,
-    "change_7d": -6.1,
-    "category": "Algo-Stables",
+  "JSTUSDT": {
+    "tvl": 3762262498,
+    "tvl_fmt": "$3.8B",
+    "change_1d": -0.29,
+    "change_7d": -1.66,
+    "category": "Lending",
     "chains": [
-      "Ethereum"
+      "Tron"
     ],
-    "slug": "frax",
-    "name": "Frax"
+    "slug": "justlend-v1",
+    "name": "JustLend V1"
   },
-  "1INCHUSDT": {
-    "tvl": 3280193,
-    "tvl_fmt": "$3M",
-    "change_1d": -0.55,
-    "change_7d": -6.74,
-    "category": "DEX Aggregator",
+  "JTOUSDT": {
+    "tvl": 1120551488,
+    "tvl_fmt": "$1.1B",
+    "change_1d": 0.11,
+    "change_7d": -8.75,
+    "category": "Liquid Staking",
     "chains": [
-      "Ethereum",
-      "Binance"
+      "Solana"
     ],
-    "slug": "1inch-swap",
-    "name": "1inch Swap"
+    "slug": "jito-liquid-staking",
+    "name": "Jito Liquid Staking"
   },
-  "REUSDT": {
-    "tvl": 416601978,
-    "tvl_fmt": "$417M",
-    "change_1d": 0.76,
-    "change_7d": 4.92,
-    "category": "RWA",
+  "KMNOUSDT": {
+    "tvl": 1329609352,
+    "tvl_fmt": "$1.3B",
+    "change_1d": 1.72,
+    "change_7d": -3.5,
+    "category": "Lending",
     "chains": [
-      "Ethereum",
-      "Base",
-      "Arbitrum",
-      "Avalanche"
+      "Solana"
     ],
-    "slug": "re",
-    "name": "Re"
+    "slug": "kamino-lend",
+    "name": "Kamino Lend"
   },
-  "GMXUSDT": {
-    "tvl": 212629074,
-    "tvl_fmt": "$213M",
-    "change_1d": -0.37,
-    "change_7d": -0.83,
-    "category": "Derivatives",
-    "chains": [
-      "Arbitrum",
-      "Avalanche",
-      "MegaETH",
-      "Botanix"
-    ],
-    "slug": "gmx-v2-perps",
-    "name": "GMX V2 Perps"
-  },
-  "SOLVUSDT": {
-    "tvl": 529428742,
-    "tvl_fmt": "$529M",
-    "change_1d": -0.15,
-    "change_7d": -3.96,
-    "category": "Bridge",
-    "chains": [
-      "Bitcoin",
-      "Binance",
-      "Ethereum",
-      "Solana",
-      "Base"
-    ],
-    "slug": "solvbtc",
-    "name": "SolvBTC"
-  },
-  "USDEUSDT": {
-    "tvl": 1701518,
-    "tvl_fmt": "$2M",
-    "change_1d": -0.06,
-    "change_7d": -7.76,
-    "category": "Derivatives",
-    "chains": [
-      "Ethereal"
-    ],
-    "slug": "ethereal-dex",
-    "name": "Ethereal DEX"
-  },
-  "REZUSDT": {
-    "tvl": 116048338,
-    "tvl_fmt": "$116M",
-    "change_1d": 1.35,
-    "change_7d": -5.69,
-    "category": "Liquid Restaking",
-    "chains": [
-      "Ethereum",
-      "Linea",
-      "Solana",
-      "Arbitrum",
-      "Zircuit"
-    ],
-    "slug": "renzo",
-    "name": "Renzo"
-  },
-  "SUSHIUSDT": {
-    "tvl": 39540997,
-    "tvl_fmt": "$40M",
-    "change_1d": -1.78,
-    "change_7d": -5.45,
+  "ORCAUSDT": {
+    "tvl": 299633708,
+    "tvl_fmt": "$300M",
+    "change_1d": null,
+    "change_7d": null,
     "category": "Dexs",
     "chains": [
+      "Solana",
+      "Eclipse"
+    ],
+    "slug": "orca-dex",
+    "name": "Orca DEX"
+  },
+  "DODOUSDT": {
+    "tvl": 12537119,
+    "tvl_fmt": "$13M",
+    "change_1d": 0.03,
+    "change_7d": -0.99,
+    "category": "Dexs",
+    "chains": [
+      "Binance",
       "Ethereum",
+      "Avalanche",
       "Polygon",
-      "Arbitrum",
-      "Base",
-      "Boba"
+      "Arbitrum"
     ],
-    "slug": "sushiswap",
-    "name": "SushiSwap"
-  },
-  "TUSDT": {
-    "tvl": 352953635,
-    "tvl_fmt": "$353M",
-    "change_1d": 0.21,
-    "change_7d": -4.45,
-    "category": "Decentralized BTC",
-    "chains": [
-      "Bitcoin",
-      "Ethereum"
-    ],
-    "slug": "tbtc",
-    "name": "tBTC"
-  },
-  "YFIUSDT": {
-    "tvl": 200468938,
-    "tvl_fmt": "$200M",
-    "change_1d": 0.09,
-    "change_7d": -2.15,
-    "category": "Yield Aggregator",
-    "chains": [
-      "Ethereum",
-      "Katana",
-      "Optimism",
-      "Base",
-      "Polygon"
-    ],
-    "slug": "yearn-finance",
-    "name": "Yearn Finance"
+    "slug": "dodo-amm",
+    "name": "DODO AMM"
   },
   "QIUSDT": {
-    "tvl": 237515634,
+    "tvl": 238099683,
     "tvl_fmt": "$238M",
-    "change_1d": -6.9,
-    "change_7d": -9.88,
+    "change_1d": -0.94,
+    "change_7d": -7.49,
     "category": "Liquid Staking",
     "chains": [
       "Avalanche"
@@ -1234,11 +616,167 @@
     "slug": "benqi-staked-avax",
     "name": "Benqi Staked Avax"
   },
+  "RUNEUSDT": {
+    "tvl": 66283490,
+    "tvl_fmt": "$66M",
+    "change_1d": -0.09,
+    "change_7d": -5.23,
+    "category": "Dexs",
+    "chains": [
+      "Thorchain",
+      "Bitcoin",
+      "Ethereum",
+      "Binance",
+      "Bitcoincash"
+    ],
+    "slug": "thorchain-dex",
+    "name": "THORChain DEX"
+  },
+  "OSMOUSDT": {
+    "tvl": 11299329,
+    "tvl_fmt": "$11M",
+    "change_1d": -7.94,
+    "change_7d": 5.38,
+    "category": "Dexs",
+    "chains": [
+      "Osmosis"
+    ],
+    "slug": "osmosis-dex",
+    "name": "Osmosis DEX"
+  },
+  "SYNUSDT": {
+    "tvl": 9640964,
+    "tvl_fmt": "$10M",
+    "change_1d": -0.37,
+    "change_7d": -1.36,
+    "category": "Cross Chain Bridge",
+    "chains": [
+      "Ethereum",
+      "Avalanche",
+      "Blast",
+      "Arbitrum",
+      "Binance"
+    ],
+    "slug": "synapse-cross-chain-bridge",
+    "name": "Synapse Cross Chain Bridge"
+  },
+  "MORPHOUSDT": {
+    "tvl": 11232839025,
+    "tvl_fmt": "$11.2B",
+    "change_1d": -0.69,
+    "change_7d": -0.31,
+    "category": "Lending",
+    "chains": [
+      "Ethereum",
+      "Base",
+      "Robinhood Chain",
+      "Arc",
+      "Monad"
+    ],
+    "slug": "morpho-blue",
+    "name": "Morpho Blue"
+  },
+  "SKYUSDT": {
+    "tvl": 5875169586,
+    "tvl_fmt": "$5.9B",
+    "change_1d": 0.35,
+    "change_7d": -2.07,
+    "category": "CDP",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "sky-lending",
+    "name": "Sky Lending"
+  },
+  "GUSDT": {
+    "tvl": 14236805,
+    "tvl_fmt": "$14M",
+    "change_1d": 3.53,
+    "change_7d": -4.5,
+    "category": "Canonical Bridge",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "gravity-by-galxe",
+    "name": "Gravity by Galxe"
+  },
+  "METUSDT": {
+    "tvl": 167970162,
+    "tvl_fmt": "$168M",
+    "change_1d": -3.77,
+    "change_7d": -10.74,
+    "category": "Dexs",
+    "chains": [
+      "Solana"
+    ],
+    "slug": "meteora-dlmm",
+    "name": "Meteora DLMM"
+  },
+  "DYDXUSDT": {
+    "tvl": 70835475,
+    "tvl_fmt": "$71M",
+    "change_1d": -0.15,
+    "change_7d": 0.18,
+    "category": "Derivatives",
+    "chains": [
+      "dYdX"
+    ],
+    "slug": "dydx-v4",
+    "name": "dYdX V4"
+  },
+  "METISUSDT": {
+    "tvl": 30688994,
+    "tvl_fmt": "$31M",
+    "change_1d": -0.77,
+    "change_7d": 9.65,
+    "category": "Canonical Bridge",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "metis-bridge",
+    "name": "Metis Bridge"
+  },
+  "OPNUSDT": {
+    "tvl": 3158291,
+    "tvl_fmt": "$3M",
+    "change_1d": -0.12,
+    "change_7d": -1.6,
+    "category": "Prediction Market",
+    "chains": [
+      "Binance"
+    ],
+    "slug": "opinion",
+    "name": "OPINION"
+  },
+  "SSVUSDT": {
+    "tvl": 13090472365,
+    "tvl_fmt": "$13.1B",
+    "change_1d": -0.34,
+    "change_7d": -4.02,
+    "category": "Staking Pool",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "ssv-network",
+    "name": "SSV Network"
+  },
+  "FFUSDT": {
+    "tvl": 1643376936,
+    "tvl_fmt": "$1.6B",
+    "change_1d": 0.01,
+    "change_7d": -0.72,
+    "category": "Basis Trading",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "falcon-finance",
+    "name": "Falcon Finance"
+  },
   "SPELLUSDT": {
-    "tvl": 4852129,
+    "tvl": 4862124,
     "tvl_fmt": "$5M",
-    "change_1d": -0.95,
-    "change_7d": -4.95,
+    "change_1d": -0.28,
+    "change_7d": -1.63,
     "category": "CDP",
     "chains": [
       "Ethereum",
@@ -1250,11 +788,286 @@
     "slug": "abracadabra-spell",
     "name": "Abracadabra Spell"
   },
+  "GMXUSDT": {
+    "tvl": 213141605,
+    "tvl_fmt": "$213M",
+    "change_1d": -0.11,
+    "change_7d": 1.16,
+    "category": "Derivatives",
+    "chains": [
+      "Arbitrum",
+      "Avalanche",
+      "MegaETH",
+      "Botanix"
+    ],
+    "slug": "gmx-v2-perps",
+    "name": "GMX V2 Perps"
+  },
+  "MANTAUSDT": {
+    "tvl": 25669169,
+    "tvl_fmt": "$26M",
+    "change_1d": -0.67,
+    "change_7d": -0.94,
+    "category": "Canonical Bridge",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "manta-pacific",
+    "name": "Manta Pacific"
+  },
+  "FLOKIUSDT": {
+    "tvl": 12692712,
+    "tvl_fmt": "$13M",
+    "change_1d": -0.34,
+    "change_7d": -4.51,
+    "category": "Token Locker",
+    "chains": [
+      "Binance",
+      "Ethereum",
+      "Base",
+      "Cronos",
+      "Arbitrum"
+    ],
+    "slug": "flokifi-locker",
+    "name": "FlokiFi Locker"
+  },
+  "2ZUSDT": {
+    "tvl": 74603734,
+    "tvl_fmt": "$75M",
+    "change_1d": 0.7,
+    "change_7d": -9.05,
+    "category": "Liquid Staking",
+    "chains": [
+      "Solana"
+    ],
+    "slug": "doublezero-staked-sol",
+    "name": "DoubleZero Staked SOL"
+  },
+  "API3USDT": {
+    "tvl": 20244527,
+    "tvl_fmt": "$20M",
+    "change_1d": 1.32,
+    "change_7d": 6.44,
+    "category": "Risk Curators",
+    "chains": [
+      "Ethereum",
+      "Base"
+    ],
+    "slug": "api3",
+    "name": "Api3"
+  },
+  "QUICKUSDT": {
+    "tvl": 50567900,
+    "tvl_fmt": "$51M",
+    "change_1d": 1.35,
+    "change_7d": -41.25,
+    "category": "Dexs",
+    "chains": [
+      "Polygon",
+      "Base"
+    ],
+    "slug": "quickswap-dex",
+    "name": "Quickswap Dex"
+  },
+  "HEMIUSDT": {
+    "tvl": 44136237,
+    "tvl_fmt": "$44M",
+    "change_1d": 0.31,
+    "change_7d": -2.99,
+    "category": "Farm",
+    "chains": [
+      "Hemi"
+    ],
+    "slug": "hemi-staking",
+    "name": "Hemi Staking"
+  },
+  "SUSHIUSDT": {
+    "tvl": 39472840,
+    "tvl_fmt": "$39M",
+    "change_1d": -0.32,
+    "change_7d": -2.14,
+    "category": "Dexs",
+    "chains": [
+      "Ethereum",
+      "Polygon",
+      "Arbitrum",
+      "Base",
+      "Boba"
+    ],
+    "slug": "sushiswap",
+    "name": "SushiSwap"
+  },
+  "SPKUSDT": {
+    "tvl": 5244270562,
+    "tvl_fmt": "$5.2B",
+    "change_1d": -0.34,
+    "change_7d": -2.94,
+    "category": "Lending",
+    "chains": [
+      "Ethereum",
+      "xDai"
+    ],
+    "slug": "sparklend",
+    "name": "SparkLend"
+  },
+  "COMPUSDT": {
+    "tvl": 1436228057,
+    "tvl_fmt": "$1.4B",
+    "change_1d": -0.35,
+    "change_7d": -3.24,
+    "category": "Lending",
+    "chains": [
+      "Ethereum",
+      "Arbitrum",
+      "Base",
+      "Optimism",
+      "Polygon"
+    ],
+    "slug": "compound-v3",
+    "name": "Compound V3"
+  },
+  "BIOUSDT": {
+    "tvl": 3591814,
+    "tvl_fmt": "$4M",
+    "change_1d": -1.33,
+    "change_7d": -4.81,
+    "category": "Launchpad",
+    "chains": [
+      "Ethereum",
+      "Base"
+    ],
+    "slug": "bio-protocol",
+    "name": "Bio Protocol"
+  },
+  "FLOWUSDT": {
+    "tvl": 2935062,
+    "tvl_fmt": "$3M",
+    "change_1d": -33.1,
+    "change_7d": -27.17,
+    "category": "Dexs",
+    "chains": [
+      "Flow"
+    ],
+    "slug": "flowswap-v3",
+    "name": "FlowSwap V3"
+  },
+  "HYPERUSDT": {
+    "tvl": 75665528,
+    "tvl_fmt": "$76M",
+    "change_1d": -0.84,
+    "change_7d": -5.72,
+    "category": "Cross Chain Bridge",
+    "chains": [
+      "Binance",
+      "Ethereum",
+      "Base",
+      "Arbitrum",
+      "Optimism"
+    ],
+    "slug": "hyperlane",
+    "name": "Hyperlane"
+  },
+  "REZUSDT": {
+    "tvl": 116126093,
+    "tvl_fmt": "$116M",
+    "change_1d": 2.68,
+    "change_7d": -0.35,
+    "category": "Liquid Restaking",
+    "chains": [
+      "Ethereum",
+      "Linea",
+      "Solana",
+      "Arbitrum",
+      "Zircuit"
+    ],
+    "slug": "renzo",
+    "name": "Renzo"
+  },
+  "BANKUSDT": {
+    "tvl": 502099575,
+    "tvl_fmt": "$502M",
+    "change_1d": -0.24,
+    "change_7d": -0.45,
+    "category": "Bridge",
+    "chains": [
+      "Bitcoin"
+    ],
+    "slug": "lorenzo-enzobtc",
+    "name": "Lorenzo enzoBTC"
+  },
+  "MMTUSDT": {
+    "tvl": 4010990,
+    "tvl_fmt": "$4M",
+    "change_1d": 1.52,
+    "change_7d": -1.32,
+    "category": "Dexs",
+    "chains": [
+      "Sui"
+    ],
+    "slug": "momentum",
+    "name": "Momentum"
+  },
+  "ZBTUSDT": {
+    "tvl": 61013270,
+    "tvl_fmt": "$61M",
+    "change_1d": -0.01,
+    "change_7d": 0.1,
+    "category": "Basis Trading",
+    "chains": [
+      "Binance",
+      "Ethereum",
+      "Base",
+      "Arbitrum",
+      "Optimism"
+    ],
+    "slug": "zerobase-cedefi",
+    "name": "ZEROBASE CeDeFi"
+  },
+  "MAVUSDT": {
+    "tvl": 1156712,
+    "tvl_fmt": "$1M",
+    "change_1d": -0.82,
+    "change_7d": -8.44,
+    "category": "Dexs",
+    "chains": [
+      "Ethereum",
+      "Base",
+      "zkSync Era",
+      "Arbitrum",
+      "Binance"
+    ],
+    "slug": "maverick-v2",
+    "name": "Maverick V2"
+  },
+  "BABYUSDT": {
+    "tvl": 3398304775,
+    "tvl_fmt": "$3.4B",
+    "change_1d": -0.25,
+    "change_7d": 0.13,
+    "category": "Restaking",
+    "chains": [
+      "Bitcoin"
+    ],
+    "slug": "babylon-protocol",
+    "name": "Babylon Protocol"
+  },
+  "SUNUSDT": {
+    "tvl": 259576142,
+    "tvl_fmt": "$260M",
+    "change_1d": -0.71,
+    "change_7d": -1.68,
+    "category": "Dexs",
+    "chains": [
+      "Tron"
+    ],
+    "slug": "sunswap-v2",
+    "name": "SUNSwap V2"
+  },
   "NEXOUSDT": {
-    "tvl": 317300739,
-    "tvl_fmt": "$317M",
-    "change_1d": -1.67,
-    "change_7d": -2.77,
+    "tvl": 320764765,
+    "tvl_fmt": "$321M",
+    "change_1d": 1.01,
+    "change_7d": 0.54,
     "category": "CEX",
     "chains": [
       "Ethereum",
@@ -1266,80 +1079,62 @@
     "slug": "nexo",
     "name": "Nexo"
   },
-  "LAYERUSDT": {
-    "tvl": 10828683,
+  "REUSDT": {
+    "tvl": 418101955,
+    "tvl_fmt": "$418M",
+    "change_1d": 0.38,
+    "change_7d": 4.84,
+    "category": "RWA",
+    "chains": [
+      "Ethereum",
+      "Base",
+      "Arbitrum",
+      "Avalanche"
+    ],
+    "slug": "re",
+    "name": "Re"
+  },
+  "IMXUSDT": {
+    "tvl": 30314304,
+    "tvl_fmt": "$30M",
+    "change_1d": -1.84,
+    "change_7d": -1.54,
+    "category": "Chain",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "immutable-zkevm",
+    "name": "Immutable zkEVM"
+  },
+  "USUALUSDT": {
+    "tvl": 83270984,
+    "tvl_fmt": "$83M",
+    "change_1d": -0.58,
+    "change_7d": -1.38,
+    "category": "RWA",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "usual-usd0",
+    "name": "Usual USD0"
+  },
+  "AVNTUSDT": {
+    "tvl": 11489767,
     "tvl_fmt": "$11M",
-    "change_1d": -4.06,
-    "change_7d": -12.49,
-    "category": "Restaking",
-    "chains": [
-      "Solana"
-    ],
-    "slug": "solayer-restaking",
-    "name": "Solayer Restaking"
-  },
-  "HAEDALUSDT": {
-    "tvl": 39487973,
-    "tvl_fmt": "$39M",
-    "change_1d": -5.71,
-    "change_7d": -12.83,
-    "category": "Liquid Staking",
-    "chains": [
-      "Sui"
-    ],
-    "slug": "haedal-protocol",
-    "name": "Haedal Protocol"
-  },
-  "AEVOUSDT": {
-    "tvl": 14806639,
-    "tvl_fmt": "$15M",
-    "change_1d": -3.1,
-    "change_7d": -3.94,
+    "change_1d": 1.09,
+    "change_7d": 2.76,
     "category": "Derivatives",
     "chains": [
-      "Ethereum",
-      "Arbitrum",
-      "Base",
-      "Optimism"
+      "Base"
     ],
-    "slug": "aevo-perps",
-    "name": "Aevo Perps"
-  },
-  "TREEUSDT": {
-    "tvl": 68323118,
-    "tvl_fmt": "$68M",
-    "change_1d": -2.14,
-    "change_7d": -8.86,
-    "category": "DOR",
-    "chains": [
-      "Ethereum",
-      "Avalanche",
-      "Mantle"
-    ],
-    "slug": "treehouse-protocol",
-    "name": "Treehouse Protocol"
-  },
-  "ANKRUSDT": {
-    "tvl": 28450844,
-    "tvl_fmt": "$28M",
-    "change_1d": -3.9,
-    "change_7d": -5.7,
-    "category": "Liquid Staking",
-    "chains": [
-      "Ethereum",
-      "Flow",
-      "Binance",
-      "Avalanche",
-      "Polkadot"
-    ],
-    "slug": "ankr",
-    "name": "Ankr"
+    "slug": "veranta",
+    "name": "Veranta"
   },
   "CELRUSDT": {
-    "tvl": 15041766,
+    "tvl": 14887247,
     "tvl_fmt": "$15M",
-    "change_1d": -0.98,
-    "change_7d": -3.26,
+    "change_1d": -1.0,
+    "change_7d": -2.05,
     "category": "Bridge",
     "chains": [
       "Ethereum",
@@ -1351,48 +1146,39 @@
     "slug": "cbridge",
     "name": "cBridge"
   },
-  "ASTRUSDT": {
-    "tvl": 18997520,
-    "tvl_fmt": "$19M",
-    "change_1d": -6.66,
-    "change_7d": -15.91,
-    "category": "Chain",
+  "EULUSDT": {
+    "tvl": 297043864,
+    "tvl_fmt": "$297M",
+    "change_1d": -1.53,
+    "change_7d": -11.34,
+    "category": "Lending",
     "chains": [
-      "Astar"
+      "Monad",
+      "Ethereum",
+      "Base",
+      "BOB",
+      "Avalanche"
     ],
-    "slug": "astar-dapps-staking",
-    "name": "Astar dApps Staking"
+    "slug": "euler-v2",
+    "name": "Euler V2"
   },
-  "BARDUSDT": {
-    "tvl": 651181060,
-    "tvl_fmt": "$651M",
-    "change_1d": -0.49,
-    "change_7d": -6.05,
-    "category": "Restaked BTC",
-    "chains": [
-      "Bitcoin",
-      "Ethereum"
-    ],
-    "slug": "lombard-lbtc",
-    "name": "Lombard LBTC"
-  },
-  "RESOLVUSDT": {
-    "tvl": 6239858,
-    "tvl_fmt": "$6M",
-    "change_1d": 0.0,
-    "change_7d": -0.07,
-    "category": "Basis Trading",
+  "STOUSDT": {
+    "tvl": 19522947,
+    "tvl_fmt": "$20M",
+    "change_1d": -0.78,
+    "change_7d": -4.49,
+    "category": "Liquid Staking",
     "chains": [
       "Ethereum"
     ],
-    "slug": "resolv-usr",
-    "name": "Resolv USR"
+    "slug": "stakestone-stone",
+    "name": "StakeStone STONE"
   },
   "CETUSUSDT": {
-    "tvl": 28852866,
-    "tvl_fmt": "$29M",
-    "change_1d": -3.87,
-    "change_7d": -6.48,
+    "tvl": 29602792,
+    "tvl_fmt": "$30M",
+    "change_1d": 4.25,
+    "change_7d": -1.75,
     "category": "Dexs",
     "chains": [
       "Sui",
@@ -1401,43 +1187,158 @@
     "slug": "cetus-clmm",
     "name": "Cetus CLMM"
   },
-  "KNCUSDT": {
-    "tvl": 1056379,
-    "tvl_fmt": "$1M",
+  "FUSDT": {
+    "tvl": 2839159,
+    "tvl_fmt": "$3M",
+    "change_1d": 3.13,
+    "change_7d": -7.63,
+    "category": "Derivatives",
+    "chains": [
+      "Base",
+      "Blast"
+    ],
+    "slug": "synfutures-v3",
+    "name": "SynFutures V3"
+  },
+  "SOLVUSDT": {
+    "tvl": 530681650,
+    "tvl_fmt": "$531M",
+    "change_1d": -0.25,
+    "change_7d": -0.8,
+    "category": "Bridge",
+    "chains": [
+      "Bitcoin",
+      "Binance",
+      "Ethereum",
+      "Solana",
+      "Base"
+    ],
+    "slug": "solvbtc",
+    "name": "SolvBTC"
+  },
+  "YFIUSDT": {
+    "tvl": 200199438,
+    "tvl_fmt": "$200M",
     "change_1d": -0.6,
-    "change_7d": -2.42,
-    "category": "Dexs",
+    "change_7d": -0.7,
+    "category": "Yield Aggregator",
     "chains": [
       "Ethereum",
-      "Polygon",
-      "Avalanche",
-      "Binance",
-      "Optimism"
-    ],
-    "slug": "kyberswap-classic",
-    "name": "KyberSwap Classic"
-  },
-  "WOOUSDT": {
-    "tvl": 4006193,
-    "tvl_fmt": "$4M",
-    "change_1d": -0.31,
-    "change_7d": -2.98,
-    "category": "Yield",
-    "chains": [
-      "Arbitrum",
+      "Katana",
       "Optimism",
       "Base",
-      "Avalanche",
+      "Polygon"
+    ],
+    "slug": "yearn-finance",
+    "name": "Yearn Finance"
+  },
+  "HAEDALUSDT": {
+    "tvl": 40093505,
+    "tvl_fmt": "$40M",
+    "change_1d": 0.55,
+    "change_7d": -5.42,
+    "category": "Liquid Staking",
+    "chains": [
+      "Sui"
+    ],
+    "slug": "haedal-protocol",
+    "name": "Haedal Protocol"
+  },
+  "CVXUSDT": {
+    "tvl": 574135165,
+    "tvl_fmt": "$574M",
+    "change_1d": -1.52,
+    "change_7d": -4.35,
+    "category": "Yield",
+    "chains": [
+      "Ethereum",
+      "Fraxtal",
+      "Arbitrum",
+      "Polygon"
+    ],
+    "slug": "convex-finance",
+    "name": "Convex Finance"
+  },
+  "RESOLVUSDT": {
+    "tvl": 6098974,
+    "tvl_fmt": "$6M",
+    "change_1d": -2.26,
+    "change_7d": -0.02,
+    "category": "Basis Trading",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "resolv-usr",
+    "name": "Resolv USR"
+  },
+  "THEUSDT": {
+    "tvl": 2523560,
+    "tvl_fmt": "$3M",
+    "change_1d": -0.21,
+    "change_7d": -2.03,
+    "category": "Dexs",
+    "chains": [
       "Binance"
     ],
-    "slug": "woofi-earn",
-    "name": "WOOFi Earn"
+    "slug": "thena-integral",
+    "name": "THENA INTEGRAL"
+  },
+  "FRAXUSDT": {
+    "tvl": 38310178,
+    "tvl_fmt": "$38M",
+    "change_1d": -2.8,
+    "change_7d": -10.97,
+    "category": "Algo-Stables",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "frax",
+    "name": "Frax"
+  },
+  "BARDUSDT": {
+    "tvl": 652978316,
+    "tvl_fmt": "$653M",
+    "change_1d": 0.71,
+    "change_7d": -3.45,
+    "category": "Restaked BTC",
+    "chains": [
+      "Bitcoin",
+      "Ethereum"
+    ],
+    "slug": "lombard-lbtc",
+    "name": "Lombard LBTC"
+  },
+  "YBUSDT": {
+    "tvl": 131243027,
+    "tvl_fmt": "$131M",
+    "change_1d": -0.3,
+    "change_7d": -2.86,
+    "category": "Leveraged Farming",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "yield-basis",
+    "name": "Yield Basis"
+  },
+  "TREEUSDT": {
+    "tvl": 68319828,
+    "tvl_fmt": "$68M",
+    "change_1d": 0.23,
+    "change_7d": -4.16,
+    "category": "DOR",
+    "chains": [
+      "Ethereum",
+      "Avalanche",
+      "Mantle"
+    ],
+    "slug": "treehouse-protocol",
+    "name": "Treehouse Protocol"
   },
   "KERNELUSDT": {
-    "tvl": 1034367986,
+    "tvl": 1031121177,
     "tvl_fmt": "$1.0B",
-    "change_1d": -0.86,
-    "change_7d": -8.78,
+    "change_1d": -0.4,
+    "change_7d": -4.49,
     "category": "Liquid Restaking",
     "chains": [
       "Ethereum"
@@ -1445,11 +1346,24 @@
     "slug": "kelp",
     "name": "Kelp"
   },
+  "1INCHUSDT": {
+    "tvl": 3273877,
+    "tvl_fmt": "$3M",
+    "change_1d": -0.39,
+    "change_7d": -2.93,
+    "category": "DEX Aggregator",
+    "chains": [
+      "Ethereum",
+      "Binance"
+    ],
+    "slug": "1inch-swap",
+    "name": "1inch Swap"
+  },
   "DOLOUSDT": {
-    "tvl": 353762211,
-    "tvl_fmt": "$354M",
-    "change_1d": 0.51,
-    "change_7d": -1.93,
+    "tvl": 356229602,
+    "tvl_fmt": "$356M",
+    "change_1d": 0.59,
+    "change_7d": 1.17,
     "category": "Lending",
     "chains": [
       "Ethereum",
@@ -1461,11 +1375,119 @@
     "slug": "dolomite",
     "name": "Dolomite"
   },
+  "AEVOUSDT": {
+    "tvl": 14805125,
+    "tvl_fmt": "$15M",
+    "change_1d": -0.04,
+    "change_7d": -3.32,
+    "category": "Derivatives",
+    "chains": [
+      "Ethereum",
+      "Arbitrum",
+      "Base",
+      "Optimism"
+    ],
+    "slug": "aevo-perps",
+    "name": "Aevo Perps"
+  },
+  "ANKRUSDT": {
+    "tvl": 28616668,
+    "tvl_fmt": "$29M",
+    "change_1d": -1.5,
+    "change_7d": -0.8,
+    "category": "Liquid Staking",
+    "chains": [
+      "Ethereum",
+      "Flow",
+      "Binance",
+      "Avalanche",
+      "Fantom"
+    ],
+    "slug": "ankr",
+    "name": "Ankr"
+  },
+  "ASTRUSDT": {
+    "tvl": 19059041,
+    "tvl_fmt": "$19M",
+    "change_1d": -0.88,
+    "change_7d": -8.38,
+    "category": "Chain",
+    "chains": [
+      "Astar"
+    ],
+    "slug": "astar-dapps-staking",
+    "name": "Astar dApps Staking"
+  },
+  "LAYERUSDT": {
+    "tvl": 10906189,
+    "tvl_fmt": "$11M",
+    "change_1d": 0.67,
+    "change_7d": -9.88,
+    "category": "Restaking",
+    "chains": [
+      "Solana"
+    ],
+    "slug": "solayer-restaking",
+    "name": "Solayer Restaking"
+  },
+  "KNCUSDT": {
+    "tvl": 1055795,
+    "tvl_fmt": "$1M",
+    "change_1d": -0.02,
+    "change_7d": -1.11,
+    "category": "Dexs",
+    "chains": [
+      "Ethereum",
+      "Polygon",
+      "Avalanche",
+      "Binance",
+      "Optimism"
+    ],
+    "slug": "kyberswap-classic",
+    "name": "KyberSwap Classic"
+  },
+  "RPLUSDT": {
+    "tvl": 1305418474,
+    "tvl_fmt": "$1.3B",
+    "change_1d": -0.48,
+    "change_7d": -3.35,
+    "category": "Liquid Staking",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "rocket-pool",
+    "name": "Rocket Pool"
+  },
+  "TUSDT": {
+    "tvl": 353166597,
+    "tvl_fmt": "$353M",
+    "change_1d": -0.44,
+    "change_7d": -1.48,
+    "category": "Decentralized BTC",
+    "chains": [
+      "Bitcoin",
+      "Ethereum"
+    ],
+    "slug": "tbtc",
+    "name": "tBTC"
+  },
+  "USDEUSDT": {
+    "tvl": 1699369,
+    "tvl_fmt": "$2M",
+    "change_1d": -0.12,
+    "change_7d": -2.89,
+    "category": "Derivatives",
+    "chains": [
+      "Ethereal"
+    ],
+    "slug": "ethereal-dex",
+    "name": "Ethereal DEX"
+  },
   "LISTAUSDT": {
-    "tvl": 986574591,
-    "tvl_fmt": "$987M",
-    "change_1d": -0.46,
-    "change_7d": -4.91,
+    "tvl": 994530892,
+    "tvl_fmt": "$995M",
+    "change_1d": 0.23,
+    "change_7d": -2.26,
     "category": "Lending",
     "chains": [
       "Binance",
@@ -1474,63 +1496,11 @@
     "slug": "lista-lending",
     "name": "Lista Lending"
   },
-  "JOEUSDT": {
-    "tvl": 11016704,
-    "tvl_fmt": "$11M",
-    "change_1d": -4.26,
-    "change_7d": -8.61,
-    "category": "Dexs",
-    "chains": [
-      "Avalanche",
-      "Monad",
-      "Arbitrum",
-      "Binance"
-    ],
-    "slug": "joe-dex",
-    "name": "Joe DEX"
-  },
-  "LQTYUSDT": {
-    "tvl": 179632896,
-    "tvl_fmt": "$180M",
-    "change_1d": -1.71,
-    "change_7d": -8.35,
-    "category": "CDP",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "liquity-v1",
-    "name": "Liquity V1"
-  },
-  "FUSDT": {
-    "tvl": 2759852,
-    "tvl_fmt": "$3M",
-    "change_1d": -3.2,
-    "change_7d": -10.89,
-    "category": "Derivatives",
-    "chains": [
-      "Base",
-      "Blast"
-    ],
-    "slug": "synfutures-v3",
-    "name": "SynFutures V3"
-  },
-  "RPLUSDT": {
-    "tvl": 1301269171,
-    "tvl_fmt": "$1.3B",
-    "change_1d": -2.34,
-    "change_7d": -8.03,
-    "category": "Liquid Staking",
-    "chains": [
-      "Ethereum"
-    ],
-    "slug": "rocket-pool",
-    "name": "Rocket Pool"
-  },
   "XVSUSDT": {
-    "tvl": 1276028122,
+    "tvl": 1271696337,
     "tvl_fmt": "$1.3B",
-    "change_1d": -0.73,
-    "change_7d": -5.21,
+    "change_1d": -0.6,
+    "change_7d": -2.11,
     "category": "Lending",
     "chains": [
       "Binance",
@@ -1542,29 +1512,59 @@
     "slug": "venus-core-pool",
     "name": "Venus Core Pool"
   },
+  "WOOUSDT": {
+    "tvl": 4008567,
+    "tvl_fmt": "$4M",
+    "change_1d": 0.11,
+    "change_7d": -1.06,
+    "category": "Yield",
+    "chains": [
+      "Arbitrum",
+      "Optimism",
+      "Base",
+      "Avalanche",
+      "Binance"
+    ],
+    "slug": "woofi-earn",
+    "name": "WOOFi Earn"
+  },
+  "JOEUSDT": {
+    "tvl": 11011478,
+    "tvl_fmt": "$11M",
+    "change_1d": -0.75,
+    "change_7d": -6.33,
+    "category": "Dexs",
+    "chains": [
+      "Avalanche",
+      "Monad",
+      "Arbitrum",
+      "Binance"
+    ],
+    "slug": "joe-dex",
+    "name": "Joe DEX"
+  },
+  "LQTYUSDT": {
+    "tvl": 180088351,
+    "tvl_fmt": "$180M",
+    "change_1d": -0.48,
+    "change_7d": -3.45,
+    "category": "CDP",
+    "chains": [
+      "Ethereum"
+    ],
+    "slug": "liquity-v1",
+    "name": "Liquity V1"
+  },
   "BNTUSDT": {
-    "tvl": 16268633,
+    "tvl": 16254943,
     "tvl_fmt": "$16M",
-    "change_1d": -1.7,
-    "change_7d": -6.91,
+    "change_1d": -0.71,
+    "change_7d": -3.48,
     "category": "Dexs",
     "chains": [
       "Ethereum"
     ],
     "slug": "bancor-v3",
     "name": "Bancor V3"
-  },
-  "QUICKUSDT": {
-    "tvl": 49868731,
-    "tvl_fmt": "$50M",
-    "change_1d": -1.92,
-    "change_7d": -47.58,
-    "category": "Dexs",
-    "chains": [
-      "Polygon",
-      "Base"
-    ],
-    "slug": "quickswap-dex",
-    "name": "Quickswap Dex"
   }
 }
