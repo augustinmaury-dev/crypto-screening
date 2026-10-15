@@ -1,12 +1,12 @@
 {
- "date": "20261014",
+ "date": "20261015",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb+alt_blend",
- "calibration_k": 0.339,
- "train_rows": 59348,
- "train_days": 150,
- "alt_days_measured": 26,
+ "calibration_k": 0.341,
+ "train_rows": 59740,
+ "train_days": 151,
+ "alt_days_measured": 27,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
@@ -96,90 +96,103 @@
  "already_exploded": {
   "rule": "hausse ≥ +100% sur 180 j",
   "count_today": 141,
-  "leaders_removed_second_wave": [
-   "STX"
-  ]
+  "leaders_removed_second_wave": []
  },
  "leaders": {
   "label": "🚀 Leader (altseason)",
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
-    "symbol": "INIT",
-    "ret_30d_pct": 92.4,
-    "dist_high_90d_pct": 1.9
-   },
-   {
-    "symbol": "WAL",
-    "ret_30d_pct": 85.8,
+    "symbol": "ZK",
+    "ret_30d_pct": 76.9,
     "dist_high_90d_pct": 0.0
    },
    {
-    "symbol": "ZK",
-    "ret_30d_pct": 62.7,
-    "dist_high_90d_pct": 4.3
+    "symbol": "BEAMX",
+    "ret_30d_pct": 75.5,
+    "dist_high_90d_pct": 4.7
+   },
+   {
+    "symbol": "INIT",
+    "ret_30d_pct": 72.4,
+    "dist_high_90d_pct": 4.7
    },
    {
     "symbol": "AVA",
-    "ret_30d_pct": 54.5,
-    "dist_high_90d_pct": 4.2
+    "ret_30d_pct": 66.2,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "PYTH",
+    "ret_30d_pct": 61.0,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "DUSK",
+    "ret_30d_pct": 58.3,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "PARTI",
+    "ret_30d_pct": 56.1,
+    "dist_high_90d_pct": 2.3
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.514,
+  "model_top20_beat": 0.51,
   "days": 36,
-  "naive_top20_beat": 0.521,
-  "shrink_k": 0.339
+  "naive_top20_beat": 0.537,
+  "shrink_k": 0.341
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.842
+   "effect": 0.839
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.641
+   "effect": -0.639
   },
   {
    "feature": "p_ma50",
-   "effect": -0.562
-  },
-  {
-   "feature": "corr_btc_90d",
-   "effect": 0.34
+   "effect": -0.567
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.328
+   "effect": -0.333
   },
   {
-   "feature": "bear_signals",
-   "effect": -0.304
+   "feature": "corr_btc_90d",
+   "effect": 0.332
   },
   {
    "feature": "log_rank",
    "effect": -0.299
   },
   {
-   "feature": "pat_bear_flag",
-   "effect": -0.284
+   "feature": "bear_signals",
+   "effect": -0.287
   },
   {
    "feature": "macd_n",
-   "effect": -0.283
+   "effect": -0.286
+  },
+  {
+   "feature": "pat_bear_flag",
+   "effect": -0.276
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.266
+   "effect": -0.269
   }
  ],
  "regime": {
-  "alt_index_30d": 65.0,
-  "btc_ret_30d": 6.0,
-  "alt_index_90d": 62.2,
-  "btc_ret_90d": 29.1,
-  "breadth_ma50": 47.3,
+  "alt_index_30d": 61.0,
+  "btc_ret_30d": 5.3,
+  "alt_index_90d": 51.0,
+  "btc_ret_90d": 28.8,
+  "breadth_ma50": 29.5,
   "label": "Neutre"
  }
 }
