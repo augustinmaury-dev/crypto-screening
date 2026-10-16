@@ -2,10 +2,10 @@
 **Ce document n'est pas un conseil financier.** Le scoring reflète des indicateurs passés et publics, pas une prédiction. La crypto peut faire perdre la totalité du capital investi. Aucune action d'achat ou de vente n'est suggérée ici — seulement un classement à examiner.
 
 
-# Crypto USDT screening — 2026-10-15
+# Crypto USDT screening — 2026-10-16
 
 
-_Univers : 486 tokens scorés. Etabli : 60, Mid : 155, Speculative : 271. Suspects : 0. Stablecoins exclus : 14._
+_Univers : 486 tokens scorés. Etabli : 62, Mid : 153, Speculative : 271. Suspects : 0. Stablecoins exclus : 14._
 
 
 ## 🌐 Signal Marché Global — Crypto vs EUR
@@ -13,36 +13,36 @@ _Univers : 486 tokens scorés. Etabli : 60, Mid : 155, Speculative : 271. Suspec
 > ⚠️ Indicateur macro basé sur des données passées uniquement. Pas un conseil de gestion.
 
 
-### 🟠 SIGNAL NEUTRE — Surveillance accrue  (score composite : +0 / 10)
+### 🟢 CRYPTO FAVORABLE  (score composite : +4 / 10)
 
-_Pas de tendance claire. Le marché est dans une zone d'indécision. La prudence s'impose avant de prendre des positions importantes._
+_Les indicateurs macro convergent positivement. BTC en tendance haussière, breadth large, structures solides._
 
 
-**Note EUR :** Conserver une part significative en EUR/stablecoins est prudent dans ce contexte.
+**Note EUR :** Rester en crypto semble justifié par les conditions actuelles.
 
 
 ### Détail des composantes
 
 | Composante | Signal | Interprétation |
 |---|---|---|
-| BTC vs MAs | 🔴 -1 | Configuration MAs dégradée |
-| RSI BTC | ⚪ 0 | RSI 44.6 — neutre |
+| BTC vs MAs | 🟢 +2 | Prix > MA50 > MA200 — tendance haussière |
+| RSI BTC | 🟢 +1 | RSI 49.7 — zone saine |
 | Drawdown BTC 90j | 🟢 +1 | 6.9% — faible drawdown |
-| Breadth marché | 🔴 -1 | 30% tokens haussiers — dominance baissière |
-| Structures tendance | 🟢 +1 | 36% tokens en uptrend — structure haussière générale |
-| Volume BTC | ⚪ 0 | 0.82× médiane — volume normal |
+| Breadth marché | ⚪ 0 | 31% tokens haussiers — équilibre |
+| Structures tendance | 🟢 +1 | 35% tokens en uptrend — structure haussière générale |
+| Volume BTC | 🔴 -1 | 0.43× médiane — volume faible (désintérêt) |
 
 ### Évolution du signal (7 derniers jours disponibles)
 
 | Date | Score | Verdict |
 |---|---|---|
-| 2026-10-09 | +1 | 🟡 Mixte |
 | 2026-10-10 | +1 | 🟡 Mixte |
 | 2026-10-11 | +1 | 🟡 Mixte |
 | 2026-10-12 | +2 | 🟡 Mixte |
 | 2026-10-13 | +2 | 🟡 Mixte |
 | 2026-10-14 | +2 | 🟡 Mixte |
 | 2026-10-15 | -2 | 🔴 Défavorable |
+| 2026-10-16 | +1 | 🟡 Mixte |
 
 
 ## 🔥 Candidats à une explosion de prix
@@ -51,46 +51,52 @@ _Pas de tendance claire. Le marché est dans une zone d'indécision. La prudence
 > Indicateurs passés uniquement. Aucune garantie de performance future.
 
 
-### 🔥 Profil fort — très similaire aux explosions passées (464 tokens)
+### 🔥 Profil fort — très similaire aux explosions passées (463 tokens)
 
 | Symbol | Tier | Score global | Score explosion | RSI | DD90 | Vol ratio | Patterns | Raisons |
 |---|---|---|---|---|---|---|---|---|
-| **BBUSDT** | Speculative | 51.7 | **23** | 38.0 | 59.1% | 0.9 | uptrend | 🔥 Fort  |
-| **EULUSDT** | Speculative | 51.0 | **22** | 36.1 | 51.5% | 0.6 | doji_4h | 🔥 Fort  |
-| **ERAUSDT** | Speculative | 51.0 | **21** | 39.5 | 44.6% | 1.6 | macd_bearish_cross · uptrend | 🔥 Fort  |
-| **REQUSDT** | Speculative | 49.9 | **21** | 37.7 | 20.2% | 0.3 | downtrend | 🔥 Fort  |
-| **MMTUSDT** | Speculative | 48.7 | **21** | 30.4 | 49.9% | 1.7 | uptrend | 🔥 Fort  |
-| **SUNUSDT** | Mid | 48.1 | **21** | 37.5 | 14.0% | 1.3 | rsi_bullish_divergence · uptrend | 🔥 Fort  |
-| **MVLLBUSDT** | Speculative | 0.0 | **21** | 35.9 | 43.6% | 0.5 | uptrend | 🔥 Fort  |
-| **QNTBUSDT** | Speculative | 0.0 | **21** | 20.0 | 54.4% | 0.9 | uptrend | 🔥 Fort  |
-| **JASMYUSDT** | Mid | 53.8 | **20** | 42.5 | 27.2% | 0.6 | uptrend · doji_4h | 🔥 Fort  |
-| **RONINUSDT** | Speculative | 53.6 | **20** | 43.9 | 20.9% | 1.0 | uptrend | 🔥 Fort  |
+| **HOMEUSDT** | Speculative | 49.6 | **23** | 36.9 | 49.5% | 0.1 | macd_bearish_cross · support_bounce · downtrend | 🔥 Fort  |
+| **MANTRAUSDT** | Speculative | 46.2 | **23** | 44.3 | 41.5% | 1.6 | macd_bearish_cross | 🔥 Fort  |
+| **BBUSDT** | Speculative | 50.0 | **22** | 41.9 | 59.1% | 0.3 | macd_bearish_cross · doji_4h | 🔥 Fort  |
+| **MMTUSDT** | Speculative | 49.7 | **22** | 35.0 | 49.9% | 0.9 | uptrend | 🔥 Fort  |
+| **FUSDT** | Speculative | 49.7 | **22** | 39.2 | 42.4% | 0.1 | downtrend | 🔥 Fort  |
+| **LAUSDT** | Speculative | 48.9 | **22** | 39.7 | 40.2% | 0.2 | rsi_bullish_divergence · downtrend | 🔥 Fort  |
+| **MOVEUSDT** | Speculative | 51.0 | **21** | 37.3 | 46.3% | 0.7 | uptrend | 🔥 Fort  |
+| **ERAUSDT** | Speculative | 50.9 | **21** | 41.1 | 44.6% | 0.7 | macd_bearish_cross · uptrend | 🔥 Fort  |
+| **GUNUSDT** | Speculative | 49.5 | **21** | 35.2 | 36.0% | 0.4 | uptrend · doji_4h | 🔥 Fort  |
+| **HMSTRUSDT** | Speculative | 49.4 | **21** | 40.3 | 28.0% | 0.1 | double_top_90d | 🔥 Fort  |
 
-_Profil construit sur **6961 observations pré-explosion** (388 tokens analysés). RSI médian avant explosion : 45.8._
+### ⚡ Profil modéré — ressemblance notable (1 tokens)
+
+| Symbol | Tier | Score global | Score explosion | RSI | DD90 | Vol ratio | Patterns | Raisons |
+|---|---|---|---|---|---|---|---|---|
+| **RLCUSDT** | Mid | 46.3 | **7** | 64.1 | 19.6% | 2.3 | — | ⚡ Modéré  |
+
+_Profil construit sur **7061 observations pré-explosion** (388 tokens analysés). RSI médian avant explosion : 45.9._
 
 
 
-## Mouvements vs snapshot 20261014
+## Mouvements vs snapshot 20261015
 
 **+ Plus fortes hausses de score**
 
 | Symbol | Δ score | Score | Patterns |
 |---|---|---|---|
-| GPSUSDT | +6.6 | 46.9 | downtrend |
-| ROBOUSDT | +5.5 | 50.5 | — |
-| MITOUSDT | +4.6 | 50.7 | breakdown_30d|macd_bearish_cross |
-| SAPIENUSDT | +4.3 | 49.0 | double_top_90d |
-| RADUSDT | +4.0 | 50.9 | macd_bearish_cross|doji_4h |
+| SOPHUSDT | +8.3 | 49.6 | downtrend|doji_4h |
+| 2ZUSDT | +5.1 | 49.0 | — |
+| RAREUSDT | +4.2 | 50.7 | golden_cross|uptrend |
+| DGBUSDT | +4.2 | 50.2 | uptrend |
+| NOMUSDT | +4.0 | 50.5 | rsi_bullish_divergence|uptrend|doji_4h |
 
 **− Plus fortes baisses**
 
 | Symbol | Δ score | Score | Patterns |
 |---|---|---|---|
-| SOPHUSDT | -9.8 | 41.3 | breakdown_30d|downtrend|doji_4h |
-| TSTUSDT | -4.3 | 46.8 | — |
-| NOMUSDT | -4.3 | 46.5 | uptrend |
-| CITYUSDT | -4.1 | 47.1 | — |
-| MAVUSDT | -3.8 | 48.4 | — |
+| ZILUSDT | -8.0 | 43.0 | breakdown_30d |
+| ROBOUSDT | -6.2 | 44.3 | macd_bearish_cross |
+| SAPIENUSDT | -5.3 | 43.7 | rsi_bullish_divergence|double_top_90d|doji_4h |
+| ANIMEUSDT | -4.6 | 46.1 | — |
+| INJUSDT | -4.2 | 47.4 | breakout_30d|rsi_bearish_divergence|macd_bullish_cross|downtrend|doji_4h |
 
 
 ## Top par tier
@@ -99,78 +105,78 @@ _Profil construit sur **6961 observations pré-explosion** (388 tokens analysés
 
 | # | Symbol | Score | Sol. | Mom. | Sig. | Risq. | Anti | Prix | Vol 24h | Δ24h | RSI | DD90 | Patterns |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **PEPEUSDT** | 54.6 | 45.0 | 82.0 | 34.7 | 66.5 | 78.5 | 0.000004 | 40.63M$ | -6.4% | 46.6 | 23.2% | downtrend |
-| 2 | **TAOUSDT** | 54.0 | 45.0 | 45.0 | 50.0 | 66.5 | 78.5 | 261.30 | 29.48M$ | -6.3% | 42.9 | 18.5% | doji_4h |
-| 3 | **SUIUSDT** | 53.9 | 45.0 | 73.0 | 34.7 | 74.5 | 78.5 | 0.9808 | 66.11M$ | -7.3% | 44.1 | 22.3% | downtrend|doji_4h |
-| 4 | **ADAUSDT** | 53.4 | 45.0 | 45.0 | 50.0 | 77.0 | 78.5 | 0.2215 | 36.60M$ | -6.1% | 41.7 | 18.0% | — |
-| 5 | **ALGOUSDT** | 53.3 | 45.0 | 73.0 | 62.4 | 85.0 | 68.0 | 0.1096 | 4.40M$ | -9.9% | 44.3 | 19.3% | uptrend |
-| 6 | **XLMUSDT** | 52.7 | 45.0 | 45.0 | 62.4 | 77.0 | 78.5 | 0.1800 | 17.18M$ | -5.5% | 37.7 | 22.4% | uptrend |
-| 7 | **ETCUSDT** | 52.5 | 45.0 | 45.0 | 62.4 | 77.0 | 68.0 | 7.74 | 3.37M$ | -4.8% | 38.3 | 19.4% | uptrend |
-| 8 | **SOLUSDT** | 52.4 | 45.0 | 45.0 | 50.0 | 77.0 | 78.5 | 102.01 | 303.89M$ | -5.1% | 35.1 | 16.4% | — |
-| 9 | **BTCUSDT** | 52.3 | 45.0 | 45.0 | 34.7 | 86.0 | 78.5 | 80988.01 | 1.90B$ | -3.2% | 44.6 | 6.9% | downtrend|doji_4h |
-| 10 | **XRPUSDT** | 52.2 | 45.0 | 45.0 | 50.0 | 87.5 | 78.5 | 1.31 | 201.93M$ | -5.1% | 36.1 | 16.8% | — |
-| 11 | **HBARUSDT** | 52.2 | 45.0 | 54.0 | 50.0 | 58.0 | 78.5 | 0.0817 | 17.47M$ | -5.9% | 39.6 | 32.8% | — |
-| 12 | **NEXOUSDT** | 52.2 | 45.0 | 45.0 | 34.7 | 92.0 | 57.5 | 0.8140 | 549.8k$ | -2.7% | 39.2 | 8.8% | downtrend |
-| 13 | **ONDOUSDT** | 52.1 | 45.0 | 73.0 | 62.4 | 62.5 | 78.5 | 0.4295 | 24.03M$ | -7.7% | 42.4 | 26.9% | uptrend |
-| 14 | **ATOMUSDT** | 52.1 | 45.0 | 46.0 | 50.7 | 85.0 | 68.0 | 1.68 | 3.92M$ | -6.7% | 45.1 | 18.6% | macd_bearish_cross|uptrend |
-| 15 | **DOGEUSDT** | 52.1 | 45.0 | 54.0 | 50.0 | 77.0 | 78.5 | 0.0804 | 100.98M$ | -5.0% | 36.8 | 20.0% | — |
-| 16 | **BCHUSDT** | 52.0 | 45.0 | 37.0 | 62.4 | 74.5 | 78.5 | 264.90 | 10.08M$ | -5.4% | 41.4 | 24.9% | uptrend |
-| 17 | **SKYUSDT** | 52.0 | 45.0 | 45.0 | 62.4 | 62.5 | 68.0 | 0.0699 | 3.51M$ | -8.5% | 42.2 | 28.6% | uptrend |
-| 18 | **RENDERUSDT** | 51.9 | 45.0 | 82.0 | 60.3 | 85.0 | 78.5 | 1.84 | 6.64M$ | -7.8% | 48.1 | 18.2% | golden_cross |
-| 19 | **WLDUSDT** | 51.8 | 45.0 | 82.0 | 62.4 | 74.5 | 78.5 | 0.4683 | 36.40M$ | -8.3% | 45.9 | 24.1% | uptrend |
-| 20 | **AAVEUSDT** | 51.8 | 45.0 | 73.0 | 50.0 | 85.0 | 78.5 | 148.85 | 20.07M$ | -7.2% | 43.6 | 19.2% | — |
+| 1 | **PEPEUSDT** | 55.0 | 45.0 | 73.0 | 35.1 | 66.5 | 78.5 | 0.000004 | 27.47M$ | 4.1% | 49.7 | 23.2% | downtrend |
+| 2 | **BTCUSDT** | 54.4 | 45.0 | 73.0 | 35.1 | 86.0 | 78.5 | 82512.18 | 1.43B$ | 2.0% | 49.7 | 6.9% | downtrend |
+| 3 | **ADAUSDT** | 54.0 | 45.0 | 73.0 | 50.0 | 77.0 | 78.5 | 0.2309 | 22.37M$ | 4.5% | 45.6 | 15.9% | — |
+| 4 | **APTUSDT** | 54.0 | 45.0 | 66.0 | 35.8 | 79.0 | 78.5 | 0.8819 | 14.82M$ | 14.7% | 59.0 | 20.1% | macd_bearish_cross|double_bottom_90d|shooting_star_4h |
+| 5 | **NEXOUSDT** | 53.7 | 45.0 | 36.0 | 35.1 | 92.0 | 57.5 | 0.8240 | 573.1k$ | 1.4% | 44.3 | 8.8% | downtrend |
+| 6 | **ETHUSDT** | 53.6 | 45.0 | 45.0 | 50.0 | 87.5 | 78.5 | 2473.64 | 816.46M$ | 4.8% | 42.9 | 12.8% | — |
+| 7 | **BNBUSDT** | 53.6 | 45.0 | 36.0 | 36.0 | 92.0 | 78.5 | 730.91 | 87.21M$ | 1.5% | 42.7 | 8.7% | bearish_engulfing_4h |
+| 8 | **ETCUSDT** | 53.5 | 45.0 | 45.0 | 63.1 | 77.0 | 68.0 | 8.07 | 3.98M$ | 4.4% | 43.6 | 16.7% | uptrend |
+| 9 | **SKYUSDT** | 53.3 | 45.0 | 73.0 | 63.1 | 62.5 | 68.0 | 0.0728 | 1.92M$ | 4.4% | 45.5 | 26.8% | uptrend |
+| 10 | **SOLUSDT** | 53.1 | 45.0 | 36.0 | 36.0 | 77.0 | 78.5 | 106.40 | 226.56M$ | 4.2% | 41.8 | 14.6% | bearish_engulfing_4h |
+| 11 | **ATOMUSDT** | 52.8 | 45.0 | 66.0 | 51.4 | 85.0 | 68.0 | 1.76 | 3.99M$ | 4.2% | 49.4 | 18.3% | macd_bearish_cross|uptrend |
+| 12 | **XRPUSDT** | 52.8 | 45.0 | 36.0 | 50.0 | 87.5 | 78.5 | 1.34 | 116.43M$ | 3.1% | 40.2 | 15.6% | — |
+| 13 | **LTCUSDT** | 52.6 | 45.0 | 64.0 | 50.0 | 85.0 | 78.5 | 61.15 | 19.12M$ | 4.8% | 44.4 | 18.3% | — |
+| 14 | **XLMUSDT** | 52.6 | 45.0 | 36.0 | 63.1 | 77.0 | 78.5 | 0.1846 | 11.70M$ | 2.8% | 40.0 | 21.5% | uptrend |
+| 15 | **DOGEUSDT** | 52.6 | 45.0 | 36.0 | 50.0 | 77.0 | 78.5 | 0.0822 | 129.16M$ | 2.5% | 40.0 | 19.2% | — |
+| 16 | **SHIBUSDT** | 52.6 | 45.0 | 36.0 | 33.8 | 77.0 | 68.0 | 0.000005 | 2.74M$ | 3.8% | 40.9 | 17.1% | double_top_90d |
+| 17 | **SUIUSDT** | 52.4 | 45.0 | 73.0 | 35.1 | 74.5 | 78.5 | 1.05 | 55.49M$ | 7.4% | 49.9 | 19.2% | downtrend |
+| 18 | **LINKUSDT** | 52.4 | 45.0 | 73.0 | 50.0 | 85.0 | 78.5 | 12.67 | 27.58M$ | 5.1% | 46.4 | 19.5% | — |
+| 19 | **POLUSDT** | 52.1 | 45.0 | 36.0 | 63.1 | 73.0 | 78.5 | 0.0963 | 5.29M$ | 3.1% | 41.4 | 26.4% | uptrend |
+| 20 | **GRAMUSDT** | 52.0 | 37.9 | 45.0 | 63.1 | 85.0 | 78.5 | 1.39 | 6.73M$ | 3.8% | 45.2 | 16.8% | uptrend |
 
 
 ### Top 20 — Tier **Mid**
 
 | # | Symbol | Score | Sol. | Mom. | Sig. | Risq. | Anti | Prix | Vol 24h | Δ24h | RSI | DD90 | Patterns |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **JASMYUSDT** | 53.8 | 31.0 | 37.0 | 62.4 | 62.5 | 57.5 | 0.004490 | 936.7k$ | -5.3% | 42.5 | 27.2% | uptrend|doji_4h |
-| 2 | **RUNEUSDT** | 53.7 | 31.0 | 64.0 | 62.4 | 74.5 | 68.0 | 0.6230 | 1.71M$ | -5.7% | 43.0 | 22.0% | uptrend |
-| 3 | **IOTAUSDT** | 53.3 | 31.0 | 37.0 | 50.0 | 77.0 | 57.5 | 0.0453 | 816.0k$ | -7.7% | 40.8 | 23.9% | — |
-| 4 | **1INCHUSDT** | 53.1 | 31.0 | 54.0 | 48.1 | 87.5 | 57.5 | 0.0915 | 830.5k$ | -5.1% | 38.7 | 15.0% | uptrend|evening_star_4h |
-| 5 | **EIGENUSDT** | 52.9 | 31.0 | 54.0 | 62.4 | 62.5 | 68.0 | 0.2267 | 3.65M$ | -6.1% | 45.3 | 29.1% | uptrend |
-| 6 | **FETUSDT** | 52.7 | 31.0 | 73.0 | 72.8 | 74.5 | 78.5 | 0.1949 | 22.01M$ | -9.8% | 43.4 | 23.4% | golden_cross|uptrend |
-| 7 | **SEIUSDT** | 52.7 | 31.0 | 82.0 | 62.4 | 62.5 | 78.5 | 0.0590 | 7.36M$ | -8.5% | 42.6 | 25.2% | uptrend|doji_4h |
-| 8 | **IMXUSDT** | 52.7 | 31.0 | 73.0 | 50.7 | 74.5 | 57.5 | 0.1590 | 587.7k$ | -7.3% | 44.5 | 22.6% | macd_bearish_cross|uptrend |
-| 9 | **AXSUSDT** | 52.6 | 31.0 | 46.0 | 50.0 | 74.5 | 68.0 | 1.02 | 2.64M$ | -9.2% | 40.9 | 24.7% | — |
-| 10 | **BONKUSDT** | 52.6 | 31.0 | 37.0 | 50.0 | 73.0 | 68.0 | 0.000003 | 2.61M$ | -6.2% | 39.6 | 29.9% | doji_4h |
-| 11 | **RIFUSDT** | 52.5 | 31.0 | 36.0 | 34.7 | 64.0 | 47.0 | 0.0777 | 390.6k$ | -5.0% | 39.7 | 51.3% | downtrend|doji_4h |
-| 12 | **VIRTUALUSDT** | 52.4 | 31.0 | 45.0 | 62.4 | 73.0 | 68.0 | 0.6454 | 4.87M$ | -7.7% | 39.5 | 26.2% | uptrend|doji_4h |
-| 13 | **WIFUSDT** | 52.4 | 31.0 | 45.0 | 34.7 | 66.5 | 68.0 | 0.1932 | 2.14M$ | -7.1% | 37.6 | 24.4% | downtrend |
-| 14 | **GENIUSUSDT** | 52.4 | 25.0 | 54.0 | 22.9 | 67.0 | 68.0 | 0.3046 | 1.43M$ | -5.1% | 39.4 | 29.3% | macd_bearish_cross|downtrend |
-| 15 | **ARKMUSDT** | 52.3 | 31.0 | 73.0 | 62.4 | 85.0 | 57.5 | 0.1195 | 990.8k$ | -7.4% | 44.4 | 23.3% | uptrend |
-| 16 | **GRTUSDT** | 52.3 | 31.0 | 73.0 | 50.0 | 58.0 | 57.5 | 0.0241 | 865.9k$ | -7.3% | 44.3 | 33.3% | — |
-| 17 | **DYDXUSDT** | 52.3 | 31.0 | 46.0 | 62.4 | 85.0 | 68.0 | 0.1189 | 1.35M$ | -10.3% | 39.7 | 22.2% | uptrend |
-| 18 | **FLOKIUSDT** | 52.3 | 31.0 | 45.0 | 33.4 | 77.0 | 68.0 | 0.000024 | 1.53M$ | -7.5% | 37.2 | 22.2% | double_top_90d |
-| 19 | **SNXUSDT** | 52.2 | 31.0 | 37.0 | 62.4 | 85.0 | 57.5 | 0.2156 | 687.0k$ | -8.8% | 36.7 | 20.4% | uptrend |
-| 20 | **HOTUSDT** | 52.2 | 31.0 | 36.0 | 34.7 | 77.0 | 47.0 | 0.000369 | 175.0k$ | -6.8% | 33.4 | 21.0% | downtrend |
+| 1 | **YFIUSDT** | 54.3 | 31.0 | 73.0 | 50.0 | 87.5 | 47.0 | 2342.00 | 220.2k$ | 6.0% | 47.9 | 14.2% | — |
+| 2 | **NEOUSDT** | 54.2 | 31.0 | 57.0 | 35.1 | 85.0 | 47.0 | 2.37 | 410.7k$ | 6.5% | 46.5 | 19.5% | downtrend|doji_4h |
+| 3 | **ARKMUSDT** | 54.1 | 31.0 | 73.0 | 50.0 | 85.0 | 57.5 | 0.1252 | 670.3k$ | 4.9% | 48.9 | 23.3% | — |
+| 4 | **1INCHUSDT** | 54.1 | 31.0 | 45.0 | 63.1 | 87.5 | 47.0 | 0.0955 | 317.6k$ | 4.4% | 45.3 | 12.4% | uptrend |
+| 5 | **RIFUSDT** | 53.7 | 31.0 | 73.0 | 35.1 | 73.0 | 47.0 | 0.0817 | 357.5k$ | 5.1% | 47.3 | 48.1% | downtrend |
+| 6 | **AIUSDT** | 53.6 | 31.0 | 57.0 | 38.3 | 89.5 | 47.0 | 0.0195 | 342.1k$ | 3.7% | 48.7 | 16.3% | macd_bearish_cross|doji_4h |
+| 7 | **RUNEUSDT** | 53.5 | 31.0 | 73.0 | 63.1 | 74.5 | 68.0 | 0.6530 | 1.73M$ | 4.8% | 47.2 | 20.0% | uptrend |
+| 8 | **IOTAUSDT** | 53.5 | 31.0 | 66.0 | 50.0 | 77.0 | 57.5 | 0.0504 | 954.8k$ | 11.3% | 50.1 | 19.6% | — |
+| 9 | **HOTUSDT** | 53.2 | 31.0 | 36.0 | 21.1 | 77.0 | 47.0 | 0.000390 | 136.9k$ | 5.7% | 39.3 | 17.6% | downtrend|evening_star_4h |
+| 10 | **WIFUSDT** | 53.1 | 31.0 | 36.0 | 35.1 | 66.5 | 68.0 | 0.2036 | 1.64M$ | 5.3% | 41.8 | 21.6% | downtrend |
+| 11 | **XTZUSDT** | 52.9 | 31.0 | 82.0 | 45.6 | 74.5 | 57.5 | 0.3191 | 990.6k$ | 7.3% | 53.3 | 21.2% | golden_cross|downtrend |
+| 12 | **QTUMUSDT** | 52.7 | 31.0 | 36.0 | 63.1 | 85.0 | 47.0 | 0.9170 | 102.1k$ | 3.7% | 44.3 | 12.9% | uptrend |
+| 13 | **LUNCUSDT** | 52.7 | 31.0 | 28.0 | 60.4 | 95.5 | 57.5 | 0.000049 | 911.7k$ | 3.7% | 39.7 | 18.9% | support_bounce |
+| 14 | **AXSUSDT** | 52.6 | 31.0 | 57.0 | 50.0 | 74.5 | 68.0 | 1.08 | 1.23M$ | 5.6% | 45.0 | 21.9% | — |
+| 15 | **IMXUSDT** | 52.5 | 31.0 | 82.0 | 51.4 | 74.5 | 57.5 | 0.1666 | 732.4k$ | 4.5% | 48.4 | 22.6% | macd_bearish_cross|uptrend |
+| 16 | **ROSEUSDT** | 52.5 | 31.0 | 57.0 | 50.0 | 89.5 | 57.5 | 0.008240 | 735.1k$ | 5.9% | 52.0 | 16.5% | — |
+| 17 | **COMPUSDT** | 52.3 | 31.0 | 73.0 | 63.1 | 85.0 | 57.5 | 22.64 | 626.9k$ | 4.6% | 47.1 | 13.0% | uptrend |
+| 18 | **GRTUSDT** | 52.3 | 31.0 | 73.0 | 50.0 | 62.5 | 57.5 | 0.0255 | 733.6k$ | 6.2% | 48.8 | 30.1% | — |
+| 19 | **BABYUSDT** | 52.3 | 31.0 | 57.0 | 35.1 | 73.0 | 68.0 | 0.0125 | 1.61M$ | 0.5% | 46.6 | 25.6% | downtrend |
+| 20 | **GALAUSDT** | 52.2 | 31.0 | 57.0 | 63.1 | 62.5 | 68.0 | 0.002074 | 1.43M$ | 5.8% | 45.1 | 32.4% | uptrend |
 
 
 ### Top 20 — Tier **Speculative**
 
 | # | Symbol | Score | Sol. | Mom. | Sig. | Risq. | Anti | Prix | Vol 24h | Δ24h | RSI | DD90 | Patterns |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **LAZIOUSDT** | 54.1 | 17.0 | 66.0 | 50.7 | 100.0 | 47.0 | 0.4000 | 367.2k$ | -1.7% | 51.6 | 11.6% | macd_bearish_cross|uptrend |
-| 2 | **RONINUSDT** | 53.6 | 17.0 | 37.0 | 62.4 | 74.5 | 57.5 | 0.0593 | 753.4k$ | -7.8% | 43.9 | 20.9% | uptrend |
-| 3 | **PARTIUSDT** | 53.2 | 17.0 | 48.0 | 59.8 | 71.5 | 57.5 | 0.0348 | 853.0k$ | 0.3% | 70.8 | 28.7% | double_bottom_90d |
-| 4 | **C98USDT** | 52.3 | 17.0 | 55.0 | 50.7 | 74.5 | 57.5 | 0.0151 | 929.2k$ | -10.5% | 42.8 | 19.3% | macd_bearish_cross|uptrend |
-| 5 | **EDENUSDT** | 52.3 | 17.0 | 45.0 | 34.7 | 67.0 | 57.5 | 0.0558 | 809.0k$ | -7.1% | 42.6 | 39.2% | downtrend |
-| 6 | **DIAUSDT** | 51.8 | 17.0 | 73.0 | 48.6 | 67.0 | 47.0 | 0.1544 | 404.3k$ | -8.8% | 45.8 | 26.5% | macd_bearish_cross|golden_cross |
-| 7 | **CYBERUSDT** | 51.8 | 17.0 | 55.0 | 21.6 | 85.0 | 68.0 | 0.3130 | 1.23M$ | -7.9% | 44.1 | 22.7% | macd_bearish_cross|double_top_90d |
-| 8 | **MOVEUSDT** | 51.8 | 17.0 | 28.0 | 62.4 | 73.0 | 47.0 | 0.007739 | 446.5k$ | -8.7% | 34.8 | 46.3% | uptrend |
-| 9 | **NEIROUSDT** | 51.8 | 17.0 | 45.0 | 34.7 | 73.0 | 68.0 | 0.000076 | 1.21M$ | -7.7% | 37.4 | 26.9% | downtrend|doji_4h |
-| 10 | **PIXELUSDT** | 51.7 | 17.0 | 46.0 | 62.3 | 74.5 | 57.5 | 0.005360 | 836.7k$ | -9.8% | 43.0 | 24.8% | macd_bearish_cross|uptrend|hammer_4h |
-| 11 | **WOOUSDT** | 51.7 | 17.0 | 37.0 | 50.0 | 85.0 | 47.0 | 0.0112 | 427.2k$ | -10.7% | 37.8 | 22.2% | — |
-| 12 | **BBUSDT** | 51.7 | 17.0 | 37.0 | 62.4 | 55.0 | 57.5 | 0.008220 | 973.3k$ | -8.8% | 38.0 | 59.1% | uptrend |
-| 13 | **API3USDT** | 51.6 | 17.0 | 66.0 | 50.7 | 85.0 | 57.5 | 0.2768 | 890.2k$ | -7.9% | 46.8 | 19.6% | macd_bearish_cross|uptrend |
-| 14 | **HYPERUSDT** | 51.6 | 17.0 | 28.0 | 62.4 | 85.0 | 57.5 | 0.0630 | 700.7k$ | -10.8% | 34.8 | 20.0% | uptrend |
-| 15 | **MASKUSDT** | 51.6 | 17.0 | 45.0 | 34.7 | 85.0 | 47.0 | 0.4140 | 414.6k$ | -8.4% | 38.4 | 17.3% | downtrend |
-| 16 | **USUALUSDT** | 51.6 | 17.0 | 36.0 | 34.7 | 68.5 | 57.5 | 0.0102 | 617.7k$ | -7.9% | 32.6 | 33.3% | downtrend |
-| 17 | **SLPUSDT** | 51.5 | 17.0 | 36.0 | 48.1 | 85.0 | 47.0 | 0.000567 | 195.5k$ | -7.7% | 34.6 | 20.2% | uptrend|evening_star_4h |
-| 18 | **BIGTIMEUSDT** | 51.5 | 17.0 | 28.0 | 62.4 | 73.0 | 47.0 | 0.006880 | 205.0k$ | -9.2% | 34.5 | 30.0% | uptrend |
-| 19 | **SPELLUSDT** | 51.5 | 17.0 | 37.0 | 20.3 | 85.0 | 47.0 | 0.000084 | 434.6k$ | -6.8% | 35.0 | 23.2% | downtrend|evening_star_4h |
-| 20 | **GMTUSDT** | 51.4 | 17.0 | 37.0 | 62.4 | 74.5 | 57.5 | 0.007580 | 603.7k$ | -6.2% | 42.1 | 20.3% | uptrend |
+| 1 | **LAZIOUSDT** | 52.5 | 17.0 | 66.0 | 51.4 | 100.0 | 68.0 | 0.4140 | 1.41M$ | 3.8% | 58.0 | 11.6% | macd_bearish_cross|uptrend |
+| 2 | **CYBERUSDT** | 52.4 | 17.0 | 66.0 | 22.0 | 85.0 | 57.5 | 0.3300 | 762.7k$ | 5.1% | 49.3 | 22.7% | macd_bearish_cross|double_top_90d |
+| 3 | **AUCTIONUSDT** | 52.1 | 17.0 | 37.0 | 35.1 | 100.0 | 47.0 | 3.53 | 213.3k$ | 5.8% | 45.6 | 18.8% | downtrend |
+| 4 | **PARTIUSDT** | 52.0 | 17.0 | 66.0 | 60.4 | 71.5 | 68.0 | 0.0336 | 2.91M$ | -3.4% | 64.5 | 28.7% | double_bottom_90d |
+| 5 | **MASKUSDT** | 52.0 | 17.0 | 36.0 | 35.1 | 85.0 | 47.0 | 0.4340 | 179.2k$ | 4.8% | 43.2 | 13.5% | downtrend |
+| 6 | **EDENUSDT** | 51.9 | 17.0 | 73.0 | 23.4 | 67.0 | 47.0 | 0.0592 | 395.5k$ | 6.2% | 49.3 | 39.2% | macd_bearish_cross|downtrend |
+| 7 | **SXTUSDT** | 51.8 | 17.0 | 28.0 | 35.1 | 85.0 | 47.0 | 0.008680 | 340.7k$ | 4.2% | 44.3 | 15.0% | downtrend |
+| 8 | **BANDUSDT** | 51.7 | 17.0 | 73.0 | 51.4 | 89.5 | 47.0 | 0.2360 | 165.5k$ | 5.6% | 55.3 | 14.3% | macd_bearish_cross|uptrend|doji_4h |
+| 9 | **BNTUSDT** | 51.5 | 17.0 | 36.0 | 63.1 | 87.5 | 47.0 | 0.3170 | 75.6k$ | 4.6% | 43.3 | 12.7% | uptrend|doji_4h |
+| 10 | **SIGNUSDT** | 51.4 | 17.0 | 57.0 | 63.1 | 73.0 | 47.0 | 0.0118 | 217.1k$ | 4.9% | 45.2 | 26.0% | uptrend |
+| 11 | **SKLUSDT** | 51.3 | 17.0 | 66.0 | 51.4 | 89.5 | 57.5 | 0.004880 | 759.0k$ | 4.7% | 53.4 | 21.6% | macd_bearish_cross|uptrend |
+| 12 | **GIGGLEUSDT** | 51.3 | 16.8 | 36.0 | 35.1 | 67.0 | 68.0 | 34.95 | 2.01M$ | 4.3% | 44.1 | 36.5% | downtrend |
+| 13 | **AVNTUSDT** | 51.2 | 17.0 | 57.0 | 51.4 | 85.0 | 57.5 | 0.1187 | 827.2k$ | 5.6% | 45.6 | 19.5% | macd_bearish_cross|uptrend |
+| 14 | **NOTUSDT** | 51.2 | 17.0 | 36.0 | 63.1 | 85.0 | 47.0 | 0.000421 | 238.9k$ | 3.4% | 39.1 | 20.4% | uptrend|doji_4h |
+| 15 | **UMAUSDT** | 51.1 | 17.0 | 66.0 | 50.0 | 89.5 | 47.0 | 0.3980 | 236.1k$ | 5.6% | 48.4 | 13.8% | doji_4h |
+| 16 | **GMTUSDT** | 51.1 | 17.0 | 37.0 | 63.1 | 74.5 | 47.0 | 0.007950 | 404.0k$ | 4.7% | 46.1 | 17.8% | uptrend |
+| 17 | **REQUSDT** | 51.1 | 17.0 | 28.0 | 35.1 | 89.5 | 47.0 | 0.0522 | 60.1k$ | 2.2% | 43.1 | 20.2% | downtrend |
+| 18 | **API3USDT** | 51.0 | 17.0 | 57.0 | 51.4 | 85.0 | 57.5 | 0.2932 | 653.9k$ | 5.9% | 51.5 | 17.6% | macd_bearish_cross|uptrend |
+| 19 | **MOVEUSDT** | 51.0 | 17.0 | 37.0 | 63.1 | 73.0 | 47.0 | 0.007977 | 341.5k$ | 2.9% | 37.3 | 46.3% | uptrend |
+| 20 | **NEIROUSDT** | 51.0 | 17.0 | 36.0 | 35.1 | 85.0 | 57.5 | 0.000079 | 917.7k$ | 4.0% | 40.5 | 24.6% | downtrend |
 
 
 ## Analyse de patterns — signaux techniques
@@ -182,105 +188,107 @@ _Profil construit sur **6961 observations pré-explosion** (388 tokens analysés
 
 | Metrique | Valeur |
 |---|---|
-| Tokens avec biais haussier | **140** |
-| Tokens avec biais baissier | **135** |
-| Tokens mixtes / neutres | 197 |
-| Total signaux haussiers detectes | 222 |
-| Total signaux baissiers detectes | 229 |
+| Tokens avec biais haussier | **147** |
+| Tokens avec biais baissier | **123** |
+| Tokens mixtes / neutres | 202 |
+| Total signaux haussiers detectes | 234 |
+| Total signaux baissiers detectes | 209 |
 
 ### Setups haussiers les plus confluents
 
 | Symbol | Tier | Score | Signaux haussiers | Signaux baissiers | Patterns detectes | Support 90j | Prix actuel |
 |---|---|---|---|---|---|---|---|
-| **CKBUSDT** | Mid | 48.1 | +3 | -2 | Croisement MACD haussier, Golden Cross MA50/200, Structure haussiere (HH+HL) | 0.000822 | 0.001471 |
-| **FETUSDT** | Mid | 52.7 | +2 | -0 | Golden Cross MA50/200, Structure haussiere (HH+HL) | 0.1329 | 0.1949 |
-| **WINUSDT** | Mid | 51.7 | +2 | -1 | Double fond 90j, Structure haussiere (HH+HL) | 0.000025 | 0.000053 |
-| **PIXELUSDT** | Speculative | 51.7 | +2 | -1 | Structure haussiere (HH+HL), Marteau 4h | 0.004227 | 0.005360 |
-| **COMPUSDT** | Mid | 51.2 | +2 | -0 | Structure haussiere (HH+HL), Marteau 4h | 16.35 | 21.54 |
-| **ICPUSDT** | Etabli | 51.1 | +2 | -0 | Divergence RSI haussiere, Structure haussiere (HH+HL) | 2.10 | 2.89 |
-| **JSTUSDT** | Etabli | 50.5 | +2 | -1 | Bull flag, Structure haussiere (HH+HL) | 0.0988 | 0.1340 |
-| **HAEDALUSDT** | Speculative | 50.4 | +2 | -1 | Divergence RSI haussiere, Structure haussiere (HH+HL) | 0.0151 | 0.0180 |
-| **UNIUSDT** | Etabli | 49.9 | +2 | -0 | Divergence RSI haussiere, Structure haussiere (HH+HL) | 3.53 | 6.88 |
-| **GMXUSDT** | Mid | 49.8 | +2 | -1 | Structure haussiere (HH+HL), Engulfing haussier 4h | 6.30 | 8.28 |
+| **FETUSDT** | Mid | 52.1 | +2 | -0 | Golden Cross MA50/200, Structure haussiere (HH+HL) | 0.1329 | 0.2068 |
+| **HOLOUSDT** | Mid | 51.4 | +2 | -0 | Rebond sur support, Structure haussiere (HH+HL) | 0.0579 | 0.0596 |
+| **RAREUSDT** | Speculative | 50.7 | +2 | -0 | Golden Cross MA50/200, Structure haussiere (HH+HL) | 0.0116 | 0.0141 |
+| **JSTUSDT** | Etabli | 50.6 | +2 | -0 | Bull flag, Structure haussiere (HH+HL) | 0.0990 | 0.1382 |
+| **NOMUSDT** | Speculative | 50.5 | +2 | -0 | Divergence RSI haussiere, Structure haussiere (HH+HL) | 0.001467 | 0.001850 |
+| **SOMIUSDT** | Speculative | 50.4 | +2 | -0 | Structure haussiere (HH+HL), Morning star 4h | 0.0870 | 0.2006 |
+| **TRXUSDT** | Etabli | 50.3 | +2 | -0 | Croisement MACD haussier, Rebond sur support | 0.3264 | 0.3357 |
+| **LINEAUSDT** | Mid | 50.3 | +2 | -0 | Croisement MACD haussier, Structure haussiere (HH+HL) | 0.002182 | 0.002956 |
+| **WINUSDT** | Mid | 50.1 | +2 | -1 | Double fond 90j, Structure haussiere (HH+HL) | 0.000025 | 0.000056 |
+| **CUSDT** | Speculative | 49.9 | +2 | -0 | Golden Cross MA50/200, Structure haussiere (HH+HL) | 0.0550 | 0.0874 |
 
 ### Setups baissiers les plus confluents
 
 | Symbol | Tier | Score | Signaux baissiers | Signaux haussiers | Patterns detectes | Resistance 90j | Prix actuel |
 |---|---|---|---|---|---|---|---|
-| **DELLBUSDT** | Speculative | 0.0 | -3 | +0 | Breakdown 30j, Croisement MACD baissier, Structure baissiere (LH+LL) | 578.30 | 486.27 |
-| **HOODBUSDT** | Speculative | 0.0 | -3 | +0 | Double sommet 90j, Structure baissiere (LH+LL), Evening star 4h | 121.56 | 99.08 |
-| **GENIUSUSDT** | Mid | 52.4 | -2 | +0 | Croisement MACD baissier, Structure baissiere (LH+LL) | 0.3787 | 0.3046 |
-| **BIOUSDT** | Mid | 51.9 | -2 | +0 | Double sommet 90j, Structure baissiere (LH+LL) | 0.0316 | 0.0246 |
-| **CYBERUSDT** | Speculative | 51.8 | -2 | +0 | Croisement MACD baissier, Double sommet 90j | 0.3562 | 0.3130 |
-| **币安人生USDT** | Mid | 51.8 | -2 | +0 | Croisement MACD baissier, Death Cross MA50/200 | 0.6393 | 0.4719 |
-| **ESPUSDT** | Mid | 51.5 | -2 | +1 | Croisement MACD baissier, Double sommet 90j | 0.1106 | 0.0921 |
-| **SPELLUSDT** | Speculative | 51.5 | -2 | +0 | Structure baissiere (LH+LL), Evening star 4h | 0.000099 | 0.000084 |
-| **TUSDT** | Mid | 51.5 | -2 | +0 | Double sommet 90j, Structure baissiere (LH+LL) | 0.005635 | 0.004780 |
-| **JUVUSDT** | Speculative | 51.4 | -2 | +0 | Croisement MACD baissier, Evening star 4h | 0.3376 | 0.3110 |
+| **APTUSDT** | Etabli | 54.0 | -2 | +1 | Croisement MACD baissier, Etoile filante 4h | 0.8428 | 0.8819 |
+| **HOTUSDT** | Mid | 53.2 | -2 | +0 | Structure baissiere (LH+LL), Evening star 4h | 0.000447 | 0.000390 |
+| **CYBERUSDT** | Speculative | 52.4 | -2 | +0 | Croisement MACD baissier, Double sommet 90j | 0.3561 | 0.3300 |
+| **EDENUSDT** | Speculative | 51.9 | -2 | +0 | Croisement MACD baissier, Structure baissiere (LH+LL) | 0.0659 | 0.0592 |
+| **TUSDT** | Mid | 51.4 | -2 | +0 | Double sommet 90j, Structure baissiere (LH+LL) | 0.005635 | 0.005120 |
+| **BIOUSDT** | Mid | 51.3 | -2 | +0 | Double sommet 90j, Structure baissiere (LH+LL) | 0.0316 | 0.0259 |
+| **币安人生USDT** | Mid | 51.0 | -2 | +1 | Croisement MACD baissier, Death Cross MA50/200 | 0.6328 | 0.4790 |
+| **KAVAUSDT** | Mid | 50.7 | -2 | +0 | Divergence RSI baissiere, Structure baissiere (LH+LL) | 0.0704 | 0.0695 |
+| **ESPUSDT** | Mid | 50.4 | -2 | +1 | Croisement MACD baissier, Double sommet 90j | 0.1106 | 0.0980 |
+| **GENIUSUSDT** | Mid | 49.9 | -2 | +0 | Croisement MACD baissier, Structure baissiere (LH+LL) | 0.3787 | 0.3026 |
 
 ### Signaux contradictoires (mixtes) — a surveiller
 
 | Symbol | Tier | Bull | Bear | Patterns |
 |---|---|---|---|---|
-| **LAZIOUSDT** | Speculative | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL) |
-| **1INCHUSDT** | Mid | +1 | -1 | Structure haussiere (HH+HL), Evening star 4h |
-| **IMXUSDT** | Mid | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL) |
-| **C98USDT** | Speculative | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL) |
 | **XTZUSDT** | Mid | +1 | -1 | Golden Cross MA50/200, Structure baissiere (LH+LL) |
 | **ATOMUSDT** | Etabli | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL) |
-| **DIAUSDT** | Speculative | +1 | -1 | Croisement MACD baissier, Golden Cross MA50/200 |
-| **CHZUSDT** | Mid | +1 | -1 | Structure haussiere (HH+HL), Evening star 4h |
+| **IMXUSDT** | Mid | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL) |
+| **LAZIOUSDT** | Speculative | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL) |
+| **AXLUSDT** | Mid | +1 | -1 | Golden Cross MA50/200, Structure baissiere (LH+LL) |
+| **BANDUSDT** | Speculative | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL), Doji 4h |
+| **CFXUSDT** | Mid | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL) |
+| **SKLUSDT** | Speculative | +1 | -1 | Croisement MACD baissier, Structure haussiere (HH+HL) |
 
 ### Detail des 8 setups les plus confluents
 
-**CKBUSDT** (Mid) — Score 48.1 — RSI 53.8 — Prix 0.001471 — Vol 24h 1.31M$
-  - Haussiers : Croisement MACD haussier, Golden Cross MA50/200, Structure haussiere (HH+HL)
-  - Baissiers : Test de resistance, Evening star 4h
-  - Support 90j : 0.000822
-  - Resistance 90j : 0.001448
-
-**AVAUSDT** (Speculative) — Score 48.0 — RSI 63.1 — Prix 0.2698 — Vol 24h 9.07M$
-  - Haussiers : Croisement MACD haussier, Double fond 90j
+**INJUSDT** (Etabli) — Score 47.4 — RSI 65.5 — Prix 9.15 — Vol 24h 48.09M$
+  - Haussiers : Breakout 30j, Croisement MACD haussier
   - Baissiers : Divergence RSI baissiere, Structure baissiere (LH+LL)
   - Neutres : Doji 4h
-  - Support 90j : 0.1554
-  - Resistance 90j : 0.2650
+  - Support 90j : 4.43
+  - Resistance 90j : 8.02
 
-**WINUSDT** (Mid) — Score 51.7 — RSI 59.7 — Prix 0.000053 — Vol 24h 491.7k$
+**SPYBUSDT** (Speculative) — Score 0.0 — RSI 52.2 — Prix 773.90 — Vol 24h 610.6k$
+  - Haussiers : Rebond sur support, Structure haussiere (HH+HL)
+  - Baissiers : Croisement MACD baissier, Test de resistance
+  - Support 90j : 745.29
+  - Resistance 90j : 777.44
+
+**APTUSDT** (Etabli) — Score 54.0 — RSI 59.0 — Prix 0.8819 — Vol 24h 14.82M$
+  - Haussiers : Double fond 90j
+  - Baissiers : Croisement MACD baissier, Etoile filante 4h
+  - Support 90j : 0.5406
+  - Resistance 90j : 0.8428
+
+**币安人生USDT** (Mid) — Score 51.0 — RSI 43.8 — Prix 0.4790 — Vol 24h 1.61M$
+  - Haussiers : Divergence RSI haussiere
+  - Baissiers : Croisement MACD baissier, Death Cross MA50/200
+  - Neutres : Doji 4h
+  - Support 90j : 0.4671
+  - Resistance 90j : 0.6328
+
+**ESPUSDT** (Mid) — Score 50.4 — RSI 45.5 — Prix 0.0980 — Vol 24h 822.4k$
+  - Haussiers : Structure haussiere (HH+HL)
+  - Baissiers : Croisement MACD baissier, Double sommet 90j
+  - Neutres : Doji 4h
+  - Support 90j : 0.0669
+  - Resistance 90j : 0.1106
+
+**WINUSDT** (Mid) — Score 50.1 — RSI 67.4 — Prix 0.000056 — Vol 24h 176.3k$
   - Haussiers : Double fond 90j, Structure haussiere (HH+HL)
   - Baissiers : Croisement MACD baissier
   - Support 90j : 0.000025
-  - Resistance 90j : 0.000052
+  - Resistance 90j : 0.000053
 
-**PIXELUSDT** (Speculative) — Score 51.7 — RSI 43.0 — Prix 0.005360 — Vol 24h 836.7k$
-  - Haussiers : Structure haussiere (HH+HL), Marteau 4h
+**HOMEUSDT** (Speculative) — Score 49.6 — RSI 36.9 — Prix 0.005210 — Vol 24h 279.7k$
+  - Haussiers : Rebond sur support
+  - Baissiers : Croisement MACD baissier, Structure baissiere (LH+LL)
+  - Support 90j : 0.005320
+  - Resistance 90j : 0.009059
+
+**NIGHTUSDT** (Etabli) — Score 49.1 — RSI 58.7 — Prix 0.0445 — Vol 24h 3.87M$
+  - Haussiers : Golden Cross MA50/200, Structure haussiere (HH+HL)
   - Baissiers : Croisement MACD baissier
-  - Support 90j : 0.004227
-  - Resistance 90j : 0.006257
-
-**ESPUSDT** (Mid) — Score 51.5 — RSI 40.6 — Prix 0.0921 — Vol 24h 1.44M$
-  - Haussiers : Structure haussiere (HH+HL)
-  - Baissiers : Croisement MACD baissier, Double sommet 90j
-  - Support 90j : 0.0668
-  - Resistance 90j : 0.1106
-
-**ILVUSDT** (Speculative) — Score 51.2 — RSI 36.3 — Prix 3.32 — Vol 24h 415.0k$
-  - Haussiers : Structure haussiere (HH+HL)
-  - Baissiers : Double sommet 90j, Evening star 4h
-  - Support 90j : 2.86
-  - Resistance 90j : 4.02
-
-**JSTUSDT** (Etabli) — Score 50.5 — RSI 53.9 — Prix 0.1340 — Vol 24h 3.66M$
-  - Haussiers : Bull flag, Structure haussiere (HH+HL)
-  - Baissiers : Croisement MACD baissier
-  - Support 90j : 0.0988
-  - Resistance 90j : 0.1363
-
-**HAEDALUSDT** (Speculative) — Score 50.4 — RSI 39.7 — Prix 0.0180 — Vol 24h 498.2k$
-  - Haussiers : Divergence RSI haussiere, Structure haussiere (HH+HL)
-  - Baissiers : Double sommet 90j
-  - Support 90j : 0.0151
-  - Resistance 90j : 0.0208
+  - Support 90j : 0.0176
+  - Resistance 90j : 0.0448
 
 
 ## Suspects
@@ -288,4 +296,4 @@ Aucun token flaggé SUSPECT lors de ce run.
 
 
 ---
-_Méthodologie complète : voir `methodology.md`. CSV brut : `data/computed/scores.csv` (généré le 2026-10-15 12:40 UTC)._
+_Méthodologie complète : voir `methodology.md`. CSV brut : `data/computed/scores.csv` (généré le 2026-10-16 12:14 UTC)._
