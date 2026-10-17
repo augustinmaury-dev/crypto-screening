@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260917",
-    "btc_prob": 67.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "A",
-      "ASTR",
-      "BNSOL",
-      "LSK",
-      "DASH"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.454,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260918",
     "btc_prob": 70.0,
     "regime": "Haussier",
@@ -540,6 +524,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.544,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20261017",
+    "regime": "Neutre",
+    "alt_index_30d": 68.0,
+    "alt_index_90d": 65.3,
+    "btc_ret_30d": 6.0,
+    "score_model": "ml_gb+alt_blend",
+    "top_tokens": [
+      "APT",
+      "BTC",
+      "PEPE",
+      "IOTA",
+      "TAO"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.54,
     "bear_signals_ok": 10
   }
 ]
