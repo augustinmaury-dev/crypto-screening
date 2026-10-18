@@ -1,12 +1,12 @@
 {
- "date": "20261017",
+ "date": "20261018",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
- "model_used_today": "ml_gb+alt_blend",
- "calibration_k": 0.364,
- "train_rows": 60524,
- "train_days": 153,
- "alt_days_measured": 29,
+ "model_used_today": "ml_gb",
+ "calibration_k": 0.37,
+ "train_rows": 60916,
+ "train_days": 154,
+ "alt_days_measured": 30,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
@@ -96,87 +96,82 @@
  },
  "already_exploded": {
   "rule": "hausse ≥ +100% sur 180 j",
-  "count_today": 138,
+  "count_today": 139,
   "leaders_removed_second_wave": [
-   "EDU",
-   "VELODROME"
+   "AVA",
+   "EDU"
   ]
  },
  "leaders": {
-  "label": "🚀 Leader (altseason)",
+  "label": "🎲 Leader (spéculatif)",
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
-    "symbol": "TIA",
-    "ret_30d_pct": 90.5,
-    "dist_high_90d_pct": 3.0
-   },
-   {
     "symbol": "BEAMX",
-    "ret_30d_pct": 80.0,
-    "dist_high_90d_pct": 2.2
+    "ret_30d_pct": 65.7,
+    "dist_high_90d_pct": 3.8
    },
    {
-    "symbol": "INJ",
-    "ret_30d_pct": 56.0,
+    "symbol": "IOTX",
+    "ret_30d_pct": 34.2,
     "dist_high_90d_pct": 0.0
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.524,
+  "model_top20_beat": 0.512,
   "days": 36,
-  "naive_top20_beat": 0.549,
-  "shrink_k": 0.364
+  "naive_top20_beat": 0.554,
+  "shrink_k": 0.37
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.83
+   "effect": 0.829
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.646
+   "effect": -0.636
   },
   {
    "feature": "p_ma50",
-   "effect": -0.568
-  },
-  {
-   "feature": "corr_btc_90d",
-   "effect": 0.331
+   "effect": -0.574
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.329
+   "effect": -0.33
   },
   {
-   "feature": "log_rank",
-   "effect": -0.295
+   "feature": "corr_btc_90d",
+   "effect": 0.327
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.288
+   "effect": -0.299
+  },
+  {
+   "feature": "log_rank",
+   "effect": -0.297
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.287
+   "effect": -0.289
   },
   {
    "feature": "macd_n",
-   "effect": -0.277
+   "effect": -0.274
   },
   {
-   "feature": "bear_signals",
-   "effect": -0.256
+   "feature": "trend_rank",
+   "effect": 0.242
   }
  ],
  "regime": {
-  "alt_index_30d": 68.0,
-  "btc_ret_30d": 6.0,
-  "alt_index_90d": 65.3,
-  "btc_ret_90d": 26.1,
-  "breadth_ma50": 34.6,
+  "alt_index_30d": 48.0,
+  "btc_ret_30d": 5.1,
+  "alt_index_90d": 60.2,
+  "btc_ret_90d": 27.7,
+  "breadth_ma50": 27.2,
   "label": "Neutre"
  }
 }

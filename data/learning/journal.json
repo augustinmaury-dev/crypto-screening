@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260918",
-    "btc_prob": 70.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "ROSE",
-      "ENSO",
-      "LSK",
-      "AXS",
-      "LPT"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.461,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260919",
     "btc_prob": 60.0,
     "regime": "Haussier",
@@ -543,6 +527,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.54,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20261018",
+    "regime": "Neutre",
+    "alt_index_30d": 48.0,
+    "alt_index_90d": 60.2,
+    "btc_ret_30d": 5.1,
+    "score_model": "ml_gb",
+    "top_tokens": [
+      "IOTA",
+      "PEPE",
+      "HOT",
+      "NEO",
+      "WIF"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.533,
     "bear_signals_ok": 10
   }
 ]
