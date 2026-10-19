@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260919",
-    "btc_prob": 60.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "ESP",
-      "SLP",
-      "C98",
-      "ASTER",
-      "A"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.457,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260920",
     "btc_prob": 66.0,
     "regime": "Haussier",
@@ -546,6 +530,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.533,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20261019",
+    "regime": "Neutre",
+    "alt_index_30d": 41.0,
+    "alt_index_90d": 57.1,
+    "btc_ret_30d": 1.2,
+    "score_model": "ml_gb",
+    "top_tokens": [
+      "IOTA",
+      "XLM",
+      "CHIP",
+      "ADA",
+      "ENS"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.529,
     "bear_signals_ok": 10
   }
 ]
