@@ -638,11 +638,22 @@ def generate_memory(
         a(f"- **Indice altseason** : {reg.get('alt_index_30d', '—')} sur 30 j, {reg.get('alt_index_90d', '—')} sur 90 j "
           f"(= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)")
         a(f"- **BTC** : {reg.get('btc_ret_30d', '—')} % sur 30 j · **Tokens au-dessus de leur MA50** : {reg.get('breadth_ma50', '—')} %")
-        if "Altseason" in regime_label or (reg.get("alt_index_30d") or 0) >= 60:
+        a30 = reg.get("alt_index_30d") or 0
+        alt_on = a30 >= 60
+        a("- *Deux seuils différents : l'**étiquette** du régime suit les seuils classiques (≥ 75 = altseason, ≤ 25 = saison Bitcoin) ; "
+          "le **mode altseason** du classement s'active dès que l'indice 30 j atteint 60.* "
+          f"Aujourd'hui : mode altseason **{'ACTIF' if alt_on else 'inactif'}** (indice 30 j = {reg.get('alt_index_30d', '—')}).")
+        n_alt, n_min = mrep.get("alt_days_measured"), mrep.get("min_alt_days_for_alt_model", 30)
+        used = mrep.get("model_used_today", "")
+        if n_alt is not None and n_alt >= n_min:
+            a(f"- **Modèle dédié à l'altseason : prêt** ({n_alt} jours d'altseason mesurés, seuil {n_min}). Il est utilisé seulement "
+              f"les jours où le mode altseason est actif — aujourd'hui : **{'utilisé' if 'alt_model' in used else 'non utilisé'}** (`{used}`).")
+        elif n_alt is not None:
+            a(f"- Modèle dédié à l'altseason : en préparation ({n_alt}/{n_min} jours d'altseason mesurés) ; en attendant, "
+              "le mode altseason mélange une part de momentum au classement.")
+        if alt_on:
             a("- ⚠️ **En altseason, les règles changent** : la prime aux grosses caps peu volatiles (ce que j'ai surtout appris) "
-              "s'efface et le momentum redevient payant. J'intègre donc une part de momentum dans le classement, "
-              f"et j'entraînerai un modèle dédié à l'altseason dès que j'aurai {mrep.get('min_alt_days_for_alt_model', 30)} jours "
-              f"d'altseason mesurés (actuellement : {mrep.get('alt_days_measured', '?')}).")
+              "s'efface et le momentum redevient payant.")
     a("")
 
     if mrep:
@@ -812,8 +823,11 @@ def generate_memory(
         def alt_of(p):
             v = (reg_hist.get(p["date"]) or {}).get("alt_index_30d")
             return None if v is None else v >= 60
+        LIVE_FROM = "20260929"   # la liste des leaders existe depuis le 29/09/2026 ; avant = signaux reconstitués sur l'historique
         for name, grp in (("Tous", lead_m), ("Altseason (indice 30 j ≥ 60)", [p for p in lead_m if alt_of(p) is True]),
-                          ("Hors altseason", [p for p in lead_m if alt_of(p) is False])):
+                          ("Hors altseason", [p for p in lead_m if alt_of(p) is False]),
+                          ("**En direct** (depuis le 29/09/2026)", [p for p in lead_m if p["date"] >= LIVE_FROM]),
+                          ("Reconstitués (avant le 29/09/2026)", [p for p in lead_m if p["date"] < LIVE_FROM])):
             ex = [p["excess_14d"] for p in grp if p.get("excess_14d") is not None]
             if not ex: continue
             bm = sum(1 for p in grp if p.get("beat_market_14d")) / len(grp)
@@ -1023,6 +1037,12 @@ def generate_memory(
             er_s  = f"⚠️ {er}" if er >= 4 else str(er)
             cat   = (r.get("catalyst_flags") or "")[:50]
             a(f"| **{sym}** | {r.get('tier', '')} | {sc:.1f}% | {alpha:+.1f}pp | {er_s} | {cat} |")
+        n_cat = sum(1 for r in today_scores if (r.get("catalyst_flags") or "").strip())
+        if not any((r.get("catalyst_flags") or "").strip() for r in top):
+            a("")
+            a(f"*Colonne Catalyseurs vide : normal, ce n'est pas une panne — {n_cat} tokens ont un catalyseur aujourd'hui "
+              "(trending CoinGecko, pic de volume…), mais le modèle a appris que ces tokens font plutôt moins bien ensuite "
+              "(`catalyst_score` joue contre), ils sont donc rarement dans le top.*")
     else:
         a("*Aucun token classé aujourd'hui.*")
 

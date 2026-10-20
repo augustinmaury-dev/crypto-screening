@@ -216,9 +216,13 @@ def run():
     today["model"] = model.predict_proba(today[FEATS])[:, 1]
     today["blend"] = today["model"].rank(pct=True) + today["rule"].rank(pct=True)
     today["pct"] = today[method].rank(pct=True)
-    dec = np.minimum((today["pct"] * 10).astype(int), 9)
-    cal = res[method]["deciles_beat"]
-    today["prob"] = [round(100 * (cal[d] if cal[d] == cal[d] else 0.5), 1) for d in dec]
+    # probabilité = courbe lisse « rang du jour → taux de réussite observé » ajustée sur les 120 jours de test
+    # (avant : une valeur par tranche de 10 %, donc tout le top 20 affichait exactement le même chiffre)
+    from sklearn.linear_model import LogisticRegression
+    te_pct = te.groupby("date")[method].rank(pct=True).to_numpy()
+    calib = LogisticRegression(C=1e6, max_iter=1000).fit(np.c_[te_pct, te_pct ** 2], te["y"].to_numpy())
+    tp = today["pct"].to_numpy()
+    today["prob"] = np.round(100 * calib.predict_proba(np.c_[tp, tp ** 2])[:, 1], 1)
     today["rank30"] = today[method].rank(ascending=False, method="first").astype(int)
     probs = dict(zip(today["symbol"], today["prob"])); ranks = dict(zip(today["symbol"], today["rank30"]))
 
