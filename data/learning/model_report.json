@@ -1,12 +1,12 @@
 {
- "date": "20261019",
+ "date": "20261020",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb",
- "calibration_k": 0.408,
- "train_rows": 61309,
- "train_days": 155,
- "alt_days_measured": 31,
+ "calibration_k": 0.411,
+ "train_rows": 61702,
+ "train_days": 156,
+ "alt_days_measured": 32,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
@@ -100,8 +100,7 @@
   "rule": "hausse ≥ +100% sur 180 j",
   "count_today": 139,
   "leaders_removed_second_wave": [
-   "AVA",
-   "OSMO"
+   "WIN"
   ]
  },
  "leaders": {
@@ -110,43 +109,53 @@
   "tokens": [
    {
     "symbol": "GTC",
-    "ret_30d_pct": 273.9,
+    "ret_30d_pct": 313.9,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "BEAMX",
+    "ret_30d_pct": 83.1,
     "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "AMP",
-    "ret_30d_pct": 87.5,
+    "ret_30d_pct": 78.0,
+    "dist_high_90d_pct": 0.7
+   },
+   {
+    "symbol": "ALT",
+    "ret_30d_pct": 49.9,
     "dist_high_90d_pct": 0.0
    },
    {
-    "symbol": "IOTX",
-    "ret_30d_pct": 24.6,
-    "dist_high_90d_pct": 4.3
+    "symbol": "METIS",
+    "ret_30d_pct": 32.1,
+    "dist_high_90d_pct": 0.0
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.549,
+  "model_top20_beat": 0.565,
   "days": 36,
-  "naive_top20_beat": 0.565,
-  "shrink_k": 0.408
+  "naive_top20_beat": 0.574,
+  "shrink_k": 0.411
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.825
+   "effect": 0.827
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.636
+   "effect": -0.632
   },
   {
    "feature": "p_ma50",
-   "effect": -0.58
+   "effect": -0.587
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.334
+   "effect": -0.336
   },
   {
    "feature": "corr_btc_90d",
@@ -154,31 +163,31 @@
   },
   {
    "feature": "log_rank",
-   "effect": -0.299
-  },
-  {
-   "feature": "pat_resistance_test",
-   "effect": -0.295
+   "effect": -0.302
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.293
+   "effect": -0.286
+  },
+  {
+   "feature": "pat_resistance_test",
+   "effect": -0.283
   },
   {
    "feature": "macd_n",
-   "effect": -0.274
+   "effect": -0.276
   },
   {
    "feature": "pat_double_bottom_90d",
-   "effect": 0.237
+   "effect": 0.247
   }
  ],
  "regime": {
-  "alt_index_30d": 41.0,
-  "btc_ret_30d": 1.2,
-  "alt_index_90d": 57.1,
-  "btc_ret_90d": 24.3,
-  "breadth_ma50": 25.4,
+  "alt_index_30d": 52.0,
+  "btc_ret_30d": 1.4,
+  "alt_index_90d": 61.2,
+  "btc_ret_90d": 23.5,
+  "breadth_ma50": 27.2,
   "label": "Neutre"
  }
 }
