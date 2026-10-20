@@ -3,7 +3,7 @@
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb",
- "calibration_k": 0.411,
+ "calibration_k": 0.41,
  "train_rows": 61702,
  "train_days": 156,
  "alt_days_measured": 32,
@@ -108,23 +108,23 @@
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
-    "symbol": "GTC",
-    "ret_30d_pct": 313.9,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "BEAMX",
-    "ret_30d_pct": 83.1,
-    "dist_high_90d_pct": 0.0
+    "symbol": "BAT",
+    "ret_30d_pct": 172.2,
+    "dist_high_90d_pct": 2.2
    },
    {
     "symbol": "AMP",
-    "ret_30d_pct": 78.0,
-    "dist_high_90d_pct": 0.7
+    "ret_30d_pct": 75.8,
+    "dist_high_90d_pct": 1.8
+   },
+   {
+    "symbol": "BEAMX",
+    "ret_30d_pct": 73.1,
+    "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "ALT",
-    "ret_30d_pct": 49.9,
+    "ret_30d_pct": 44.4,
     "dist_high_90d_pct": 0.0
    },
    {
@@ -137,21 +137,21 @@
  "oos_last_5_weeks": {
   "model_top20_beat": 0.565,
   "days": 36,
-  "naive_top20_beat": 0.574,
-  "shrink_k": 0.411
+  "naive_top20_beat": 0.571,
+  "shrink_k": 0.41
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.827
+   "effect": 0.823
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.632
+   "effect": -0.63
   },
   {
    "feature": "p_ma50",
-   "effect": -0.587
+   "effect": -0.585
   },
   {
    "feature": "vol_30d_ann",
@@ -159,35 +159,35 @@
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.326
+   "effect": 0.325
   },
   {
    "feature": "log_rank",
-   "effect": -0.302
+   "effect": -0.3
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.286
+   "effect": -0.297
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.283
+   "effect": -0.279
   },
   {
    "feature": "macd_n",
    "effect": -0.276
   },
   {
-   "feature": "pat_double_bottom_90d",
-   "effect": 0.247
+   "feature": "bear_signals",
+   "effect": -0.247
   }
  ],
  "regime": {
-  "alt_index_30d": 52.0,
-  "btc_ret_30d": 1.4,
-  "alt_index_90d": 61.2,
-  "btc_ret_90d": 23.5,
-  "breadth_ma50": 27.2,
+  "alt_index_30d": 53.0,
+  "btc_ret_30d": 2.6,
+  "alt_index_90d": 62.2,
+  "btc_ret_90d": 25.0,
+  "breadth_ma50": 32.6,
   "label": "Neutre"
  }
 }

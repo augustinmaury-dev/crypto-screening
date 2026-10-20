@@ -19,8 +19,10 @@ Depuis le 12/10/2026, je fais aussi une **prévision à 30 jours** (section 🗓
 
 ### Régime de marché : 🟡 Neutre
 
-- **Indice altseason** : 52.0 sur 30 j, 61.2 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)
-- **BTC** : 1.4 % sur 30 j · **Tokens au-dessus de leur MA50** : 27.2 %
+- **Indice altseason** : 53.0 sur 30 j, 62.2 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)
+- **BTC** : 2.6 % sur 30 j · **Tokens au-dessus de leur MA50** : 32.6 %
+- *Deux seuils différents : l'**étiquette** du régime suit les seuils classiques (≥ 75 = altseason, ≤ 25 = saison Bitcoin) ; le **mode altseason** du classement s'active dès que l'indice 30 j atteint 60.* Aujourd'hui : mode altseason **inactif** (indice 30 j = 53.0).
+- **Modèle dédié à l'altseason : prêt** (32 jours d'altseason mesurés, seuil 30). Il est utilisé seulement les jours où le mode altseason est actif — aujourd'hui : **non utilisé** (`ml_gb`).
 
 ### Mon modèle aujourd'hui : `ml_gb`
 
@@ -116,7 +118,7 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 | 13 oct 2026 | **SEI** | 52% | 0.06317 | -4.0% | ✅ +4.5pp | … |
 | 13 oct 2026 | **XLM** | 52% | 0.1931 | -8.5% | ❌ -0.0pp | … |
 
-**140 prédictions en attente de résultat (< 7 jours).**
+**145 prédictions en attente de résultat (< 7 jours).**
 
 ---
 
@@ -131,16 +133,18 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 | Tous | 1047 | 48% | 22% (hasard : 10 %) | +4.4 pts | -1.1 pts |
 | Altseason (indice 30 j ≥ 60) | 266 | 44% | 16% (hasard : 10 %) | +0.5 pts | -1.9 pts |
 | Hors altseason | 687 | 48% | 25% (hasard : 10 %) | +4.7 pts | -1.1 pts |
+| **En direct** (depuis le 29/09/2026) | 97 | 48% | 20% (hasard : 10 %) | +2.1 pts | -0.5 pts |
+| Reconstitués (avant le 29/09/2026) | 950 | 48% | 23% (hasard : 10 %) | +4.6 pts | -1.2 pts |
 
 **Leaders aujourd'hui — 🎲 Leader (spéculatif)** :
 
 | # | Token | Tier | Perf 30 j | Score principal | Exit risk |
 |---|-------|------|-----------|-----------------|-----------|
-| 1 | **GTC** | Speculative | +314% | 38.7% | ⚠️ 6 |
-| 2 | **BEAMX** | Speculative | +83% | 46.6% | ⚠️ 6 |
-| 3 | **AMP** | Mid | +78% | 44.1% | ⚠️ 4 |
-| 4 | **ALT** | Mid | +50% | 42.1% | ⚠️ 4 |
-| 5 | **METIS** | Speculative | +32% | 45.9% | ⚠️ 4 |
+| 1 | **BAT** | Mid | +172% | 42.8% | 2 |
+| 2 | **AMP** | Mid | +76% | 44.5% | ⚠️ 4 |
+| 3 | **BEAMX** | Speculative | +73% | 48.7% | ⚠️ 4 |
+| 4 | **ALT** | Mid | +44% | 42.0% | ⚠️ 4 |
+| 5 | **METIS** | Speculative | +32% | 46.9% | ⚠️ 4 |
 
 *Exit risk élevé = surachat / essoufflement possible. Un leader peut perdre 30 % en quelques jours.*
 
@@ -156,30 +160,30 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 
 | Candidat | Top 20 bat le marché à 30 j | Corrélation de rang |
 |---|---|---|
-| Modèle appris | 67% | +0.192 |
+| Modèle appris | 67% | +0.187 |
 | Règle simple | 68% | +0.165 |
-| Mélange ✅ | 68% | +0.193 |
+| Mélange ✅ | 68% | +0.190 |
 
 ⚠️ Sur cette période, le token médian a fait **+1.6 %** en 30 j et seuls **49%** des tokens ont fini en hausse : « battre le marché » peut vouloir dire « perdre moins ».
 
 Ce qui compte le plus à 30 j : `vol90` (−), `vol30` (−), `runup180` (−), `vtrend` (−), `dd90` (−), `r90` (+)
 
-**Suivi réel** : 182 prédictions en attente — premiers résultats à partir du 11 nov 2026.
+**Suivi réel** : 185 prédictions en attente — premiers résultats à partir du 11 nov 2026.
 
 | # | Token | Tier | Prob. de battre le marché à 30 j | Score 7 j | Perf 30 j passée |
 |---|---|---|---|---|---|
-| 1 | **BTC** | Etabli | 68 % | 53.6 % | +1 % |
-| 2 | **TRX** | Etabli | 68 % | 49.5 % | -3 % |
-| 3 | **BNB** | Etabli | 68 % | 53.7 % | -3 % |
-| 4 | **ASTER** | Etabli | 68 % | 51.7 % | -4 % |
-| 5 | **SOL** | Etabli | 68 % | 53.4 % | -4 % |
-| 6 | **WLFI** | Etabli | 68 % | 51.4 % | -7 % |
-| 7 | **ETH** | Etabli | 68 % | 53.6 % | -7 % |
-| 8 | **JST** | Etabli | 68 % | 48.5 % | +23 % |
-| 9 | **SUN** | Mid | 68 % | 51.0 % | -3 % |
-| 10 | **XRP** | Etabli | 68 % | 53.9 % | -6 % |
-| 11 | **DOGE** | Etabli | 68 % | 52.9 % | -7 % |
-| 12 | **NEXO** | Etabli | 68 % | 53.5 % | -3 % |
+| 1 | **BTC** | Etabli | 66 % | 53.7 % | +3 % |
+| 2 | **TRX** | Etabli | 66 % | 49.8 % | -3 % |
+| 3 | **BNB** | Etabli | 66 % | 52.7 % | -2 % |
+| 4 | **ASTER** | Etabli | 66 % | 51.4 % | -3 % |
+| 5 | **ETH** | Etabli | 65 % | 53.9 % | -5 % |
+| 6 | **SOL** | Etabli | 65 % | 53.3 % | -2 % |
+| 7 | **JST** | Etabli | 65 % | 50.9 % | +22 % |
+| 8 | **WLFI** | Etabli | 65 % | 52.5 % | -7 % |
+| 9 | **NEXO** | Etabli | 65 % | 54.5 % | -2 % |
+| 10 | **XRP** | Etabli | 65 % | 52.9 % | -4 % |
+| 11 | **SUN** | Mid | 65 % | 51.4 % | -3 % |
+| 12 | **DOGE** | Etabli | 65 % | 52.7 % | -5 % |
 
 ---
 
@@ -196,11 +200,11 @@ Ce qui compte le plus à 30 j : `vol90` (−), `vol30` (−), `runup180` (−), 
 
 | Date | Token | Dépôt | Fonds | Depuis le dépôt (vs marché) |
 |---|---|---|---|---|
-| 2026-10-02 | **PEPE** | S-1/A | Canary PEPE ETF | -5% (+11 pts) |
+| 2026-10-02 | **PEPE** | S-1/A | Canary PEPE ETF | +1% (+15 pts) |
 | 2026-09-24 | **INJ** | S-1/A | Canary Staked INJ ETF | +7% (+15 pts) |
-| 2026-09-24 | **NEAR** | 8-A12B | Bitwise NEAR ETF  (NRR) | +7% (+16 pts) |
+| 2026-09-24 | **NEAR** | 8-A12B | Bitwise NEAR ETF  (NRR) | +11% (+18 pts) |
 
-**Tokens avec un ETF en préparation ou en lancement :** PEPE (📝 S-1/A le 2026-10-02), INJ (📝 S-1/A le 2026-09-24), NEAR (🟢 8-A12B le 2026-09-24), SEI (📝 S-1/A le 2026-09-15), LTC (📝 S-3/A le 2026-09-11), BCH (📝 S-3/A le 2026-09-11), TRX (🟢 8-A12B/A le 2026-09-08), ZEC (🟢 8-A12B le 2026-08-24)
+**Tokens avec un ETF en préparation ou en lancement :** PEPE (📝 S-1/A le 2026-10-02), INJ (📝 S-1/A le 2026-09-24), NEAR (🟢 8-A12B le 2026-09-24), SEI (📝 S-1/A le 2026-09-15), BCH (📝 S-3/A le 2026-09-11), LTC (📝 S-3/A le 2026-09-11), TRX (🟢 8-A12B/A le 2026-09-08), ZEC (🟢 8-A12B le 2026-08-24)
 
 ---
 
@@ -290,21 +294,23 @@ C'est pourquoi le score principal vient désormais d'un modèle appris (voir plu
 
 ## Aujourd'hui — 20 oct 2026
 
-**Régime :** 🟡 Neutre (indice altseason 30 j : 52.0)
+**Régime :** 🟡 Neutre (indice altseason 30 j : 53.0)
 
 **Top 12 du jour** — score = probabilité de battre la médiane du marché sur 7 j (modèle : `ml_gb`) :
 
 | Token | Tier | Score | vs BTC | Exit risk | Catalyseurs |
 |-------|------|-------|--------|-----------|-------------|
-| **ENS** | Mid | 55.4% | +1.8pp | 3 |  |
-| **ADA** | Etabli | 54.8% | +1.2pp | 3 |  |
-| **SHIB** | Etabli | 54.7% | +1.1pp | ⚠️ 5 |  |
-| **FLOKI** | Mid | 54.7% | +1.1pp | ⚠️ 5 |  |
-| **TRUMP** | Mid | 54.6% | +1.0pp | 3 |  |
-| **XLM** | Etabli | 54.5% | +0.9pp | 3 |  |
-| **STX** | Etabli | 54.4% | +0.8pp | ⚠️ 5 |  |
-| **1INCH** | Mid | 54.4% | +0.8pp | 3 |  |
-| **ICP** | Etabli | 54.4% | +0.8pp | 3 |  |
-| **YFI** | Mid | 54.3% | +0.7pp | 3 |  |
-| **TAO** | Etabli | 54.0% | +0.4pp | 3 |  |
-| **XRP** | Etabli | 53.9% | +0.3pp | 3 |  |
+| **XLM** | Etabli | 55.4% | +1.7pp | 1 |  |
+| **STX** | Etabli | 55.3% | +1.6pp | ⚠️ 5 |  |
+| **POL** | Etabli | 54.8% | +1.1pp | 3 |  |
+| **SHIB** | Etabli | 54.6% | +0.9pp | ⚠️ 5 |  |
+| **NEXO** | Etabli | 54.5% | +0.8pp | 3 |  |
+| **ETC** | Etabli | 54.4% | +0.7pp | 1 |  |
+| **ENS** | Mid | 54.3% | +0.6pp | 1 |  |
+| **1INCH** | Mid | 54.2% | +0.5pp | 3 |  |
+| **ADA** | Etabli | 54.2% | +0.5pp | 3 |  |
+| **ICP** | Etabli | 54.1% | +0.4pp | 3 |  |
+| **ETH** | Etabli | 53.9% | +0.2pp | 1 |  |
+| **LUNC** | Mid | 53.9% | +0.2pp | 3 |  |
+
+*Colonne Catalyseurs vide : normal, ce n'est pas une panne — 28 tokens ont un catalyseur aujourd'hui (trending CoinGecko, pic de volume…), mais le modèle a appris que ces tokens font plutôt moins bien ensuite (`catalyst_score` joue contre), ils sont donc rarement dans le top.*
