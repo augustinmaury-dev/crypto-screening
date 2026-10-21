@@ -1,12 +1,12 @@
 {
- "date": "20261020",
+ "date": "20261021",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb",
- "calibration_k": 0.41,
- "train_rows": 61702,
- "train_days": 156,
- "alt_days_measured": 32,
+ "calibration_k": 0.434,
+ "train_rows": 62095,
+ "train_days": 157,
+ "alt_days_measured": 33,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
@@ -100,7 +100,9 @@
   "rule": "hausse ≥ +100% sur 180 j",
   "count_today": 139,
   "leaders_removed_second_wave": [
-   "WIN"
+   "CVX",
+   "WIN",
+   "WLD"
   ]
  },
  "leaders": {
@@ -108,50 +110,45 @@
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
-    "symbol": "BAT",
-    "ret_30d_pct": 172.2,
-    "dist_high_90d_pct": 2.2
-   },
-   {
-    "symbol": "AMP",
-    "ret_30d_pct": 75.8,
-    "dist_high_90d_pct": 1.8
-   },
-   {
     "symbol": "BEAMX",
-    "ret_30d_pct": 73.1,
+    "ret_30d_pct": 61.7,
+    "dist_high_90d_pct": 2.9
+   },
+   {
+    "symbol": "PARTI",
+    "ret_30d_pct": 55.7,
     "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "ALT",
-    "ret_30d_pct": 44.4,
-    "dist_high_90d_pct": 0.0
+    "ret_30d_pct": 31.9,
+    "dist_high_90d_pct": 2.1
    },
    {
-    "symbol": "METIS",
-    "ret_30d_pct": 32.1,
-    "dist_high_90d_pct": 0.0
+    "symbol": "JST",
+    "ret_30d_pct": 25.7,
+    "dist_high_90d_pct": 1.2
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.565,
+  "model_top20_beat": 0.567,
   "days": 36,
-  "naive_top20_beat": 0.571,
-  "shrink_k": 0.41
+  "naive_top20_beat": 0.575,
+  "shrink_k": 0.434
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.823
+   "effect": 0.831
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.63
+   "effect": -0.638
   },
   {
    "feature": "p_ma50",
-   "effect": -0.585
+   "effect": -0.594
   },
   {
    "feature": "vol_30d_ann",
@@ -159,35 +156,35 @@
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.325
+   "effect": 0.329
   },
   {
    "feature": "log_rank",
-   "effect": -0.3
+   "effect": -0.305
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.297
-  },
-  {
-   "feature": "pat_resistance_test",
-   "effect": -0.279
+   "effect": -0.288
   },
   {
    "feature": "macd_n",
+   "effect": -0.282
+  },
+  {
+   "feature": "pat_resistance_test",
    "effect": -0.276
   },
   {
-   "feature": "bear_signals",
-   "effect": -0.247
+   "feature": "pat_double_bottom_90d",
+   "effect": 0.255
   }
  ],
  "regime": {
-  "alt_index_30d": 53.0,
-  "btc_ret_30d": 2.6,
-  "alt_index_90d": 62.2,
-  "btc_ret_90d": 25.0,
-  "breadth_ma50": 32.6,
+  "alt_index_30d": 47.0,
+  "btc_ret_30d": -1.6,
+  "alt_index_90d": 64.3,
+  "btc_ret_90d": 27.2,
+  "breadth_ma50": 34.9,
   "label": "Neutre"
  }
 }
