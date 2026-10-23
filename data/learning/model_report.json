@@ -1,12 +1,12 @@
 {
- "date": "20261022",
+ "date": "20261023",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb",
- "calibration_k": 0.496,
- "train_rows": 62488,
- "train_days": 158,
- "alt_days_measured": 34,
+ "calibration_k": 0.545,
+ "train_rows": 62881,
+ "train_days": 159,
+ "alt_days_measured": 35,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
@@ -100,7 +100,6 @@
   "rule": "hausse ≥ +100% sur 180 j",
   "count_today": 139,
   "leaders_removed_second_wave": [
-   "CVX",
    "WIN"
   ]
  },
@@ -110,70 +109,70 @@
   "tokens": [
    {
     "symbol": "BEAMX",
-    "ret_30d_pct": 68.0,
-    "dist_high_90d_pct": 1.2
+    "ret_30d_pct": 60.8,
+    "dist_high_90d_pct": 2.6
    },
    {
     "symbol": "JST",
-    "ret_30d_pct": 20.2,
-    "dist_high_90d_pct": 1.7
+    "ret_30d_pct": 25.0,
+    "dist_high_90d_pct": 1.8
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.575,
+  "model_top20_beat": 0.597,
   "days": 36,
-  "naive_top20_beat": 0.576,
-  "shrink_k": 0.496
+  "naive_top20_beat": 0.585,
+  "shrink_k": 0.545
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.831
+   "effect": 0.832
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.644
+   "effect": -0.643
   },
   {
    "feature": "p_ma50",
-   "effect": -0.598
+   "effect": -0.606
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.337
+   "effect": -0.346
   },
   {
    "feature": "corr_btc_90d",
-   "effect": 0.331
+   "effect": 0.333
   },
   {
    "feature": "log_rank",
-   "effect": -0.313
+   "effect": -0.316
   },
   {
    "feature": "macd_n",
-   "effect": -0.285
+   "effect": -0.289
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.285
+   "effect": -0.289
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.262
+   "effect": -0.267
   },
   {
    "feature": "pat_double_bottom_90d",
-   "effect": 0.259
+   "effect": 0.265
   }
  ],
  "regime": {
-  "alt_index_30d": 53.0,
-  "btc_ret_30d": -4.8,
+  "alt_index_30d": 40.0,
+  "btc_ret_30d": -4.5,
   "alt_index_90d": 65.3,
-  "btc_ret_90d": 25.7,
-  "breadth_ma50": 23.4,
+  "btc_ret_90d": 27.8,
+  "breadth_ma50": 23.2,
   "label": "Neutre"
  }
 }

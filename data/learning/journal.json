@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260923",
-    "btc_prob": 65.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "PENGU",
-      "BROCCOLI714",
-      "WIN",
-      "BFUSD",
-      "ASTER"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.49,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260924",
     "btc_prob": 67.0,
     "regime": "Haussier",
@@ -558,6 +542,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.507,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20261023",
+    "regime": "Neutre",
+    "alt_index_30d": 40.0,
+    "alt_index_90d": 65.3,
+    "btc_ret_30d": -4.5,
+    "score_model": "ml_gb",
+    "top_tokens": [
+      "BTC",
+      "TAO",
+      "XRP",
+      "ETH",
+      "ADA"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.504,
     "bear_signals_ok": 10
   }
 ]
