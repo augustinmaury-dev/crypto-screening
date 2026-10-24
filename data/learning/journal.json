@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260924",
-    "btc_prob": 67.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "ONDO",
-      "COMP",
-      "AI",
-      "BTTC",
-      "ZEC"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.491,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260925",
     "btc_prob": 65.0,
     "regime": "Haussier",
@@ -561,6 +545,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.504,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20261024",
+    "regime": "Neutre",
+    "alt_index_30d": 34.0,
+    "alt_index_90d": 51.0,
+    "btc_ret_30d": -3.5,
+    "score_model": "ml_gb",
+    "top_tokens": [
+      "TAO",
+      "XRP",
+      "BTC",
+      "WIF",
+      "ADA"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.499,
     "bear_signals_ok": 10
   }
 ]
