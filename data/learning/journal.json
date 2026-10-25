@@ -1,21 +1,5 @@
 [
   {
-    "date": "20260925",
-    "btc_prob": 65.0,
-    "regime": "Haussier",
-    "top_tokens": [
-      "IQ",
-      "ONDO",
-      "EIGEN",
-      "QTUM",
-      "AT"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.494,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20260926",
     "regime": "Altseason en formation",
     "alt_index_30d": 83.0,
@@ -564,6 +548,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.499,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20261025",
+    "regime": "Bitcoin domine (court terme)",
+    "alt_index_30d": 20.0,
+    "alt_index_90d": 53.1,
+    "btc_ret_30d": -4.7,
+    "score_model": "ml_gb",
+    "top_tokens": [
+      "DOGE",
+      "ETH",
+      "ADA",
+      "WIN",
+      "SHIB"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.493,
     "bear_signals_ok": 10
   }
 ]
