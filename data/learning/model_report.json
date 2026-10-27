@@ -1,11 +1,11 @@
 {
- "date": "20261026",
+ "date": "20261027",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb",
- "calibration_k": 0.559,
- "train_rows": 64060,
- "train_days": 162,
+ "calibration_k": 0.537,
+ "train_rows": 64453,
+ "train_days": 163,
  "alt_days_measured": 36,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
@@ -103,6 +103,8 @@
   "rule": "hausse ≥ +100% sur 180 j",
   "count_today": 139,
   "leaders_removed_second_wave": [
+   "INIT",
+   "OSMO",
    "WIN"
   ]
  },
@@ -112,90 +114,100 @@
   "tokens": [
    {
     "symbol": "BEAMX",
-    "ret_30d_pct": 50.5,
-    "dist_high_90d_pct": 1.8
+    "ret_30d_pct": 55.0,
+    "dist_high_90d_pct": 1.5
    },
    {
     "symbol": "PARTI",
-    "ret_30d_pct": 31.6,
-    "dist_high_90d_pct": 1.7
+    "ret_30d_pct": 39.1,
+    "dist_high_90d_pct": 4.4
    },
    {
     "symbol": "ERA",
-    "ret_30d_pct": 18.7,
+    "ret_30d_pct": 23.7,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "REZ",
+    "ret_30d_pct": 20.7,
+    "dist_high_90d_pct": 0.0
+   },
+   {
+    "symbol": "HAEDAL",
+    "ret_30d_pct": 15.5,
     "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "JST",
-    "ret_30d_pct": 14.8,
-    "dist_high_90d_pct": 0.5
-   },
-   {
-    "symbol": "BABY",
-    "ret_30d_pct": 5.3,
-    "dist_high_90d_pct": 0.0
+    "ret_30d_pct": 9.7,
+    "dist_high_90d_pct": 3.9
    },
    {
     "symbol": "KAVA",
-    "ret_30d_pct": 1.6,
-    "dist_high_90d_pct": 4.3
+    "ret_30d_pct": 2.4,
+    "dist_high_90d_pct": 3.7
+   },
+   {
+    "symbol": "BABY",
+    "ret_30d_pct": -1.3,
+    "dist_high_90d_pct": 0.1
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.576,
+  "model_top20_beat": 0.578,
   "days": 36,
-  "naive_top20_beat": 0.625,
-  "shrink_k": 0.559
+  "naive_top20_beat": 0.643,
+  "shrink_k": 0.537
  },
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.781
+   "effect": 0.762
   },
   {
    "feature": "catalyst_score",
-   "effect": -0.629
+   "effect": -0.624
   },
   {
    "feature": "p_ma50",
-   "effect": -0.605
+   "effect": -0.601
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.387
-  },
-  {
-   "feature": "log_rank",
-   "effect": -0.316
-  },
-  {
-   "feature": "corr_btc_90d",
-   "effect": 0.31
+   "effect": -0.4
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.304
+   "effect": -0.326
+  },
+  {
+   "feature": "log_rank",
+   "effect": -0.315
+  },
+  {
+   "feature": "corr_btc_90d",
+   "effect": 0.302
   },
   {
    "feature": "pat_double_bottom_90d",
    "effect": 0.283
   },
   {
-   "feature": "macd_n",
-   "effect": -0.276
+   "feature": "pat_resistance_test",
+   "effect": -0.277
   },
   {
-   "feature": "pat_resistance_test",
-   "effect": -0.273
+   "feature": "bear_signals",
+   "effect": -0.272
   }
  ],
  "regime": {
-  "alt_index_30d": 20.0,
-  "btc_ret_30d": -5.4,
-  "alt_index_90d": 56.1,
-  "btc_ret_90d": 25.4,
-  "breadth_ma50": 10.2,
+  "alt_index_30d": 18.2,
+  "btc_ret_30d": -5.3,
+  "alt_index_90d": 60.8,
+  "btc_ret_90d": 24.8,
+  "breadth_ma50": 14.0,
   "label": "Bitcoin domine (court terme)"
  }
 }
