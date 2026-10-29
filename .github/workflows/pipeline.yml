@@ -8,18 +8,18 @@ on:
 
 jobs:
   run-pipeline:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # figé : ubuntu-latest migre vers Ubuntu 26 (annonce GitHub, oct. 2026)
     permissions:
       contents: write
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5   # v5+ tourne sous Node 24 (Node 20 déprécié)
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6   # v6+ tourne sous Node 24
         with:
           python-version: '3.11'
 

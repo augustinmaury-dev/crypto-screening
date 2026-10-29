@@ -464,7 +464,7 @@ def load_market_regime() -> dict:
     """Régime du jour calculé par 06b_ml_score.py (data/computed/market_regime.json)."""
     return (load_json(COMPUTED / "market_regime.json", {}) or {}).get("today", {}) or {}
 
-REGIME_EMOJI = {"Altseason": "🚀", "Altseason en formation": "🌱", "Saison Bitcoin": "🟠",
+REGIME_EMOJI = {"Altseason": "🚀", "Altseason en formation": "🌱", "Altseason modérée": "🌤️", "Saison Bitcoin": "🟠",
                 "Bitcoin domine (court terme)": "🟠", "Neutre": "🟡",
                 "Haussier": "🟢", "Baissier": "🔴"}  # (les deux derniers : anciennes entrées du journal)
 
@@ -636,12 +636,14 @@ def generate_memory(
     a("")
     if reg:
         a(f"- **Indice altseason** : {reg.get('alt_index_30d', '—')} sur 30 j, {reg.get('alt_index_90d', '—')} sur 90 j "
-          f"(= % des 100 plus grosses altcoins qui ont fait mieux que BTC ; ≥ 75 = altseason, ≤ 25 = saison Bitcoin)")
+          f"(= % des 100 plus grosses altcoins qui ont fait mieux que BTC)")
         a(f"- **BTC** : {reg.get('btc_ret_30d', '—')} % sur 30 j · **Tokens au-dessus de leur MA50** : {reg.get('breadth_ma50', '—')} %")
         a30 = reg.get("alt_index_30d") or 0
         alt_on = a30 >= 60
-        a("- *Deux seuils différents : l'**étiquette** du régime suit les seuils classiques (≥ 75 = altseason, ≤ 25 = saison Bitcoin) ; "
-          "le **mode altseason** du classement s'active dès que l'indice 30 j atteint 60.* "
+        a("- *Échelle unique (depuis le 26/10/2026) : indice 90 j ≥ 75 → 🚀 Altseason ; indice 30 j ≥ 75 → 🌱 Altseason en formation ; "
+          "indice 30 j ≥ 60 → 🌤️ Altseason modérée ; ≤ 25 → saison Bitcoin. Le **mode altseason** du classement et le groupe "
+          "« Altseason » des leaders utilisent le même seuil (indice 30 j ≥ 60) : 🌱 et 🌤️ = mode altseason actif ; seule l'étiquette "
+          "🚀 (fondée sur 90 j) peut coexister avec un mode inactif si le court terme s'essouffle.* "
           f"Aujourd'hui : mode altseason **{'ACTIF' if alt_on else 'inactif'}** (indice 30 j = {reg.get('alt_index_30d', '—')}).")
         n_alt, n_min = mrep.get("alt_days_measured"), mrep.get("min_alt_days_for_alt_model", 30)
         used = mrep.get("model_used_today", "")
@@ -785,6 +787,22 @@ def generate_memory(
             med = _median([p[f"return_{H}d"] for p in L])
             a(f"| {m[:4]}-{m[4:]} | {model} | {len(L)} | {up:.0%} | {bt:.0%} | {med:+.1f}% |")
         a("")
+        reg_h = {h["date"]: h for h in (load_json(COMPUTED / "market_regime.json", {}) or {}).get("history", [])}
+        learned = [p for p in measured if p.get("model") == "Modèle appris" and p.get(f"beat_market_{H}d") is not None]
+        if learned:
+            a("**Modèle appris selon le régime de marché** (indice altseason 30 j le jour de la prédiction ; mode altseason actif à partir de 60) :")
+            a("")
+            a("| Régime le jour de la prédiction | Jours | Prédictions | Ont battu le marché (7 j) | Return médian (7 j) |")
+            a("|---|---|---|---|---|")
+            def _alt(p):
+                v = (reg_h.get(p["date"]) or {}).get("alt_index_30d")
+                return None if v is None else v >= 60
+            for lab, val in (("Mode altseason actif (indice ≥ 60)", True), ("Mode altseason inactif (indice < 60)", False), ("Régime inconnu", None)):
+                g = [p for p in learned if _alt(p) is val]
+                if not g: continue
+                bt = sum(1 for p in g if p[f"beat_market_{H}d"]) / len(g)
+                a(f"| {lab} | {len({p['date'] for p in g})} | {len(g)} | {bt:.0%} | {_median([p[f'return_{H}d'] for p in g]):+.1f}% |")
+            a("")
         a("**Dernières prédictions mesurées :**")
         a("")
         a("| Date | Token | Score | Prix prédit | Return 7 j | vs marché | Return 14 j |")
@@ -811,7 +829,8 @@ def generate_memory(
     a(f"*Règle : perf 30 j dans le top 10 % de l'univers **et** à moins de 5 % de son plus haut 90 j. "
       "Le score principal est prudent et évite les tokens qui explosent ; cette liste fait l'inverse. "
       "Hors altseason, c'est un pari « loterie » : la plupart retombent, quelques-uns explosent. "
-      "En altseason, les leaders ont historiquement surperformé nettement (backtest : 67 % battent le marché à 14 j).*")
+      "Le backtest initial (juin→sept. 2026) annonçait 67 % de réussite en altseason ; le suivi réel ci-dessous ne le confirme pas : "
+      "jugez sur la ligne « En direct ».*")
     a("")
     reg_hist = {h["date"]: h for h in (load_json(COMPUTED / "market_regime.json", {}) or {}).get("history", [])}
     lead_m = [p for p in pred_log if p.get("selection") == "leaders" and p.get("return_14d") is not None]
@@ -826,6 +845,7 @@ def generate_memory(
         LIVE_FROM = "20260929"   # la liste des leaders existe depuis le 29/09/2026 ; avant = signaux reconstitués sur l'historique
         for name, grp in (("Tous", lead_m), ("Altseason (indice 30 j ≥ 60)", [p for p in lead_m if alt_of(p) is True]),
                           ("Hors altseason", [p for p in lead_m if alt_of(p) is False]),
+                          ("Régime inconnu (indice pas encore calculable)", [p for p in lead_m if alt_of(p) is None]),
                           ("**En direct** (depuis le 29/09/2026)", [p for p in lead_m if p["date"] >= LIVE_FROM]),
                           ("Reconstitués (avant le 29/09/2026)", [p for p in lead_m if p["date"] < LIVE_FROM])):
             ex = [p["excess_14d"] for p in grp if p.get("excess_14d") is not None]
@@ -865,7 +885,9 @@ def generate_memory(
         a("*Même principe que le score à 7 j, sur 30 j : variables techniques → apprentissage sur ~1000 jours de cours Binance "
           "→ analyse des erreurs. Chaque jour, le modèle appris et une règle simple (« peu volatil + gros volume ») sont testés "
           "sur les 120 derniers jours déjà mesurables ; le meilleur est utilisé (mélange des deux s'ils sont proches). "
-          "La probabilité affichée est le taux de réussite **réellement observé** pour la tranche de classement du token.*")
+          "La probabilité affichée découle du **rang** du token : c'est le taux de réussite **réellement observé** pour ce niveau de "
+          "classement (courbe lissée rang → réussite, ajustée sur les 120 jours de test). Deux tokens voisins dans le classement ont donc "
+          "des probabilités voisines (≈ 0,1 pt d'écart par rang) : c'est voulu, ce n'est pas une sortie brute du modèle.*")
         a("")
         ev = m30.get("eval", {})
         win = m30.get("eval_window", ["?", "?"])
@@ -922,18 +944,26 @@ def generate_memory(
     a("")
     etf_m = [p for p in pred_log if p.get("selection") == "etf" and p.get("return_7d") is not None]
     if etf_m:
-        a("| Type de dépôt | Événements | Battent le marché à 7 j | Excès médian 7 j | Battent le marché à 14 j | Excès médian 14 j |")
-        a("|---|---|---|---|---|---|")
-        for kind, label in (("dossier", "Dossier / amendement (S-1, S-3)"), ("prospectus", "Prospectus définitif (424B)"),
-                            ("listing", "Enregistrement en bourse (8-A12B)")):
-            g = [p for p in etf_m if p.get("etf_kind") == kind]
+        a("*« En direct » = dépôts publiés depuis le début du suivi (29/09/2026) ; « reconstitué » = dépôts antérieurs retrouvés "
+          "après coup dans l'historique de la SEC. Seuls les cas en direct comptent pour juger l'idée.*")
+        a("")
+        a("| Type de dépôt | Suivi | Événements | Battent le marché à 7 j | Excès médian 7 j | Battent le marché à 14 j | Excès médian 14 j |")
+        a("|---|---|---|---|---|---|---|")
+        etf_live = lambda p: (p.get("etf_date") or p["date"]).replace("-", "") >= "20260929"
+        for (kind, label), (live_lab, live_ok) in [(k, l) for k in (("dossier", "Dossier / amendement (S-1, S-3)"),
+                                                                    ("prospectus", "Prospectus définitif (424B)"),
+                                                                    ("listing", "Enregistrement en bourse (8-A12B)"))
+                                                   for l in (("**En direct**", True), ("Reconstitué", False))]:
+            g = [p for p in etf_m if p.get("etf_kind") == kind and etf_live(p) == live_ok]
             if not g: continue
             g14 = [p for p in g if p.get("excess_14d") is not None]
             b7 = sum(1 for p in g if p.get("beat_market_7d")) / len(g)
             m7 = _median([p["excess_7d"] for p in g if p.get("excess_7d") is not None] or [0])
             b14 = (sum(1 for p in g14 if p.get("beat_market_14d")) / len(g14)) if g14 else float("nan")
             m14 = _median([p["excess_14d"] for p in g14] or [0])
-            a(f"| {label} | {len(g)} | {b7:.0%} | {m7:+.1f} pts | {b14:.0%} | {m14:+.1f} pts |")
+            b14s = f"{b14:.0%}" if g14 else "…"
+            m14s = f"{m14:+.1f} pts" if g14 else "…"
+            a(f"| {label} | {live_lab} | {len(g)} | {b7:.0%} | {m7:+.1f} pts | {b14s} | {m14s} |")
         a("")
     recent = sorted([e for e in etf_events() if e["date"].replace("-", "") >= shift_date(TODAY, -30)],
                     key=lambda e: e["date"], reverse=True)
@@ -1040,9 +1070,11 @@ def generate_memory(
         n_cat = sum(1 for r in today_scores if (r.get("catalyst_flags") or "").strip())
         if not any((r.get("catalyst_flags") or "").strip() for r in top):
             a("")
-            a(f"*Colonne Catalyseurs vide : normal, ce n'est pas une panne — {n_cat} tokens ont un catalyseur aujourd'hui "
-              "(trending CoinGecko, pic de volume…), mais le modèle a appris que ces tokens font plutôt moins bien ensuite "
-              "(`catalyst_score` joue contre), ils sont donc rarement dans le top.*")
+            a(f"*Colonne Catalyseurs vide : normal, ce n'est pas une panne — {n_cat} tokens ont un catalyseur aujourd'hui, "
+              "mais le modèle a appris que ces tokens font plutôt moins bien ensuite (`catalyst_score` joue contre), ils sont donc "
+              "rarement dans le top. Sources actives : tendances CoinGecko et pics de volume. Sources inactives : agenda "
+              "d'événements CoinMarketCal (nécessite une clé gratuite, non configurée) et activité GitHub (désactivée par le mode "
+              "`--no-cg-detail` du pipeline) — `catalyst_score` mesure donc en pratique « tendance + pic de volume ».*")
     else:
         a("*Aucun token classé aujourd'hui.*")
 

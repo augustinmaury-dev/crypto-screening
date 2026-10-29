@@ -1,5 +1,5 @@
 # CLAUDE.md — Crypto Screening Project
-> Fichier de contexte pour Claude (Cowork). Mis à jour le 25/09/2026.
+> Fichier de contexte pour Claude (Cowork). Mis à jour le 26/10/2026.
 > En cas de résumé de session ou perte de contexte, lire ce fichier en priorité.
 
 ---
@@ -39,10 +39,14 @@ Système de **screening crypto automatisé** sur l'**intégralité des paires US
 05_compute_indicators.py → RSI, MACD, MA, vol, drawdown, corrélation BTC, patterns
 06_score.py              → Sous-scores 5 axes + ancienne formule bull_prob_7d (gardée en bull_prob_7d_legacy)
 06b_ml_score.py          → SCORE PRINCIPAL : modèle appris + régime de marché / altseason (depuis le 25/09/2026)
+06c_score_30d.py         → Prévision à 30 jours (modèle vs règle simple, choix selon les erreurs récentes, depuis le 12/10/2026)
 07_report.py             → report.md + diff vs veille
 08_learn.py              → Mise à jour des poids via outcomes réels
 09_explosion_screen.py   → Détection de tokens en pré-explosion
-10_fetch_catalysts.py    → Catalyseurs externes (événements, listings, etc.)
+10_fetch_catalysts.py    → Catalyseurs : Fear & Greed (alternative.me), tendances CoinGecko, pics de volume (indicateurs Binance).
+                           Inactifs : agenda CoinMarketCal (clé gratuite non configurée) et activité GitHub (désactivée par --no-cg-detail).
+                           → catalyst_score = en pratique « tendance + pic de volume » (effet négatif dans le modèle 7 j).
+10b_etf_filings.py       → Dossiers d'ETF crypto (SEC EDGAR, depuis le 29/09/2026)
 11_fetch_defi.py         → TVL via DefiLlama
 12_build_history.py      → Snapshots quotidiens pour analyse historique 30j
 13_memory.py             → Journal project_memory.md, suivi des prédictions (top 20/jour), calibration
@@ -52,7 +56,7 @@ run_pipeline.py          → Orchestrateur principal
 ### Commandes principales
 ```bash
 python run_pipeline.py --pilot 30    # test sur 30 tokens
-python run_pipeline.py               # univers complet (~45-60 min)
+python run_pipeline.py               # univers complet (~12-18 min sur GitHub Actions)
 python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
 ```
 

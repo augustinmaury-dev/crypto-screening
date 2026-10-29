@@ -216,6 +216,8 @@ def regime_label(r: dict) -> str:
         return "Saison Bitcoin"
     if a30 is not None and a30 >= ALT_SEASON_90:
         return "Altseason en formation"
+    if a30 is not None and a30 >= ALT_ACTIVE_30:   # même seuil que le mode altseason du classement (unifié le 26/10/2026)
+        return "Altseason modérée"
     if a30 is not None and a30 <= BTC_SEASON_90:
         return "Bitcoin domine (court terme)"
     return "Neutre"
@@ -429,7 +431,7 @@ def run():
     # ── rapports JSON ────────────────────────────────────────────────────
     hist_reg = [{"date": d.strftime("%Y%m%d"), **v, "label": regime_label(v)} for d, v in sorted(regimes.items())]
     (COMPUTED / "market_regime.json").write_text(json.dumps(
-        {"today": {"date": TODAY, **reg_today}, "history": hist_reg[-120:]}, ensure_ascii=False, indent=1), encoding="utf-8")
+        {"today": {"date": TODAY, **reg_today}, "history": hist_reg}, ensure_ascii=False, indent=1), encoding="utf-8")
     try:  # lecture des facteurs dominants via une régression logistique (plus lisible que le boosting)
         from sklearn.linear_model import LogisticRegression
         lr = LogisticRegression(C=0.05, max_iter=2000).fit(train[FEATS], train["y"])
