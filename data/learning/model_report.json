@@ -114,18 +114,8 @@
   "tokens": [
    {
     "symbol": "BEAMX",
-    "ret_30d_pct": 66.5,
-    "dist_high_90d_pct": 0.5
-   },
-   {
-    "symbol": "PARTI",
-    "ret_30d_pct": 51.0,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "MEGA",
-    "ret_30d_pct": 14.3,
-    "dist_high_90d_pct": 4.6
+    "ret_30d_pct": 65.5,
+    "dist_high_90d_pct": 1.2
    },
    {
     "symbol": "JST",
@@ -134,12 +124,12 @@
    },
    {
     "symbol": "GMX",
-    "ret_30d_pct": 8.8,
-    "dist_high_90d_pct": 3.6
+    "ret_30d_pct": 7.8,
+    "dist_high_90d_pct": 4.3
    },
    {
     "symbol": "KAVA",
-    "ret_30d_pct": 1.2,
+    "ret_30d_pct": 1.4,
     "dist_high_90d_pct": 4.5
    }
   ]
@@ -153,7 +143,7 @@
  "top_factors": [
   {
    "feature": "rsi_14",
-   "effect": 0.743
+   "effect": 0.74
   },
   {
    "feature": "catalyst_score",
@@ -161,19 +151,19 @@
   },
   {
    "feature": "p_ma50",
-   "effect": -0.609
+   "effect": -0.612
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.426
+   "effect": -0.428
   },
   {
    "feature": "log_rank",
-   "effect": -0.314
+   "effect": -0.316
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.304
+   "effect": -0.31
   },
   {
    "feature": "pat_double_bottom_90d",
@@ -185,19 +175,19 @@
   },
   {
    "feature": "bear_signals",
-   "effect": -0.271
+   "effect": -0.273
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.264
+   "effect": -0.266
   }
  ],
  "regime": {
-  "alt_index_30d": 18.2,
+  "alt_index_30d": 17.2,
   "btc_ret_30d": -3.9,
-  "alt_index_90d": 58.8,
+  "alt_index_90d": 59.8,
   "btc_ret_90d": 25.9,
-  "breadth_ma50": 12.0,
+  "breadth_ma50": 11.5,
   "label": "Bitcoin domine (court terme)"
  }
 }
