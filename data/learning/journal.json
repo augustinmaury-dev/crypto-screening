@@ -1,24 +1,5 @@
 [
   {
-    "date": "20261001",
-    "regime": "Altseason en formation",
-    "alt_index_30d": 83.0,
-    "alt_index_90d": 59.2,
-    "btc_ret_30d": 7.2,
-    "score_model": "ml_gb+alt_blend",
-    "top_tokens": [
-      "RENDER",
-      "TAO",
-      "WIF",
-      "XLM",
-      "LPT"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.545,
-    "bear_signals_ok": 9
-  },
-  {
     "date": "20261002",
     "regime": "Altseason en formation",
     "alt_index_30d": 82.0,
@@ -567,6 +548,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.483,
+    "bear_signals_ok": 10
+  },
+  {
+    "date": "20261031",
+    "regime": "Bitcoin domine (court terme)",
+    "alt_index_30d": 18.2,
+    "alt_index_90d": 49.5,
+    "btc_ret_30d": -7.4,
+    "score_model": "ml_gb",
+    "top_tokens": [
+      "XRP",
+      "SOL",
+      "ADA",
+      "ETH",
+      "DOGE"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.482,
     "bear_signals_ok": 10
   }
 ]
