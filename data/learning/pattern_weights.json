@@ -1,103 +1,68 @@
 {
-  "macd_bullish_cross": {
-    "weight": 0.726,
-    "hit_rate_14d": 0.432,
-    "samples": 10212
-  },
-  "bull_flag": {
-    "weight": 0.407,
-    "hit_rate_14d": 0.352,
-    "samples": 418
-  },
-  "macd_bearish_cross": {
-    "weight": 1.245,
-    "hit_rate_14d": 0.561,
-    "samples": 10406
-  },
   "morning_star_4h": {
-    "weight": 0.497,
+    "weight": 0.495,
     "hit_rate_14d": 0.374,
-    "samples": 1029
+    "samples": 1033
+  },
+  "downtrend": {
+    "weight": 1.307,
+    "hit_rate_14d": 0.577,
+    "samples": 19042
+  },
+  "squeeze_breakout": {
+    "weight": 0.933,
+    "hit_rate_14d": 0.483,
+    "samples": 600
   },
   "hammer_4h": {
     "weight": 0.775,
     "hit_rate_14d": 0.444,
     "samples": 374
   },
+  "death_cross": {
+    "weight": 1.108,
+    "hit_rate_14d": 0.527,
+    "samples": 465
+  },
+  "double_top_90d": {
+    "weight": 1.516,
+    "hit_rate_14d": 0.629,
+    "samples": 4395
+  },
   "double_bottom_90d": {
     "weight": 0.707,
     "hit_rate_14d": 0.427,
-    "samples": 2883
-  },
-  "uptrend": {
-    "weight": 0.679,
-    "hit_rate_14d": 0.42,
-    "samples": 16806
-  },
-  "bullish_engulfing_4h": {
-    "weight": 0.691,
-    "hit_rate_14d": 0.423,
-    "samples": 1429
-  },
-  "breakdown_30d": {
-    "weight": 1.387,
-    "hit_rate_14d": 0.597,
-    "samples": 191
-  },
-  "shooting_star_4h": {
-    "weight": 1.143,
-    "hit_rate_14d": 0.536,
-    "samples": 364
-  },
-  "double_top_90d": {
-    "weight": 1.508,
-    "hit_rate_14d": 0.627,
-    "samples": 4364
-  },
-  "breakout_30d": {
-    "weight": 0.382,
-    "hit_rate_14d": 0.345,
-    "samples": 634
-  },
-  "golden_cross": {
-    "weight": 0.36,
-    "hit_rate_14d": 0.34,
-    "samples": 1409
+    "samples": 2885
   },
   "resistance_test": {
     "weight": 1.093,
     "hit_rate_14d": 0.523,
-    "samples": 2668
+    "samples": 2678
   },
-  "support_bounce": {
-    "weight": 0.719,
-    "hit_rate_14d": 0.43,
-    "samples": 2873
+  "golden_cross": {
+    "weight": 0.355,
+    "hit_rate_14d": 0.339,
+    "samples": 1417
   },
-  "rsi_bullish_divergence": {
-    "weight": 0.699,
-    "hit_rate_14d": 0.425,
-    "samples": 2748
+  "breakout_30d": {
+    "weight": 0.38,
+    "hit_rate_14d": 0.345,
+    "samples": 635
   },
-  "death_cross": {
-    "weight": 1.099,
-    "hit_rate_14d": 0.525,
-    "samples": 463
+  "uptrend": {
+    "weight": 0.668,
+    "hit_rate_14d": 0.417,
+    "samples": 16942
+  },
+  "bullish_engulfing_4h": {
+    "weight": 0.69,
+    "hit_rate_14d": 0.422,
+    "samples": 1430
   },
   "bear_flag": {
     "weight": 0.938,
     "hit_rate_14d": 0.484,
     "samples": 609
-  },
-  "downtrend": {
-    "weight": 1.301,
-    "hit_rate_14d": 0.575,
-    "samples": 18956
-  },
-  "rsi_bearish_divergence": {
-    "weight": 1.26,
-    "hit_rate_14d": 0.565,
-    "samples": 2000
   },
   "evening_star_4h": {
     "weight": 1.45,
@@ -109,9 +74,44 @@
     "hit_rate_14d": 0.586,
     "samples": 1244
   },
-  "squeeze_breakout": {
-    "weight": 0.926,
-    "hit_rate_14d": 0.482,
-    "samples": 598
+  "bull_flag": {
+    "weight": 0.407,
+    "hit_rate_14d": 0.352,
+    "samples": 418
+  },
+  "breakdown_30d": {
+    "weight": 1.396,
+    "hit_rate_14d": 0.599,
+    "samples": 192
+  },
+  "macd_bullish_cross": {
+    "weight": 0.725,
+    "hit_rate_14d": 0.431,
+    "samples": 10225
+  },
+  "macd_bearish_cross": {
+    "weight": 1.248,
+    "hit_rate_14d": 0.562,
+    "samples": 10431
+  },
+  "rsi_bearish_divergence": {
+    "weight": 1.259,
+    "hit_rate_14d": 0.565,
+    "samples": 2004
+  },
+  "shooting_star_4h": {
+    "weight": 1.148,
+    "hit_rate_14d": 0.537,
+    "samples": 365
+  },
+  "support_bounce": {
+    "weight": 0.704,
+    "hit_rate_14d": 0.426,
+    "samples": 2904
+  },
+  "rsi_bullish_divergence": {
+    "weight": 0.695,
+    "hit_rate_14d": 0.424,
+    "samples": 2757
   }
 }
