@@ -710,8 +710,16 @@ def generate_memory(
         accuracy = correct / len(measured) * 100
         bm = [p for p in measured if p.get(f"beat_market_{H}d") is not None]
         beat = sum(1 for p in bm if p[f"beat_market_{H}d"]) / len(bm) * 100 if bm else float("nan")
-        a(f"**Mon top {TOP_N_PRED} quotidien, jugé à {H} j :** {len(measured)} prédictions mesurées — "
-          f"{accuracy:.0f}% ont monté, **{beat:.0f}% ont battu la médiane du marché** (50% = hasard)")
+        a(f"**Mon top {TOP_N_PRED} quotidien, jugé à {H} j — toutes méthodes confondues depuis mai (ancienne formule incluse) :** "
+          f"{len(measured)} prédictions mesurées — {accuracy:.0f}% ont monté, {beat:.0f}% ont battu la médiane du marché (50% = hasard)")
+        ml = [p for p in measured if p.get("model") == "Modèle appris"]
+        if ml:
+            ml_up = sum(1 for p in ml if p.get(f"correct_{H}d")) / len(ml) * 100
+            ml_bm = [p for p in ml if p.get(f"beat_market_{H}d") is not None]
+            ml_bt = sum(1 for p in ml_bm if p[f"beat_market_{H}d"]) / len(ml_bm) * 100 if ml_bm else float("nan")
+            a("")
+            a(f"**Modèle appris seul (depuis le 26/09/2026) :** {len(ml)} prédictions mesurées sur "
+              f"{len({p['date'] for p in ml})} jours — {ml_up:.0f}% ont monté, **{ml_bt:.0f}% ont battu la médiane du marché**")
         a("")
 
     ml_live = [p for p in measured if p.get("model") == "Modèle appris" and p.get(f"beat_market_{H}d") is not None]
@@ -947,6 +955,8 @@ def generate_memory(
         a("*« En direct » = dépôts publiés depuis le début du suivi (29/09/2026) ; « reconstitué » = dépôts antérieurs retrouvés "
           "après coup dans l'historique de la SEC. Seuls les cas en direct comptent pour juger l'idée.*")
         a("")
+        a("*Les pourcentages indiquent entre parenthèses le nombre de cas réellement mesurés à cet horizon (un dépôt récent n'est pas encore mesurable à 14 j).*")
+        a("")
         a("| Type de dépôt | Suivi | Événements | Battent le marché à 7 j | Excès médian 7 j | Battent le marché à 14 j | Excès médian 14 j |")
         a("|---|---|---|---|---|---|---|")
         etf_live = lambda p: (p.get("etf_date") or p["date"]).replace("-", "") >= "20260929"
@@ -961,9 +971,10 @@ def generate_memory(
             m7 = _median([p["excess_7d"] for p in g if p.get("excess_7d") is not None] or [0])
             b14 = (sum(1 for p in g14 if p.get("beat_market_14d")) / len(g14)) if g14 else float("nan")
             m14 = _median([p["excess_14d"] for p in g14] or [0])
-            b14s = f"{b14:.0%}" if g14 else "…"
+            n7b = sum(1 for p in g if p.get("beat_market_7d")); n14b = sum(1 for p in g14 if p.get("beat_market_14d"))
+            b14s = f"{b14:.0%} ({n14b}/{len(g14)})" if g14 else f"… (0/{len(g)} mesurés)"
             m14s = f"{m14:+.1f} pts" if g14 else "…"
-            a(f"| {label} | {live_lab} | {len(g)} | {b7:.0%} | {m7:+.1f} pts | {b14s} | {m14s} |")
+            a(f"| {label} | {live_lab} | {len(g)} | {b7:.0%} ({n7b}/{len(g)}) | {m7:+.1f} pts | {b14s} | {m14s} |")
         a("")
     recent = sorted([e for e in etf_events() if e["date"].replace("-", "") >= shift_date(TODAY, -30)],
                     key=lambda e: e["date"], reverse=True)
