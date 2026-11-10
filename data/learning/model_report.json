@@ -1,11 +1,11 @@
 {
- "date": "20261109",
+ "date": "20261110",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_gb",
- "calibration_k": 0.473,
- "train_rows": 69536,
- "train_days": 176,
+ "calibration_k": 0.417,
+ "train_rows": 69927,
+ "train_days": 177,
  "alt_days_measured": 36,
  "min_alt_days_for_alt_model": 30,
  "coingecko_ranks_missing_today": false,
@@ -114,7 +114,9 @@
   "rule": "hausse ≥ +100% sur 180 j",
   "count_today": 137,
   "leaders_removed_second_wave": [
-   "PEPE"
+   "INIT",
+   "PEPE",
+   "WIN"
   ]
  },
  "leaders": {
@@ -123,30 +125,30 @@
   "tokens": [
    {
     "symbol": "MEGA",
-    "ret_30d_pct": 23.5,
+    "ret_30d_pct": 18.6,
     "dist_high_90d_pct": 0.0
    },
    {
     "symbol": "JST",
-    "ret_30d_pct": 5.8,
-    "dist_high_90d_pct": 0.0
+    "ret_30d_pct": 6.2,
+    "dist_high_90d_pct": 1.4
    }
   ]
  },
  "oos_last_5_weeks": {
-  "model_top20_beat": 0.603,
+  "model_top20_beat": 0.594,
   "days": 36,
-  "naive_top20_beat": 0.751,
-  "shrink_k": 0.473
+  "naive_top20_beat": 0.764,
+  "shrink_k": 0.417
  },
  "top_factors": [
   {
    "feature": "catalyst_score",
-   "effect": -0.661
+   "effect": -0.67
   },
   {
    "feature": "rsi_14",
-   "effect": 0.606
+   "effect": 0.601
   },
   {
    "feature": "p_ma50",
@@ -154,39 +156,39 @@
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.523
+   "effect": -0.53
   },
   {
    "feature": "pat_double_bottom_90d",
-   "effect": 0.329
-  },
-  {
-   "feature": "log_rank",
-   "effect": -0.314
+   "effect": 0.331
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.305
+   "effect": -0.312
+  },
+  {
+   "feature": "log_rank",
+   "effect": -0.311
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.269
+   "effect": -0.266
   },
   {
    "feature": "pat_squeeze_breakout",
-   "effect": -0.265
+   "effect": -0.263
   },
   {
    "feature": "trend_rank",
-   "effect": 0.257
+   "effect": 0.259
   }
  ],
  "regime": {
-  "alt_index_30d": 15.2,
-  "btc_ret_30d": -9.4,
-  "alt_index_90d": 41.8,
-  "btc_ret_90d": 17.1,
-  "breadth_ma50": 5.4,
+  "alt_index_30d": 13.1,
+  "btc_ret_30d": -10.3,
+  "alt_index_90d": 39.8,
+  "btc_ret_90d": 16.9,
+  "breadth_ma50": 4.9,
   "label": "Bitcoin domine (court terme)"
  }
 }
