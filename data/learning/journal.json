@@ -1,24 +1,5 @@
 [
   {
-    "date": "20261012",
-    "regime": "Neutre",
-    "alt_index_30d": 69.0,
-    "alt_index_90d": 64.3,
-    "btc_ret_30d": 7.3,
-    "score_model": "ml_gb+alt_blend",
-    "top_tokens": [
-      "PARTI",
-      "LAZIO",
-      "APT",
-      "JUV",
-      "SUI"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.564,
-    "bear_signals_ok": 7
-  },
-  {
     "date": "20261013",
     "regime": "Neutre",
     "alt_index_30d": 67.0,
@@ -567,6 +548,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.471,
+    "bear_signals_ok": 11
+  },
+  {
+    "date": "20261111",
+    "regime": "Bitcoin domine (court terme)",
+    "alt_index_30d": 13.1,
+    "alt_index_90d": 41.8,
+    "btc_ret_30d": -10.7,
+    "score_model": "ml_blend",
+    "top_tokens": [
+      "SOL",
+      "BTC",
+      "ETH",
+      "XRP",
+      "DOGE"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.467,
     "bear_signals_ok": 11
   }
 ]
