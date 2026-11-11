@@ -1,5 +1,5 @@
 # CLAUDE.md — Crypto Screening Project
-> Fichier de contexte pour Claude (Cowork). Mis à jour le 26/10/2026.
+> Fichier de contexte pour Claude (Cowork). Mis à jour le 11/11/2026.
 > En cas de résumé de session ou perte de contexte, lire ce fichier en priorité.
 
 ---
@@ -39,6 +39,7 @@ Système de **screening crypto automatisé** sur l'**intégralité des paires US
 05_compute_indicators.py → RSI, MACD, MA, vol, drawdown, corrélation BTC, patterns
 06_score.py              → Sous-scores 5 axes + ancienne formule bull_prob_7d (gardée en bull_prob_7d_legacy)
 06b_ml_score.py          → SCORE PRINCIPAL : modèle appris + régime de marché / altseason (depuis le 25/09/2026)
+06d_market_state.py      → Thermomètre du marché : altcoins vs BTC sur ~1000 j de cours (depuis le 11/11/2026)
 06c_score_30d.py         → Prévision à 30 jours (modèle vs règle simple, choix selon les erreurs récentes, depuis le 12/10/2026)
 07_report.py             → report.md + diff vs veille
 08_learn.py              → Mise à jour des poids via outcomes réels
@@ -50,6 +51,7 @@ Système de **screening crypto automatisé** sur l'**intégralité des paires US
 11_fetch_defi.py         → TVL via DefiLlama
 12_build_history.py      → Snapshots quotidiens pour analyse historique 30j
 13_memory.py             → Journal project_memory.md, suivi des prédictions (top 20/jour), calibration
+14_dashboard_data.py     → data/computed/dashboard.json : tout ce que dessine le dashboard (depuis le 11/11/2026)
 run_pipeline.py          → Orchestrateur principal
 ```
 
@@ -61,6 +63,27 @@ python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
 ```
 
 ---
+
+## Refonte du 11/11/2026 — à lire en premier
+
+**Constat (étude sur 941 jours de cours Binance + 126 jours rejoués + suivi réel) :**
+- L'altcoin médiane perd ~6,5 % en 30 j ; BTC gagne ~1,6 % ; seules ~30 % des altcoins battent BTC sur 30 j (38 % sur 7 j).
+- Le classement sait choisir PARMI les altcoins (top 20 : 65 % battent la médiane, +6 pts/30 j) mais son panier fait
+  jeu égal avec BTC, pas mieux (bat BTC ~40-47 % du temps). En réel depuis le 26/09 : 58 % battent la médiane, 29 % battent BTC.
+- Aucune méthode testée (modèle, règle, mélange, cible « bat BTC », momentum, retour à la moyenne) ne bat BTC de façon fiable.
+- L'indice altseason est CONTRARIEN : ≥ 75 % → altcoin médiane −18 % les 30 j suivants ; < 25 % → la suite la moins mauvaise.
+- Largeur de marché très basse ≠ rebond (idée testée, non confirmée). Le momentum 30 j est le pire signal (37 %).
+
+**Ce qui a changé :**
+- 06b : classement 7 j = MÉLANGE modèle + règle simple (`ml_blend`), plus régulier que chacun seul ; mode altseason supprimé ;
+  walk-forward hebdomadaire sur 126 jours (`data/learning/backtest_7d.json`) ; probabilité = taux observé à ce rang ;
+  nouvelles colonnes `pct_model_7d`, `pct_rule_7d`, `rank_7d`, `avoid` (20 derniers), `beat_btc_prob_7d`.
+- 06d : `data/computed/market_state.json` (taux de base, tranches de l'indice, verdict, 2 ans d'historique).
+- Trois juges partout : bat la médiane / bat BTC / a monté (14_dashboard_data.py, project_memory.md).
+- dashboard.html : 4 onglets — Aujourd'hui (marché puis sélection), Fiabilité (suivi réel + analyse des erreurs),
+  Carte (7 j × 30 j, carte de chaleur), Explorateur (l'ancien écran). Graphiques SVG maison, sans dépendance.
+- Astuce de travail : le sandbox ne peut pas joindre Binance, mais le navigateur intégré le peut (data-api.binance.vision) :
+  les klines y sont téléchargées puis rapatriées par morceaux pour tester en local.
 
 ## Score principal depuis le 25/09/2026 — modèle appris (06b_ml_score.py)
 
@@ -74,7 +97,7 @@ python run_pipeline.py --skip-fetch  # recalcule scores depuis cache
   règle naïve « grosses caps peu volatiles » 61 %. 7 j = meilleur horizon testé (3/7/14/30). Paramètre `HORIZON`.
 - Point faible connu : chute à ~35-40 % pendant les changements de régime (mi-août 2026), puis remontée.
 
-### Altseason (régime de marché)
+### Altseason (régime de marché) — ⚠️ le « mode altseason » décrit ci-dessous est ABANDONNÉ depuis le 11/11/2026
 - Indice = % des 100 plus grosses altcoins (hors BTC/stables) qui ont fait mieux que BTC sur 30 j et 90 j.
   90 j ≥ 75 → Altseason ; ≤ 25 → Saison Bitcoin ; 30 j ≥ 75 → « Altseason en formation ». → `data/computed/market_regime.json`
 - En régime alt (indice 30 j ≥ 60) : la prime aux grosses caps s'efface et le momentum redevient payant.
