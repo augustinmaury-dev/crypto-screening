@@ -19,11 +19,11 @@ Depuis le 12/10/2026, je fais aussi une **prévision à 30 jours** (section 🗓
 
 ### Régime de marché : 🟠 Bitcoin domine (court terme)
 
-- **Indice altseason** : 13.1 sur 30 j, 41.8 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC)
-- **BTC** : -10.7 % sur 30 j · **Tokens au-dessus de leur MA50** : 4.6 %
+- **Indice altseason** : 12.1 sur 30 j, 44.9 sur 90 j (= % des 100 plus grosses altcoins qui ont fait mieux que BTC)
+- **BTC** : -10.7 % sur 30 j · **Tokens au-dessus de leur MA50** : 4.9 %
 - *Échelle : indice 90 j ≥ 75 → 🚀 Altseason ; indice 30 j ≥ 75 → 🌱 Altseason en formation ; indice 30 j ≥ 60 → 🌤️ Altseason modérée ; ≤ 25 → saison Bitcoin.*
 - **Le « mode altseason » du classement est abandonné depuis le 11/11/2026.** Il ajoutait du momentum quand l'indice dépassait 60 : en réel, 51 % de réussite quand il était actif contre 68 % sinon. Sur 2,6 ans de cours, un indice élevé a été suivi des PIRES mois pour les altcoins : l'indice sert maintenant de thermomètre, plus à modifier le classement.
-- **Thermomètre (941 jours de cours) : Contexte un peu moins défavorable aux altcoins que d'habitude.** Indice altseason à 21 % (tranche 0–25 %). Les 343 jours passés dans cette tranche ont été suivis, sur 30 j, d'une altcoin médiane à -2.3 % (BTC +2.8 %) ; 36 % des altcoins ont battu BTC (moyenne toutes périodes : 30 %).
+- **Thermomètre (941 jours de cours) : Contexte un peu moins défavorable aux altcoins que d'habitude.** Indice altseason à 20 % (tranche 0–25 %). Les 343 jours passés dans cette tranche ont été suivis, sur 30 j, d'une altcoin médiane à -2.3 % (BTC +2.8 %) ; 36 % des altcoins ont battu BTC (moyenne toutes périodes : 30 %).
 - **Taux de base à garder en tête :** sur 30 j, l'altcoin médiane fait -6.5 % et BTC +1.6 % ; seules 30 % des altcoins battent BTC (38 % sur 7 j). L'adversaire à battre, c'est BTC, pas « la médiane du marché ».
 
 ### Ma méthode aujourd'hui : mélange modèle + règle (`ml_blend`)
@@ -42,7 +42,7 @@ Depuis le 12/10/2026, je fais aussi une **prévision à 30 jours** (section 🗓
 *Lecture honnête : le classement sait écarter les mauvais tokens (les 20 derniers font nettement moins bien que le hasard), mais son top 20 ne bat pas BTC plus d'une fois sur deux. Il sert à choisir PARMI les altcoins, pas à décider d'en détenir.*
 
 - 96 tokens dérivés exclus du classement (actions/ETF tokenisés, versions wrapped/stakées) — liste dans `model_report.json`
-- Ce qui compte le plus en ce moment : `catalyst_score` (−), `rsi_14` (+), `vol_30d_ann` (−), `p_ma50` (−), `pat_double_bottom_90d` (+), `pat_bear_flag` (−)
+- Ce qui compte le plus en ce moment : `catalyst_score` (−), `rsi_14` (+), `vol_30d_ann` (−), `p_ma50` (−), `pat_double_bottom_90d` (+), `log_rank` (−)
 
 **Signaux haussiers fiables (>50%) :** aucun ❌
   → Meilleur signal haussier actuel : `squeeze_breakout` à 46.7%
@@ -72,8 +72,8 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 | `macd_bearish_cross` | 56.4% | 10610 | → |
 | `death_cross` | 55.6% | 495 | 📈 |
 | `shooting_star_4h` | 55.3% | 380 | → |
-| `bear_flag` | 52.7% | 666 | 📈 |
 | `resistance_test` | 52.7% | 2768 | → |
+| `bear_flag` | 52.7% | 666 | 📈 |
 
 ### Signaux haussiers (>50% = le signal prédit correctement la hausse)
 
@@ -141,7 +141,7 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 | 4 nov 2026 | **ZEC** | 55% | 1321.93 | -26.1% | ❌ -16.5pp | … |
 | 4 nov 2026 | **BTC** | 55% | 79336.5 | -7.0% | ✅ +2.7pp | … |
 
-**140 prédictions en attente de résultat (< 7 jours).**
+**142 prédictions en attente de résultat (< 7 jours).**
 
 ---
 
@@ -164,8 +164,10 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 
 | # | Token | Tier | Perf 30 j | Score principal | Exit risk |
 |---|-------|------|-----------|-----------------|-----------|
-| 1 | **ERA** | Speculative | +20% | 41.2% | 2 |
-| 2 | **JST** | Etabli | +3% | 59.5% | ⚠️ 6 |
+| 1 | **ERA** | Speculative | +21% | 41.2% | 2 |
+| 2 | **OPG** | Speculative | +6% | 42.4% | 2 |
+| 3 | **JST** | Etabli | +3% | 59.4% | ⚠️ 6 |
+| 4 | **SXT** | Mid | +1% | 42.8% | 2 |
 
 *Exit risk élevé = surachat / essoufflement possible. Un leader peut perdre 30 % en quelques jours.*
 
@@ -179,7 +181,7 @@ Ce classement sert à réfléchir, pas à acheter : même un bon modèle se trom
 
 | Candidat | Top 20 bat le marché à 30 j | Corrélation de rang |
 |---|---|---|
-| Modèle appris | 68% | +0.227 |
+| Modèle appris | 68% | +0.225 |
 | Règle simple | 70% | +0.190 |
 | Mélange ✅ | 70% | +0.225 |
 
@@ -191,18 +193,18 @@ Ce qui compte le plus à 30 j : `vol90` (−), `vol30` (−), `vtrend` (−), `d
 
 | # | Token | Tier | Prob. de battre le marché à 30 j | Score 7 j | Perf 30 j passée |
 |---|---|---|---|---|---|
-| 1 | **TRX** | Etabli | 70 % | 59.4 % | -4 % |
+| 1 | **TRX** | Etabli | 70 % | 59.3 % | -4 % |
 | 2 | **BTC** | Etabli | 70 % | 59.7 % | -11 % |
 | 3 | **SOL** | Etabli | 70 % | 59.8 % | -22 % |
-| 4 | **BNB** | Etabli | 70 % | 59.3 % | -9 % |
-| 5 | **ASTER** | Etabli | 70 % | 59.3 % | -8 % |
-| 6 | **WLFI** | Etabli | 70 % | 58.6 % | -16 % |
-| 7 | **ETH** | Etabli | 70 % | 59.7 % | -19 % |
-| 8 | **JST** | Etabli | 70 % | 59.5 % | +3 % |
-| 9 | **SUN** | Mid | 69 % | 58.7 % | -8 % |
-| 10 | **XRP** | Etabli | 69 % | 59.6 % | -23 % |
-| 11 | **DOGE** | Etabli | 69 % | 59.6 % | -20 % |
-| 12 | **NEXO** | Etabli | 69 % | 59.0 % | -15 % |
+| 4 | **BNB** | Etabli | 70 % | 59.5 % | -9 % |
+| 5 | **ASTER** | Etabli | 70 % | 59.0 % | -6 % |
+| 6 | **ETH** | Etabli | 70 % | 59.7 % | -18 % |
+| 7 | **JST** | Etabli | 70 % | 59.4 % | +3 % |
+| 8 | **XRP** | Etabli | 69 % | 59.6 % | -22 % |
+| 9 | **WLFI** | Etabli | 69 % | 56.9 % | -16 % |
+| 10 | **DOGE** | Etabli | 69 % | 59.6 % | -20 % |
+| 11 | **NEXO** | Etabli | 69 % | 59.2 % | -15 % |
+| 12 | **SUN** | Mid | 69 % | 58.8 % | -8 % |
 
 ---
 
@@ -225,11 +227,11 @@ Ce qui compte le plus à 30 j : `vol90` (−), `vol30` (−), `vtrend` (−), `d
 
 | Date | Token | Dépôt | Fonds | Depuis le dépôt (vs marché) |
 |---|---|---|---|---|
-| 2026-11-03 | **INJ** | 8-A12B | Canary Staked INJ ETF | +6% (+15 pts) |
+| 2026-11-03 | **INJ** | 8-A12B | Canary Staked INJ ETF | +7% (+15 pts) |
 | 2026-11-02 | **INJ** | S-1/A | Canary Staked INJ ETF | +12% (+20 pts) |
 | 2026-10-28 | **SEI** | 8-A12B | SEI Exchange Traded Funds | -16% (-1 pts) |
-| 2026-10-23 | **TAO** | S-1/A | Grayscale Bittensor Trust (TAO)  (GTAO) | -16% (+2 pts) |
-| 2026-10-23 | **INJ** | S-1/A | Canary Staked INJ ETF | -2% (+16 pts) |
+| 2026-10-23 | **TAO** | S-1/A | Grayscale Bittensor Trust (TAO)  (GTAO) | -15% (+3 pts) |
+| 2026-10-23 | **INJ** | S-1/A | Canary Staked INJ ETF | -1% (+17 pts) |
 
 **Tokens avec un ETF en préparation ou en lancement :** INJ (🟢 8-A12B le 2026-11-03), SEI (🟢 8-A12B le 2026-10-28), TAO (📝 S-1/A le 2026-10-23), PEPE (📝 S-1/A le 2026-10-02), NEAR (🟢 8-A12B le 2026-09-24)
 
@@ -321,21 +323,21 @@ C'est pourquoi le score principal vient désormais d'un modèle appris (voir plu
 
 ## Aujourd'hui — 11 nov 2026
 
-**Régime :** 🟠 Bitcoin domine (court terme) (indice altseason 30 j : 13.1)
+**Régime :** 🟠 Bitcoin domine (court terme) (indice altseason 30 j : 12.1)
 
 **Top 12 du jour** — score = probabilité de battre la médiane du marché sur 7 j (modèle : `ml_blend`) :
 
 | Token | Tier | Score | vs BTC | Exit risk | Catalyseurs |
 |-------|------|-------|--------|-----------|-------------|
-| **SOL** | Etabli | 59.8% | +0.1pp | 3 | 🔥 Trending #15 sur CoinGecko |
-| **BTC** | Etabli | 59.7% | +0.0pp | 3 | 🔥 Trending #8 sur CoinGecko |
-| **ETH** | Etabli | 59.7% | +0.0pp | ⚠️ 5 | 🔥 Trending #12 sur CoinGecko |
-| **XRP** | Etabli | 59.6% | -0.1pp | 3 | 🔥 Trending #7 sur CoinGecko |
-| **DOGE** | Etabli | 59.6% | -0.1pp | ⚠️ 5 | 🔥 Trending #1 sur CoinGecko |
-| **JST** | Etabli | 59.5% | -0.2pp | ⚠️ 6 |  |
-| **ADA** | Etabli | 59.5% | -0.2pp | 3 |  |
-| **TRX** | Etabli | 59.4% | -0.3pp | 3 |  |
+| **SOL** | Etabli | 59.8% | +0.1pp | 3 | 🔥 Trending #14 sur CoinGecko |
+| **BTC** | Etabli | 59.7% | +0.0pp | 1 | 🔥 Trending #4 sur CoinGecko |
+| **ETH** | Etabli | 59.7% | +0.0pp | ⚠️ 5 | 🔥 Trending #11 sur CoinGecko |
+| **DOGE** | Etabli | 59.6% | -0.1pp | 3 | 🔥 Trending #1 sur CoinGecko |
+| **XRP** | Etabli | 59.6% | -0.1pp | 3 | 🔥 Trending #13 sur CoinGecko |
+| **BNB** | Etabli | 59.5% | -0.2pp | 3 |  |
+| **JST** | Etabli | 59.4% | -0.3pp | ⚠️ 6 |  |
 | **SHIB** | Etabli | 59.4% | -0.3pp | ⚠️ 5 |  |
-| **BNB** | Etabli | 59.3% | -0.4pp | 3 |  |
-| **ASTER** | Etabli | 59.3% | -0.4pp | 3 |  |
-| **HBAR** | Etabli | 59.2% | -0.5pp | 2 | 🔥 Trending #14 sur CoinGecko |
+| **TRX** | Etabli | 59.3% | -0.4pp | 3 |  |
+| **ADA** | Etabli | 59.3% | -0.4pp | 3 |  |
+| **BCH** | Etabli | 59.2% | -0.5pp | 3 |  |
+| **NEXO** | Etabli | 59.2% | -0.5pp | 1 |  |
