@@ -40,7 +40,10 @@ jobs:
           git config user.email "crypto-bot@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/augustinmaury-dev/crypto-screening.git
           # Ajoute uniquement ce qui existe (certains dossiers se créent après plusieurs jours)
-          git add data/computed/scores.csv data/computed/catalysts.json data/computed/tvl.json data/computed/score_history.json data/computed/top_explosive.json data/computed/scores_explosive.csv report.md 2>/dev/null || true
+          for f in scores.csv catalysts.json tvl.json score_history.json top_explosive.json scores_explosive.csv market_regime.json market_state.json dashboard.json; do
+            [ -f "data/computed/$f" ] && git add "data/computed/$f" || true
+          done
+          [ -f report.md ] && git add report.md || true
           [ -d data/history ]  && git add data/history/  || true
           [ -d data/learning ] && git add data/learning/ || true
           git diff --staged --quiet || git commit -m "Pipeline $(date -u +%Y-%m-%d) — scores mis à jour"
