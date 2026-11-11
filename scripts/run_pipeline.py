@@ -133,6 +133,10 @@ def main():
     m30 = importlib.import_module("06c_score_30d")
     step("score_30d", m30.run)
 
+    # --- 06d Thermomètre du marché (altcoins vs BTC sur ~1000 j de cours ; réutilise les klines de 06c) ---
+    ms = importlib.import_module("06d_market_state")
+    step("market_state", ms.run)
+
     # --- 10b Annonces d'ETF crypto (SEC EDGAR) : dossiers S-1/S-3, enregistrements 8-A12B ---
     if not args.skip_fetch:
         etf = importlib.import_module("10b_etf_filings")
@@ -161,6 +165,10 @@ def main():
     # --- 13 Mémoire cumulative du projet ---
     mem = importlib.import_module("13_memory")
     step("memory", mem.run)
+
+    # --- 14 Données du dashboard (graphiques : régime, suivi réel contre médiane / BTC / hausse absolue) ---
+    dash = importlib.import_module("14_dashboard_data")
+    step("dashboard_data", dash.run)
 
     # Purge raw > 30j
     try:

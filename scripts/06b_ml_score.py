@@ -8,14 +8,20 @@ Tourne juste après 06_score.py. À chaque run :
      la probabilité de FAIRE MIEUX QUE LA MÉDIANE DU MARCHÉ dans HORIZON jours.
      → réentraîné chaque jour avec toutes les prédictions déjà mesurables :
        c'est la boucle d'apprentissage.
-  4. En altseason, adapte le classement (voir section ALTSEASON).
+  4. ANALYSE DES ERREURS (depuis le 11/11/2026) : le modèle, une règle simple (« grosse cap peu volatile »)
+     et leur MÉLANGE sont rejoués semaine après semaine sur les ~4 derniers mois (chaque semaine n'est prédite
+     qu'avec des données antérieures). Le classement du jour = le mélange, sauf si l'un des deux fait pire que
+     le hasard sur la période. La probabilité affichée = taux de réussite réellement observé à ce rang.
+     Chaque méthode est aussi jugée contre BTC et en hausse absolue → data/learning/backtest_7d.json.
   5. Réécrit data/computed/scores.csv (+ le snapshot du jour dans history/).
 
 Colonnes produites / modifiées dans scores.csv :
   outperf_prob_7d     probabilité (%) de battre la médiane du marché à 7 j
   score, bull_prob_7d = outperf_prob_7d (compatibilité dashboard / rapports)
   bull_prob_7d_legacy ancienne formule manuelle (conservée pour comparaison)
-  score_model         modèle utilisé ce jour-là (ml_gb, ml_gb+alt_blend, ml_gb+alt_model, legacy)
+  score_model         méthode du jour (ml_blend = mélange modèle + règle ; ml_gb = modèle seul ; naive_rule = règle seule)
+  pct_model_7d, pct_rule_7d  rang (0-100) du token selon le modèle seul / la règle seule
+  rank_7d, avoid      rang dans le classement du jour ; avoid = fait partie des 20 derniers (« à éviter »)
   market_regime, alt_index_30d, alt_index_90d
 
 Si scikit-learn est absent ou si les données sont insuffisantes, le script
@@ -37,18 +43,26 @@ LEARNING = ROOT / "data" / "learning"
 HORIZON        = 7      # jours. Changer ici pour tester un autre horizon (3, 14…).
 MIN_TRAIN_ROWS = 5000   # en dessous : pas de modèle, on garde l'ancien score
 TOP_N_EVAL     = 20     # taille du "top" pour l'auto-évaluation
-FALLBACK_BEAT  = 0.45   # si le top 20 du modèle bat la médiane moins de 45 % du temps sur 5 semaines → règle simple
-                        # (marge sous 50 % pour ne pas basculer sur du bruit : le modèle est tombé à ~35-40 %
-                        #  pendant 2 semaines lors du changement de régime mi-août, puis est remonté à 55-65 %)
 
 # ALTSEASON
 # Indice = % des 100 plus grosses altcoins (hors BTC, stablecoins) qui ont fait mieux que BTC
 # sur la période. Seuils classiques (indice "Altcoin Season" sur 90 j) : ≥ 75 altseason, ≤ 25 saison BTC.
 ALT_SEASON_90  = 75
 BTC_SEASON_90  = 25
-ALT_ACTIVE_30  = 60     # régime alt "actif" à court terme (utilisé pour adapter le score)
-ALT_MOMENTUM_W = 0.25   # poids du momentum mélangé au modèle en régime alt (testé : 61,5 % → 66 % sur 10 jours)
-MIN_ALT_DAYS   = 30     # nb de jours alt mesurés nécessaires pour entraîner un modèle dédié à l'altseason
+ALT_ACTIVE_30  = 60     # indice 30 j élevé (étiquettes de régime, groupe « altseason » des leaders)
+# MODE ALTSEASON ABANDONNÉ le 11/11/2026. Il mélangeait du momentum au classement (puis utilisait un modèle dédié)
+# quand l'indice 30 j dépassait 60. Résultats : en réel 51 % (mode actif) contre 68 % (inactif) ; rejoué sur
+# 31 jours d'altseason, le mélange momentum fait 53 % contre 57 % pour le modèle seul et 65 % pour la règle simple.
+# Sur 2,6 ans de cours Binance (941 jours), un indice 30 j ≥ 75 % a été suivi d'une altcoin médiane à −18 % en
+# 30 j (17 % seulement battent BTC) : un indice élevé annonce la FIN de la surperformance des altcoins, pas son
+# début. Le momentum 30 j est d'ailleurs le pire signal testé (top 20 : 37 % battent la médiane à 30 j).
+# → l'indice sert désormais de thermomètre (06d_market_state.py), plus à modifier le classement.
+
+# ANALYSE DES ERREURS (walk-forward)
+WF_DAYS        = 126    # nb de jours rejoués (≈ 4 mois)
+WF_STEP        = 7      # le modèle testé est réentraîné toutes les semaines, uniquement sur le passé
+MIN_COMPONENT  = 0.50   # un composant (modèle ou règle) sous 50 % sur la période est écarté du mélange
+AVOID_N        = 20     # taille de la liste « à éviter » (bas du classement)
 
 # LEADERS (ajouté le 29/09/2026 après l'analyse de NEAR, UNI, ZEC…)
 # Le score principal vise « battre la médiane » : il est prudent et évite les tokens qui explosent
@@ -84,10 +98,7 @@ FEATS = ["rsi_14", "vol_30d_ann", "drawdown_90d", "dist_to_high_90d", "vol_ratio
          "p_ma50", "p_ma200", "macd_n", "log_rank", "log_vol24", "change_24h_pct", "bull_signals", "bear_signals",
          "catalyst_score", "trend_rank", "ret_past7", "ret_past3",
          "score_momentum", "score_risk", "score_signal", "score_solidity"] + ["pat_" + p for p in PATS]
-MOMENTUM_FEATS = ["p_ma50", "ret_past7", "rsi_14"]
-# Calibration : le boosting est trop sûr de lui (hors échantillon, quand il annonce 75 % la réalité est ~67 %).
-# On ramène les probabilités vers 50 % : p = 0.5 + k·(p_brut − 0.5), k mesuré chaque jour sur les 5 dernières semaines.
-DEFAULT_SHRINK = 0.55   # valeur mesurée le 25/09/2026 (juin→septembre)
+METHOD_LABEL = {"ml_blend": "mélange modèle + règle", "ml_gb": "modèle appris seul", "naive_rule": "règle simple seule"}
 
 
 # ─────────────────────────── données ───────────────────────────────────────
@@ -240,6 +251,72 @@ def top_beat_rate(pd, df, col):
     return (sum(rates) / len(rates), len(rates)) if rates else (None, 0)
 
 
+def rule_score(df):
+    """Règle simple : grosse capitalisation + peu volatile (variables déjà en rang du jour)."""
+    return -df["vol_30d_ann"] - df["log_rank"]
+
+
+def walk_forward(pd, np, train):
+    """Rejoue le passé : pour chaque semaine des WF_DAYS derniers jours mesurables, entraîne le modèle sur ce qui
+    précède (purge de HORIZON jours) puis prédit la semaine. Renvoie les prédictions hors échantillon."""
+    dates = sorted(train["date"].unique())
+    tests = dates[-WF_DAYS:]
+    out = []
+    for i in range(0, len(tests), WF_STEP):
+        block = tests[i:i + WF_STEP]
+        tr = train[train["date"] <= block[0] - pd.Timedelta(days=HORIZON)]
+        if len(tr) < MIN_TRAIN_ROWS:
+            continue
+        te = train[train["date"].isin(block)].copy()
+        te["model"] = make_model().fit(tr[FEATS], tr["y"]).predict_proba(te[FEATS])[:, 1]
+        out.append(te)
+    if not out:
+        return None
+    R = pd.concat(out, ignore_index=True)
+    R["rule"] = rule_score(R)
+    g = R.groupby("date")
+    R["blend"] = g["model"].rank(pct=True) + g["rule"].rank(pct=True)
+    return R
+
+
+def evaluate_strategies(pd, np, R):
+    """Par méthode : résumé + série quotidienne. Trois juges : la médiane du marché, BTC, et la hausse absolue."""
+    daily = {"dates": [], "median": [], "btc": [], "up_share": []}
+    strat = {k: {"beat": [], "beat_btc": [], "up": [], "basket": [], "ic": []} for k in ("model", "rule", "blend")}
+    for d, g in R.groupby("date"):
+        if len(g) < 50:
+            continue
+        btc = g["btc_fwd"].iloc[0]
+        daily["dates"].append(pd.Timestamp(d).strftime("%Y%m%d"))
+        daily["median"].append(round(float(g["fwd"].median()) * 100, 2))
+        daily["btc"].append(round(float(btc) * 100, 2) if btc == btc else None)
+        daily["up_share"].append(round(float((g["fwd"] > 0).mean()), 3))
+        for k, st in strat.items():
+            t = g.nlargest(TOP_N_EVAL, k)
+            st["beat"].append(round(float((t["excess"] > 0).mean()), 3))
+            st["beat_btc"].append(round(float((t["fwd"] > btc).mean()), 3) if btc == btc else None)
+            st["up"].append(round(float((t["fwd"] > 0).mean()), 3))
+            st["basket"].append(round(float(t["fwd"].mean()) * 100, 2))
+            ic = g[k].corr(g["excess"], method="spearman")
+            st["ic"].append(round(float(ic), 3) if ic == ic else None)
+    mean = lambda v: round(float(np.mean([x for x in v if x is not None])), 3) if any(x is not None for x in v) else None
+    summary = {}
+    for k, st in strat.items():
+        pct = R.groupby("date")[k].rank(pct=True)
+        q = np.minimum((pct * 5).astype(int), 4)
+        quint = (R["excess"] > 0).groupby(q).mean()
+        bot = [float((g.nsmallest(AVOID_N, k)["excess"] > 0).mean()) for _, g in R.groupby("date") if len(g) >= 50]
+        summary[k] = {"top20_beat": mean(st["beat"]), "top20_beat_btc": mean(st["beat_btc"]), "top20_up": mean(st["up"]),
+                      "basket_ret_pct": round(float(np.mean(st["basket"])), 2), "ic": mean(st["ic"]),
+                      "bottom20_beat": round(float(np.mean(bot)), 3) if bot else None,
+                      "quintiles_beat": [round(float(quint.get(i, np.nan)), 3) for i in (4, 3, 2, 1, 0)]}   # Q1 = mieux classés
+    summary["universe"] = {"median_ret_pct": round(float(np.mean(daily["median"])), 2),
+                           "btc_ret_pct": mean([x / 1 if x is not None else None for x in daily["btc"]]),
+                           "up_share": mean(daily["up_share"]),
+                           "alts_beat_btc": round(float((R["fwd"] > R["btc_fwd"]).mean()), 3)}
+    return summary, daily, strat
+
+
 # ─────────────────────────── entrée principale ─────────────────────────────
 
 def run():
@@ -322,73 +399,67 @@ def run():
     if len(train) < MIN_TRAIN_ROWS or today_X.empty:
         log.warning(f"Données insuffisantes ({len(train)} lignes d'entraînement) — score manuel conservé"); return
 
-    # ── auto-évaluation hors échantillon : entraîne sur le passé, teste sur les 5 dernières semaines ─
-    split = cutoff - pd.Timedelta(days=35)
-    tr_old = train[train["date"] < split - pd.Timedelta(days=HORIZON)]
-    te_new = train[train["date"] >= split].copy()
-    oos = {}
-    if len(tr_old) >= MIN_TRAIN_ROWS and not te_new.empty:
-        m = make_model().fit(tr_old[FEATS], tr_old["y"])
-        te_new["p"] = m.predict_proba(te_new[FEATS])[:, 1]
-        te_new["naive"] = -te_new["vol_30d_ann"] - te_new["log_rank"]
-        oos["model_top20_beat"], oos["days"] = top_beat_rate(pd, te_new, "p")
-        oos["naive_top20_beat"], _ = top_beat_rate(pd, te_new, "naive")
-        xc = te_new["p"] - 0.5
-        if float((xc ** 2).sum()) > 0:
-            oos["shrink_k"] = float(np.clip((xc * (te_new["y"] - 0.5)).sum() / (xc ** 2).sum(), 0.2, 1.0))
-        log.info(f"Auto-évaluation 5 dernières semaines : modèle {oos['model_top20_beat']:.0%} "
-                 f"/ règle simple {oos['naive_top20_beat']:.0%} (top {TOP_N_EVAL} qui bat la médiane)")
+    # ── ANALYSE DES ERREURS : modèle, règle simple et mélange rejoués semaine après semaine ─────────
+    btc_fwd = fwd["BTCUSDT"] if "BTCUSDT" in fwd.columns else pd.Series(np.nan, index=fwd.index)
+    train["btc_fwd"] = train["date"].map(btc_fwd)
+    wf_summary, wf_daily, wf_strat, calib = {}, {}, {}, None
+    R = walk_forward(pd, np, train)
+    method = "ml_blend"
+    if R is not None and R["date"].nunique() >= 20:
+        wf_summary, wf_daily, wf_strat = evaluate_strategies(pd, np, R)
+        mb, rb, bb = (wf_summary[k]["top20_beat"] for k in ("model", "rule", "blend"))
+        log.info(f"Analyse des erreurs ({R['date'].nunique()} jours rejoués) — top {TOP_N_EVAL} qui bat la médiane : "
+                 f"modèle {mb:.0%} / règle simple {rb:.0%} / mélange {bb:.0%} ; contre BTC : "
+                 f"{wf_summary['model']['top20_beat_btc']:.0%} / {wf_summary['rule']['top20_beat_btc']:.0%} / {wf_summary['blend']['top20_beat_btc']:.0%}")
+        if mb < MIN_COMPONENT <= rb:
+            method = "naive_rule"; log.warning(f"Modèle sous {MIN_COMPONENT:.0%} sur la période → règle simple seule")
+        elif rb < MIN_COMPONENT <= mb:
+            method = "ml_gb"; log.warning(f"Règle simple sous {MIN_COMPONENT:.0%} sur la période → modèle seul")
+    else:
+        log.warning("Historique trop court pour rejouer le passé — mélange utilisé sans calibration mesurée")
 
-    # ── modèle principal, entraîné sur tout ce qui est mesurable ──────────
+    # ── classement du jour : modèle entraîné sur tout ce qui est mesurable + règle simple ───────────
     model = make_model().fit(train[FEATS], train["y"])
-    today_X["p_model"] = model.predict_proba(today_X[FEATS])[:, 1]
-    model_name = "ml_gb"
+    today_X["s_model"] = model.predict_proba(today_X[FEATS])[:, 1]
+    today_X["s_rule"] = rule_score(today_X)
+    today_X["pct_model"] = today_X["s_model"].rank(pct=True)
+    today_X["pct_rule"] = today_X["s_rule"].rank(pct=True)
+    col = {"ml_blend": "blend", "ml_gb": "model", "naive_rule": "rule"}[method]
+    today_X["s_final"] = {"blend": today_X["pct_model"] + today_X["pct_rule"], "model": today_X["s_model"], "rule": today_X["s_rule"]}[col]
+    today_X["pct"] = today_X["s_final"].rank(pct=True)
+    model_name = method
 
-    # Garde-fou : si le modèle perd récemment contre le hasard, on passe à la règle simple
-    if oos.get("model_top20_beat") is not None and oos["model_top20_beat"] < FALLBACK_BEAT:
-        log.warning(f"Modèle sous {FALLBACK_BEAT:.0%} sur les dernières semaines → règle simple (grosses caps peu volatiles)")
-        naive = -today_X["vol_30d_ann"] - today_X["log_rank"]
-        today_X["p_model"] = 0.5 + 0.2 * (naive.rank(pct=True) - 0.5)
-        model_name = "naive_fallback"
-
-    # ── ALTSEASON ────────────────────────────────────────────────────────
-    # En altseason, les règles changent : la prime aux grosses caps peu volatiles disparaît
-    # et le momentum redevient payant. Deux niveaux :
-    #   a) assez de jours alt mesurés (≥ MIN_ALT_DAYS) → modèle entraîné UNIQUEMENT sur ces jours ;
-    #   b) sinon → mélange prudent du modèle avec un score momentum (ALT_MOMENTUM_W).
-    a30 = reg_today.get("alt_index_30d")
+    # ── probabilité honnête : taux de réussite réellement observé à ce niveau de classement ─────────
+    # (courbe lisse « rang du jour → part des tokens qui ont battu la médiane », ajustée sur les jours rejoués)
+    tp = today_X["pct"].to_numpy()
+    if R is not None and len(R) >= MIN_TRAIN_ROWS:
+        from sklearn.linear_model import LogisticRegression
+        rp = R.groupby("date")[col].rank(pct=True).to_numpy()
+        calib = LogisticRegression(C=1e6, max_iter=1000).fit(np.c_[rp, rp ** 2], R["y"].to_numpy())
+        today_X["p_model"] = calib.predict_proba(np.c_[tp, tp ** 2])[:, 1]
+        yb = (R["fwd"] > R["btc_fwd"]).astype(int).to_numpy()
+        calib_btc = LogisticRegression(C=1e6, max_iter=1000).fit(np.c_[rp, rp ** 2], yb)
+        today_X["p_btc"] = calib_btc.predict_proba(np.c_[tp, tp ** 2])[:, 1]
+    else:
+        today_X["p_model"] = 0.5 + 0.2 * (today_X["pct"] - 0.5)
+        today_X["p_btc"] = np.nan
+    today_X["rank7"] = today_X["s_final"].rank(ascending=False, method="first").astype(int)
+    n_ranked = len(today_X)
     alt_days_train = train.loc[train["alt30"] >= ALT_ACTIVE_30, "date"].nunique()
-    if a30 is not None and a30 >= ALT_ACTIVE_30 and model_name == "ml_gb":
-        if alt_days_train >= MIN_ALT_DAYS:
-            alt_tr = train[train["alt30"] >= ALT_ACTIVE_30]
-            alt_model = make_model().fit(alt_tr[FEATS], alt_tr["y"])
-            today_X["p_model"] = alt_model.predict_proba(today_X[FEATS])[:, 1]
-            model_name = "ml_gb+alt_model"
-        else:
-            mom = today_X[MOMENTUM_FEATS].mean(axis=1).rank(pct=True)
-            base = today_X["p_model"].rank(pct=True)
-            blended_rank = (1 - ALT_MOMENTUM_W) * base + ALT_MOMENTUM_W * mom
-            # on garde l'échelle de probabilité du modèle, réordonnée selon le mélange
-            probs = today_X["p_model"].sort_values().values
-            today_X["p_model"] = probs[(blended_rank.rank(method="first").astype(int) - 1).values]
-            model_name = "ml_gb+alt_blend"
-        log.info(f"Régime alt actif (indice 30j = {a30}) → {model_name} "
-                 f"({alt_days_train}/{MIN_ALT_DAYS} jours alt mesurés pour un modèle dédié)")
-
-    # ── calibration des probabilités ─────────────────────────────────────
-    k = oos.get("shrink_k", DEFAULT_SHRINK)
-    today_X["p_model"] = 0.5 + k * (today_X["p_model"] - 0.5)
-    log.info(f"Calibration : probabilités ramenées vers 50 % (k = {k:.2f})")
 
     # ── écriture ─────────────────────────────────────────────────────────
     probs = dict(zip(today_X["symbol"], (today_X["p_model"] * 100).round(1)))
+    probs_btc = dict(zip(today_X["symbol"], (today_X["p_btc"] * 100).round(1)))
+    pct_m = dict(zip(today_X["symbol"], (today_X["pct_model"] * 100).round(0)))
+    pct_r = dict(zip(today_X["symbol"], (today_X["pct_rule"] * 100).round(0)))
+    rank7 = dict(zip(today_X["symbol"], today_X["rank7"]))
     btc_p = probs.get("BTCUSDT")
     with open(scores_path, encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     fields = list(rows[0].keys()) if rows else []
     for extra in ("outperf_prob_7d", "bull_prob_7d_legacy", "score_model", "market_regime", "alt_index_30d", "alt_index_90d",
                   "derivative", "rank_source", "ret_30d_pct", "leader", "leader_rank", "leader_label",
-                  "runup_180d_pct", "already_exploded"):
+                  "runup_180d_pct", "already_exploded", "beat_btc_prob_7d", "pct_model_7d", "pct_rule_7d", "rank_7d", "avoid"):
         if extra not in fields: fields.append(extra)
     for r in rows:
         r["bull_prob_7d_legacy"] = r.get("bull_prob_7d_legacy") or r.get("bull_prob_7d", "")
@@ -412,12 +483,19 @@ def run():
             r["score"] = p
             r["bull_prob_7d"] = p
             r["score_model"] = model_name
+            pb = probs_btc.get(r["symbol"])
+            r["beat_btc_prob_7d"] = pb if pb is not None and pb == pb else ""
+            r["pct_model_7d"] = int(pct_m[r["symbol"]]); r["pct_rule_7d"] = int(pct_r[r["symbol"]])
+            r["rank_7d"] = int(rank7[r["symbol"]])
+            r["avoid"] = bool(rank7[r["symbol"]] > n_ranked - AVOID_N)
             if btc_p is not None:
                 alpha = round(p - btc_p, 1)
                 r["alpha_vs_btc"] = alpha
                 r["vs_btc_label"] = ("🟢 Surperforme BTC" if alpha >= 5 else "🔴 Sous-performe BTC" if alpha <= -5 else "≈ Neutre vs BTC")
         else:  # stablecoins / suspects / dérivés : hors modèle, rangés en bas
             r["outperf_prob_7d"] = ""
+            r["beat_btc_prob_7d"] = r["pct_model_7d"] = r["pct_rule_7d"] = r["rank_7d"] = ""
+            r["avoid"] = False
             r["score"] = 0
             r["score_model"] = "exclu_derive" if r["derivative"] else "exclu"
         r["market_regime"] = reg_today["label"]
@@ -441,9 +519,9 @@ def run():
     LEARNING.mkdir(parents=True, exist_ok=True)
     (LEARNING / "model_report.json").write_text(json.dumps({
         "date": TODAY, "horizon_days": HORIZON, "target": "bat la médiane du marché",
-        "model_used_today": model_name, "calibration_k": round(float(k), 3), "train_rows": int(len(train)),
+        "model_used_today": model_name, "method_label": METHOD_LABEL.get(model_name, model_name), "train_rows": int(len(train)),
         "train_days": int(train["date"].nunique()), "alt_days_measured": int(alt_days_train),
-        "min_alt_days_for_alt_model": MIN_ALT_DAYS,
+        "alt_mode": "abandonné le 11/11/2026 (voir 06b_ml_score.py)",
         "coingecko_ranks_missing_today": bool(today_ranks_carried),
         "derivatives_excluded": {"count": len(derivatives_today), "tokens": derivatives_today},
         "already_exploded": {"rule": f"hausse ≥ +{EXPLODED_RUNUP:.0%} sur {RUNUP_WINDOW} j",
@@ -452,10 +530,18 @@ def run():
         "leaders": {"label": leader_label, "rule": f"perf 30 j ≥ percentile {LEADER_PCT:.0%} et ≤ {LEADER_DIST:.0%} du plus haut 90 j",
                     "tokens": [{"symbol": s.replace("USDT", ""), "ret_30d_pct": round(float(r30_today[s]) * 100, 1),
                                 "dist_high_90d_pct": round(float(dh_today.get(s, 0)) * 100, 1)} for s in leaders]},
-        "oos_last_5_weeks": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in oos.items()},
+        "walk_forward": {"days": int(R["date"].nunique()) if R is not None else 0,
+                         "window": [wf_daily["dates"][0], wf_daily["dates"][-1]] if wf_daily.get("dates") else [],
+                         **wf_summary},
+        "avoid_today": [s.replace("USDT", "") for s in today_X.sort_values("rank7").tail(AVOID_N)["symbol"]],
         "top_factors": [{"feature": f, "effect": round(float(c), 3)} for f, c in coefs],
         "regime": reg_today,
     }, ensure_ascii=False, indent=1), encoding="utf-8")
+    if wf_daily.get("dates"):
+        (LEARNING / "backtest_7d.json").write_text(json.dumps(
+            {"date": TODAY, "horizon_days": HORIZON, "top_n": TOP_N_EVAL, "method_today": model_name,
+             "note": "Chaque jour est prédit par un modèle entraîné uniquement sur des données antérieures (réentraînement hebdomadaire).",
+             "summary": wf_summary, **wf_daily, "strategies": wf_strat}, ensure_ascii=False), encoding="utf-8")
     log.info(f"Score appris écrit ({model_name}) : {len(probs)} tokens, entraînement {len(train)} lignes")
 
 

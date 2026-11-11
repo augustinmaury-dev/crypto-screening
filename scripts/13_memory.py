@@ -638,37 +638,45 @@ def generate_memory(
         a(f"- **Indice altseason** : {reg.get('alt_index_30d', '—')} sur 30 j, {reg.get('alt_index_90d', '—')} sur 90 j "
           f"(= % des 100 plus grosses altcoins qui ont fait mieux que BTC)")
         a(f"- **BTC** : {reg.get('btc_ret_30d', '—')} % sur 30 j · **Tokens au-dessus de leur MA50** : {reg.get('breadth_ma50', '—')} %")
-        a30 = reg.get("alt_index_30d") or 0
-        alt_on = a30 >= 60
-        a("- *Échelle unique (depuis le 26/10/2026) : indice 90 j ≥ 75 → 🚀 Altseason ; indice 30 j ≥ 75 → 🌱 Altseason en formation ; "
-          "indice 30 j ≥ 60 → 🌤️ Altseason modérée ; ≤ 25 → saison Bitcoin. Le **mode altseason** du classement et le groupe "
-          "« Altseason » des leaders utilisent le même seuil (indice 30 j ≥ 60) : 🌱 et 🌤️ = mode altseason actif ; seule l'étiquette "
-          "🚀 (fondée sur 90 j) peut coexister avec un mode inactif si le court terme s'essouffle.* "
-          f"Aujourd'hui : mode altseason **{'ACTIF' if alt_on else 'inactif'}** (indice 30 j = {reg.get('alt_index_30d', '—')}).")
-        n_alt, n_min = mrep.get("alt_days_measured"), mrep.get("min_alt_days_for_alt_model", 30)
-        used = mrep.get("model_used_today", "")
-        if n_alt is not None and n_alt >= n_min:
-            a(f"- **Modèle dédié à l'altseason : prêt** ({n_alt} jours d'altseason mesurés, seuil {n_min}). Il est utilisé seulement "
-              f"les jours où le mode altseason est actif — aujourd'hui : **{'utilisé' if 'alt_model' in used else 'non utilisé'}** (`{used}`).")
-        elif n_alt is not None:
-            a(f"- Modèle dédié à l'altseason : en préparation ({n_alt}/{n_min} jours d'altseason mesurés) ; en attendant, "
-              "le mode altseason mélange une part de momentum au classement.")
-        if alt_on:
-            a("- ⚠️ **En altseason, les règles changent** : la prime aux grosses caps peu volatiles (ce que j'ai surtout appris) "
-              "s'efface et le momentum redevient payant.")
+        a("- *Échelle : indice 90 j ≥ 75 → 🚀 Altseason ; indice 30 j ≥ 75 → 🌱 Altseason en formation ; indice 30 j ≥ 60 → "
+          "🌤️ Altseason modérée ; ≤ 25 → saison Bitcoin.*")
+        a("- **Le « mode altseason » du classement est abandonné depuis le 11/11/2026.** Il ajoutait du momentum quand l'indice "
+          "dépassait 60 : en réel, 51 % de réussite quand il était actif contre 68 % sinon. Sur 2,6 ans de cours, un indice élevé "
+          "a été suivi des PIRES mois pour les altcoins : l'indice sert maintenant de thermomètre, plus à modifier le classement.")
+        ms = load_json(COMPUTED / "market_state.json", {}) or {}
+        if ms.get("verdict", {}).get("text"):
+            b_ = ms.get("base", {})
+            a(f"- **Thermomètre ({ms.get('n_days', '?')} jours de cours) : {ms['verdict']['title']}.** {ms['verdict']['text']}")
+            a(f"- **Taux de base à garder en tête :** sur 30 j, l'altcoin médiane fait {b_.get('med30', 0):+.1f} % et BTC {b_.get('btc30', 0):+.1f} % ; "
+              f"seules {b_.get('share30', 0):.0f} % des altcoins battent BTC ({b_.get('share7', 0):.0f} % sur 7 j). "
+              "L'adversaire à battre, c'est BTC, pas « la médiane du marché ».")
     a("")
 
     if mrep:
-        oos = mrep.get("oos_last_5_weeks", {})
-        a(f"### Mon modèle aujourd'hui : `{mrep.get('model_used_today', '?')}`")
+        wf = mrep.get("walk_forward", {}) or {}
+        a(f"### Ma méthode aujourd'hui : {mrep.get('method_label', mrep.get('model_used_today', '?'))} (`{mrep.get('model_used_today', '?')}`)")
         a("")
-        a(f"- Entraîné sur {mrep.get('train_rows', '?')} observations ({mrep.get('train_days', '?')} jours), horizon {mrep.get('horizon_days', 7)} j")
-        if oos.get("model_top20_beat") is not None:
-            a(f"- **Test sur les 5 dernières semaines (données jamais vues)** : mon top 20 a battu la médiane "
-              f"**{oos['model_top20_beat']:.0%}** du temps (règle simple « grosses caps peu volatiles » : {oos.get('naive_top20_beat', 0):.0%} ; hasard : 50 %)")
-        if mrep.get("calibration_k") is not None:
-            a(f"- Confiance (calibration) : k = {mrep['calibration_k']:.2f} "
-              f"— plus k est bas, plus mes probabilités sont ramenées vers 50 % parce que je me suis trompé récemment")
+        a(f"- Modèle entraîné sur {mrep.get('train_rows', '?')} observations ({mrep.get('train_days', '?')} jours), horizon {mrep.get('horizon_days', 7)} j ; "
+          "depuis le 11/11/2026 le classement est le **mélange** du modèle et de la règle simple « grosse cap peu volatile » "
+          "(plus régulier mois après mois que l'un ou l'autre seul).")
+        if wf.get("blend"):
+            a("")
+            a(f"**Analyse des erreurs — {wf.get('days', '?')} jours rejoués** (chaque semaine prédite uniquement avec des données antérieures) ; "
+              f"top {TOP_N_PRED} jugé à 7 j contre trois adversaires :")
+            a("")
+            a("| Méthode | Bat la médiane du marché | Bat BTC | A monté | Les 20 derniers battent la médiane |")
+            a("|---|---|---|---|---|")
+            pc = lambda v: f"{v:.0%}" if isinstance(v, (int, float)) else "—"
+            for k, lab in (("blend", "**Mélange (utilisé)**"), ("model", "Modèle appris seul"), ("rule", "Règle simple seule")):
+                w = wf.get(k) or {}
+                a(f"| {lab} | {pc(w.get('top20_beat'))} | {pc(w.get('top20_beat_btc'))} | {pc(w.get('top20_up'))} | {pc(w.get('bottom20_beat'))} |")
+            u = wf.get("universe") or {}
+            a(f"| *Un token pris au hasard* | *50%* | *{pc(u.get('alts_beat_btc'))}* | *{pc(u.get('up_share'))}* | *50%* |")
+            a("")
+            a("*Lecture honnête : le classement sait écarter les mauvais tokens (les 20 derniers font nettement moins bien que le "
+              "hasard), mais son top 20 ne bat pas BTC plus d'une fois sur deux. Il sert à choisir PARMI les altcoins, pas à "
+              "décider d'en détenir.*")
+        a("")
         if mrep.get("coingecko_ranks_missing_today"):
             a("- ⚠️ CoinGecko n'a pas répondu aujourd'hui : j'ai repris le dernier rang de capitalisation connu de chaque token")
         d = mrep.get("derivatives_excluded") or {}
@@ -718,7 +726,7 @@ def generate_memory(
             ml_bm = [p for p in ml if p.get(f"beat_market_{H}d") is not None]
             ml_bt = sum(1 for p in ml_bm if p[f"beat_market_{H}d"]) / len(ml_bm) * 100 if ml_bm else float("nan")
             a("")
-            a(f"**Modèle appris seul (depuis le 26/09/2026) :** {len(ml)} prédictions mesurées sur "
+            a(f"**Modèle appris (depuis le 26/09/2026 ; mélangé à la règle simple depuis le 11/11/2026) :** {len(ml)} prédictions mesurées sur "
               f"{len({p['date'] for p in ml})} jours — {ml_up:.0f}% ont monté, **{ml_bt:.0f}% ont battu la médiane du marché**")
         a("")
 
