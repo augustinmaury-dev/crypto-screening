@@ -1,11 +1,11 @@
 {
- "date": "20261113",
+ "date": "20261114",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_blend",
  "method_label": "mélange modèle + règle",
- "train_rows": 71100,
- "train_days": 180,
+ "train_rows": 71491,
+ "train_days": 181,
  "alt_days_measured": 36,
  "alt_mode": "abandonné le 11/11/2026 (voir 06b_ml_score.py)",
  "coingecko_ranks_missing_today": false,
@@ -114,7 +114,8 @@
   "rule": "hausse ≥ +100% sur 180 j",
   "count_today": 136,
   "leaders_removed_second_wave": [
-   "DODO"
+   "DODO",
+   "NIGHT"
   ]
  },
  "leaders": {
@@ -122,101 +123,91 @@
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
-    "symbol": "BARD",
-    "ret_30d_pct": 47.0,
-    "dist_high_90d_pct": 0.0
-   },
-   {
-    "symbol": "SXT",
-    "ret_30d_pct": 8.9,
-    "dist_high_90d_pct": 0.7
-   },
-   {
     "symbol": "JST",
-    "ret_30d_pct": 3.3,
-    "dist_high_90d_pct": 1.6
+    "ret_30d_pct": 8.8,
+    "dist_high_90d_pct": 0.7
    }
   ]
  },
  "walk_forward": {
   "days": 126,
   "window": [
-   "20260704",
-   "20261106"
+   "20260705",
+   "20261107"
   ],
   "model": {
-   "top20_beat": 0.621,
-   "top20_beat_btc": 0.417,
-   "top20_up": 0.447,
-   "basket_ret_pct": 1.21,
-   "ic": 0.101,
-   "bottom20_beat": 0.345,
+   "top20_beat": 0.62,
+   "top20_beat_btc": 0.423,
+   "top20_up": 0.437,
+   "basket_ret_pct": 1.12,
+   "ic": 0.099,
+   "bottom20_beat": 0.344,
    "quintiles_beat": [
-    0.555,
+    0.55,
     0.501,
-    0.517,
-    0.498,
-    0.425
+    0.523,
+    0.493,
+    0.43
    ]
   },
   "rule": {
-   "top20_beat": 0.661,
-   "top20_beat_btc": 0.405,
-   "top20_up": 0.438,
-   "basket_ret_pct": 1.56,
-   "ic": 0.116,
-   "bottom20_beat": 0.422,
+   "top20_beat": 0.659,
+   "top20_beat_btc": 0.408,
+   "top20_up": 0.435,
+   "basket_ret_pct": 1.48,
+   "ic": 0.114,
+   "bottom20_beat": 0.424,
    "quintiles_beat": [
-    0.579,
+    0.578,
     0.52,
-    0.485,
+    0.486,
     0.477,
-    0.434
+    0.435
    ]
   },
   "blend": {
-   "top20_beat": 0.644,
-   "top20_beat_btc": 0.39,
-   "top20_up": 0.426,
-   "basket_ret_pct": 1.2,
-   "ic": 0.126,
-   "bottom20_beat": 0.347,
+   "top20_beat": 0.641,
+   "top20_beat_btc": 0.398,
+   "top20_up": 0.42,
+   "basket_ret_pct": 1.16,
+   "ic": 0.124,
+   "bottom20_beat": 0.365,
    "quintiles_beat": [
-    0.577,
-    0.523,
+    0.574,
+    0.528,
     0.488,
-    0.489,
-    0.419
+    0.483,
+    0.423
    ]
   },
   "universe": {
-   "median_ret_pct": -0.98,
-   "btc_ret_pct": 1.045,
-   "up_share": 0.416,
-   "alts_beat_btc": 0.379
+   "median_ret_pct": -1.06,
+   "btc_ret_pct": 0.927,
+   "up_share": 0.414,
+   "alts_beat_btc": 0.382
   }
  },
  "avoid_today": [
-  "STO",
-  "DODO",
   "ENSO",
-  "SHELL",
-  "MOVR",
-  "PARTI",
-  "BLUR",
-  "ROBO",
-  "OSMO",
   "THE",
+  "STO",
+  "ACT",
   "OPN",
-  "INIT",
+  "ROBO",
+  "GTC",
   "KAT",
-  "ERA",
-  "MITO",
-  "HAEDAL",
+  "INIT",
+  "GUN",
   "BMT",
+  "MARSCOIN",
+  "HAEDAL",
+  "BEAMX",
+  "ERA",
   "FOGO",
+  "MITO",
   "HUMA",
-  "SOPH"
+  "SOPH",
+  "SHELL"
  ],
  "top_factors": [
   {
@@ -225,7 +216,7 @@
   },
   {
    "feature": "rsi_14",
-   "effect": 0.573
+   "effect": 0.553
   },
   {
    "feature": "vol_30d_ann",
@@ -233,39 +224,39 @@
   },
   {
    "feature": "p_ma50",
-   "effect": -0.514
+   "effect": -0.497
   },
   {
    "feature": "pat_double_bottom_90d",
-   "effect": 0.323
+   "effect": 0.322
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.31
+   "effect": -0.307
   },
   {
    "feature": "log_rank",
-   "effect": -0.293
+   "effect": -0.286
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.267
+   "effect": -0.261
   },
   {
    "feature": "bear_signals",
-   "effect": -0.254
+   "effect": -0.26
   },
   {
    "feature": "pat_squeeze_breakout",
-   "effect": -0.251
+   "effect": -0.252
   }
  ],
  "regime": {
-  "alt_index_30d": 25.3,
-  "btc_ret_30d": -16.8,
-  "alt_index_90d": 54.1,
-  "btc_ret_90d": 9.1,
-  "breadth_ma50": 4.3,
+  "alt_index_30d": 27.3,
+  "btc_ret_30d": -17.5,
+  "alt_index_90d": 48.0,
+  "btc_ret_90d": 5.9,
+  "breadth_ma50": 3.3,
   "label": "Neutre"
  }
 }
