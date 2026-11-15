@@ -1,24 +1,5 @@
 [
   {
-    "date": "20261016",
-    "regime": "Neutre",
-    "alt_index_30d": 72.0,
-    "alt_index_90d": 63.3,
-    "btc_ret_30d": 8.5,
-    "score_model": "ml_gb+alt_blend",
-    "top_tokens": [
-      "PEPE",
-      "BTC",
-      "YFI",
-      "NEO",
-      "ARKM"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.544,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20261017",
     "regime": "Neutre",
     "alt_index_30d": 68.0,
@@ -567,6 +548,25 @@
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
     "best_bull_rate": 0.453,
+    "bear_signals_ok": 11
+  },
+  {
+    "date": "20261115",
+    "regime": "Bitcoin domine (court terme)",
+    "alt_index_30d": 14.1,
+    "alt_index_90d": 41.8,
+    "btc_ret_30d": -21.2,
+    "score_model": "ml_blend",
+    "top_tokens": [
+      "JST",
+      "ETH",
+      "DOGE",
+      "XRP",
+      "HBAR"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.452,
     "bear_signals_ok": 11
   }
 ]
