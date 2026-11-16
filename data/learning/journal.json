@@ -1,24 +1,5 @@
 [
   {
-    "date": "20261017",
-    "regime": "Neutre",
-    "alt_index_30d": 68.0,
-    "alt_index_90d": 65.3,
-    "btc_ret_30d": 6.0,
-    "score_model": "ml_gb+alt_blend",
-    "top_tokens": [
-      "APT",
-      "BTC",
-      "PEPE",
-      "IOTA",
-      "TAO"
-    ],
-    "n_top": 5,
-    "best_bull_pat": "squeeze_breakout",
-    "best_bull_rate": 0.54,
-    "bear_signals_ok": 10
-  },
-  {
     "date": "20261018",
     "regime": "Neutre",
     "alt_index_30d": 48.0,
@@ -563,6 +544,25 @@
       "DOGE",
       "XRP",
       "HBAR"
+    ],
+    "n_top": 5,
+    "best_bull_pat": "squeeze_breakout",
+    "best_bull_rate": 0.452,
+    "bear_signals_ok": 11
+  },
+  {
+    "date": "20261116",
+    "regime": "Bitcoin domine (court terme)",
+    "alt_index_30d": 18.2,
+    "alt_index_90d": 45.9,
+    "btc_ret_30d": -20.8,
+    "score_model": "ml_blend",
+    "top_tokens": [
+      "JST",
+      "HBAR",
+      "XLM",
+      "BCH",
+      "DOGE"
     ],
     "n_top": 5,
     "best_bull_pat": "squeeze_breakout",
