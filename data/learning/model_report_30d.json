@@ -1,158 +1,158 @@
 {
- "date": "20261118",
+ "date": "20261119",
  "horizon_days": 30,
  "target": "bat la médiane du marché à 30 j",
  "method_used_today": "blend",
  "method_label": "mélange modèle + règle",
  "klines_span": [
-  "2024-02-16",
-  "2026-11-18"
+  "2024-02-17",
+  "2026-11-19"
  ],
  "tokens": 390,
- "train_rows": 91216,
+ "train_rows": 91143,
  "eval_window": [
-  "2026-06-22",
-  "2026-10-19"
+  "2026-06-23",
+  "2026-10-20"
  ],
  "eval": {
   "model": {
-   "top20_beat": 0.693,
-   "ic": 0.232,
+   "top20_beat": 0.695,
+   "ic": 0.23,
    "days": 120,
    "deciles_beat": [
-    0.304,
-    0.36,
-    0.476,
-    0.471,
-    0.488,
-    0.507,
-    0.563,
-    0.55,
-    0.553,
-    0.704
+    0.307,
+    0.37,
+    0.46,
+    0.479,
+    0.494,
+    0.504,
+    0.549,
+    0.545,
+    0.566,
+    0.702
    ],
    "deciles_up": [
-    0.278,
-    0.361,
-    0.427,
-    0.44,
-    0.458,
-    0.46,
-    0.483,
-    0.503,
-    0.504,
-    0.536
+    0.289,
+    0.352,
+    0.417,
+    0.454,
+    0.454,
+    0.462,
+    0.47,
+    0.48,
+    0.51,
+    0.533
    ]
   },
   "rule": {
-   "top20_beat": 0.708,
-   "ic": 0.194,
+   "top20_beat": 0.71,
+   "ic": 0.193,
    "days": 120,
    "deciles_beat": [
     0.472,
     0.391,
-    0.39,
-    0.372,
+    0.389,
+    0.371,
     0.475,
-    0.497,
+    0.499,
     0.535,
-    0.554,
-    0.595,
-    0.7
+    0.553,
+    0.593,
+    0.702
    ],
    "deciles_up": [
-    0.434,
-    0.381,
-    0.345,
-    0.362,
+    0.432,
+    0.378,
+    0.344,
+    0.359,
     0.448,
-    0.465,
-    0.487,
-    0.479,
-    0.498,
-    0.553
+    0.462,
+    0.484,
+    0.475,
+    0.493,
+    0.548
    ]
   },
   "blend": {
-   "top20_beat": 0.708,
-   "ic": 0.231,
+   "top20_beat": 0.711,
+   "ic": 0.23,
    "days": 120,
    "deciles_beat": [
-    0.391,
-    0.374,
-    0.393,
-    0.427,
-    0.488,
-    0.491,
+    0.386,
+    0.376,
+    0.403,
+    0.433,
+    0.482,
+    0.49,
     0.534,
-    0.573,
-    0.593,
-    0.714
+    0.562,
+    0.591,
+    0.721
    ],
    "deciles_up": [
-    0.377,
-    0.321,
-    0.373,
+    0.368,
+    0.327,
+    0.382,
     0.426,
-    0.449,
-    0.463,
-    0.482,
-    0.501,
-    0.509,
-    0.548
+    0.448,
+    0.452,
+    0.47,
+    0.497,
+    0.51,
+    0.542
    ]
   }
  },
- "universe_up_rate_eval": 0.446,
+ "universe_up_rate_eval": 0.443,
  "universe_median_return_eval_pct": -0.9,
  "top_factors": [
   {
    "feature": "vol90",
-   "effect": -0.761
+   "effect": -0.758
   },
   {
    "feature": "vol30",
-   "effect": -0.467
+   "effect": -0.471
   },
   {
    "feature": "vtrend",
-   "effect": -0.258
+   "effect": -0.261
   },
   {
    "feature": "dd90",
-   "effect": -0.228
+   "effect": -0.229
   },
   {
    "feature": "r90",
-   "effect": 0.19
+   "effect": 0.195
   },
   {
    "feature": "runup180",
-   "effect": -0.178
+   "effect": -0.174
   },
   {
    "feature": "r7",
-   "effect": -0.132
+   "effect": -0.129
   },
   {
    "feature": "size",
-   "effect": 0.124
+   "effect": 0.127
   },
   {
    "feature": "pma50",
-   "effect": 0.062
+   "effect": 0.056
   },
   {
    "feature": "r30",
-   "effect": 0.05
+   "effect": 0.047
   },
   {
    "feature": "pma200",
-   "effect": 0.039
+   "effect": 0.038
   },
   {
    "feature": "r180",
-   "effect": 0.013
+   "effect": 0.01
   }
  ],
  "top_today": [
@@ -161,27 +161,27 @@
    "prob": 71.5
   },
   {
-   "symbol": "SOL",
-   "prob": 71.3
+   "symbol": "BTC",
+   "prob": 71.4
   },
   {
-   "symbol": "BTC",
+   "symbol": "SOL",
    "prob": 71.2
   },
   {
-   "symbol": "JST",
-   "prob": 71.0
+   "symbol": "WLFI",
+   "prob": 71.1
   },
   {
    "symbol": "ETH",
-   "prob": 71.0
+   "prob": 70.9
+  },
+  {
+   "symbol": "JST",
+   "prob": 70.8
   },
   {
    "symbol": "BNB",
-   "prob": 70.7
-  },
-  {
-   "symbol": "WLFI",
    "prob": 70.6
   },
   {
@@ -189,35 +189,39 @@
    "prob": 70.5
   },
   {
-   "symbol": "SUN",
-   "prob": 70.3
-  },
-  {
-   "symbol": "DOGE",
-   "prob": 70.2
-  },
-  {
-   "symbol": "PSG",
-   "prob": 70.0
-  },
-  {
-   "symbol": "BAR",
-   "prob": 69.9
-  },
-  {
    "symbol": "XRP",
-   "prob": 69.7
+   "prob": 70.4
   },
   {
    "symbol": "NEXO",
-   "prob": 69.6
+   "prob": 70.2
   },
   {
    "symbol": "LTC",
+   "prob": 70.1
+  },
+  {
+   "symbol": "DOGE",
+   "prob": 69.9
+  },
+  {
+   "symbol": "SUN",
+   "prob": 69.8
+  },
+  {
+   "symbol": "BAR",
+   "prob": 69.6
+  },
+  {
+   "symbol": "PSG",
    "prob": 69.5
   },
   {
-   "symbol": "ALLO",
+   "symbol": "SHIB",
+   "prob": 69.3
+  },
+  {
+   "symbol": "ADA",
    "prob": 69.3
   },
   {
@@ -226,15 +230,11 @@
   },
   {
    "symbol": "JUV",
-   "prob": 69.1
-  },
-  {
-   "symbol": "SUI",
    "prob": 68.9
   },
   {
-   "symbol": "LINK",
-   "prob": 68.7
+   "symbol": "HBAR",
+   "prob": 68.8
   }
  ]
 }
