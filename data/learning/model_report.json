@@ -1,16 +1,16 @@
 {
- "date": "20261122",
+ "date": "20261123",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_blend",
  "method_label": "mélange modèle + règle",
- "train_rows": 74619,
- "train_days": 189,
+ "train_rows": 75010,
+ "train_days": 190,
  "alt_days_measured": 36,
  "alt_mode": "abandonné le 11/11/2026 (voir 06b_ml_score.py)",
  "coingecko_ranks_missing_today": false,
  "derivatives_excluded": {
-  "count": 100,
+  "count": 105,
   "tokens": [
    "AAOIB",
    "AAPLB",
@@ -32,6 +32,8 @@
    "BMNRB",
    "BNCB",
    "BNSOL",
+   "BOTB",
+   "BRKBB",
    "CBRSB",
    "COHRB",
    "COINB",
@@ -61,6 +63,7 @@
    "IRENB",
    "JPMB",
    "KORUB",
+   "KSTRB",
    "LITEB",
    "LLYB",
    "MDBB",
@@ -100,12 +103,14 @@
    "SPYB",
    "SQQQB",
    "STXB",
+   "TMFB",
    "TQQQB",
    "TSLAB",
    "TSMB",
    "USARB",
    "USDEB",
    "UVXYB",
+   "VSTB",
    "WBETH",
    "WBTC",
    "WDCB",
@@ -116,9 +121,10 @@
  },
  "already_exploded": {
   "rule": "hausse ≥ +100% sur 180 j",
-  "count_today": 133,
+  "count_today": 134,
   "leaders_removed_second_wave": [
-   "DODO"
+   "DODO",
+   "LISTA"
   ]
  },
  "leaders": {
@@ -127,37 +133,37 @@
   "tokens": [
    {
     "symbol": "JST",
-    "ret_30d_pct": 3.9,
-    "dist_high_90d_pct": 0.7
+    "ret_30d_pct": 3.8,
+    "dist_high_90d_pct": 0.2
    }
   ]
  },
  "walk_forward": {
   "days": 126,
   "window": [
-   "20260713",
-   "20261115"
+   "20260714",
+   "20261116"
   ],
   "model": {
-   "top20_beat": 0.596,
-   "top20_beat_btc": 0.426,
-   "top20_up": 0.413,
-   "basket_ret_pct": 0.24,
-   "ic": 0.085,
-   "bottom20_beat": 0.349,
+   "top20_beat": 0.609,
+   "top20_beat_btc": 0.431,
+   "top20_up": 0.412,
+   "basket_ret_pct": 0.49,
+   "ic": 0.087,
+   "bottom20_beat": 0.338,
    "quintiles_beat": [
-    0.538,
-    0.503,
-    0.518,
-    0.498,
-    0.438
+    0.542,
+    0.501,
+    0.521,
+    0.497,
+    0.435
    ]
   },
   "rule": {
-   "top20_beat": 0.645,
-   "top20_beat_btc": 0.426,
-   "top20_up": 0.412,
-   "basket_ret_pct": 0.84,
+   "top20_beat": 0.642,
+   "top20_beat_btc": 0.429,
+   "top20_up": 0.411,
+   "basket_ret_pct": 0.82,
    "ic": 0.099,
    "bottom20_beat": 0.433,
    "quintiles_beat": [
@@ -165,101 +171,101 @@
     0.512,
     0.488,
     0.48,
-    0.446
+    0.445
    ]
   },
   "blend": {
-   "top20_beat": 0.629,
-   "top20_beat_btc": 0.419,
-   "top20_up": 0.406,
-   "basket_ret_pct": 0.52,
+   "top20_beat": 0.631,
+   "top20_beat_btc": 0.423,
+   "top20_up": 0.402,
+   "basket_ret_pct": 0.62,
    "ic": 0.108,
-   "bottom20_beat": 0.374,
+   "bottom20_beat": 0.363,
    "quintiles_beat": [
-    0.568,
-    0.514,
-    0.485,
-    0.498,
-    0.431
+    0.566,
+    0.518,
+    0.486,
+    0.494,
+    0.432
    ]
   },
   "universe": {
-   "median_ret_pct": -1.65,
-   "btc_ret_pct": 0.097,
-   "up_share": 0.398,
-   "alts_beat_btc": 0.4
+   "median_ret_pct": -1.66,
+   "btc_ret_pct": 0.042,
+   "up_share": 0.397,
+   "alts_beat_btc": 0.403
   }
  },
  "avoid_today": [
-  "MANTRA",
-  "牛来",
-  "MMT",
-  "BMT",
-  "BARD",
   "MARSCOIN",
+  "CFG",
+  "MMT",
   "LSK",
-  "AIGENSYN",
-  "KAT",
-  "KERNEL",
-  "ENSO",
-  "SOPH",
-  "YB",
-  "KAVA",
-  "ZIL",
-  "COOKIE",
-  "HUMA",
-  "FOGO",
+  "MUBARAK",
+  "BLUR",
   "INIT",
-  "RARE"
+  "MITO",
+  "KERNEL",
+  "ZIL",
+  "CYBER",
+  "YB",
+  "BMT",
+  "KAVA",
+  "SOPH",
+  "HUMA",
+  "BREV",
+  "RARE",
+  "ACE",
+  "FOGO"
  ],
  "top_factors": [
   {
    "feature": "catalyst_score",
-   "effect": -0.701
+   "effect": -0.704
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.559
+   "effect": -0.557
   },
   {
    "feature": "rsi_14",
-   "effect": 0.414
+   "effect": 0.406
   },
   {
    "feature": "p_ma50",
-   "effect": -0.358
+   "effect": -0.346
   },
   {
    "feature": "pat_double_bottom_90d",
-   "effect": 0.318
+   "effect": 0.32
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.267
-  },
-  {
-   "feature": "log_rank",
-   "effect": -0.251
+   "effect": -0.303
   },
   {
    "feature": "bear_signals",
-   "effect": -0.238
+   "effect": -0.246
   },
   {
-   "feature": "macd_n",
-   "effect": -0.227
+   "feature": "log_rank",
+   "effect": -0.24
   },
   {
    "feature": "score_signal",
-   "effect": -0.225
+   "effect": -0.237
+  },
+  {
+   "feature": "pat_resistance_test",
+   "effect": -0.234
   }
  ],
  "regime": {
-  "alt_index_30d": 22.2,
-  "btc_ret_30d": -25.3,
-  "alt_index_90d": 44.4,
-  "btc_ret_90d": -21.2,
-  "breadth_ma50": 3.8,
-  "label": "Bitcoin domine (court terme)"
+  "alt_index_30d": 32.3,
+  "btc_ret_30d": -23.9,
+  "alt_index_90d": 48.5,
+  "btc_ret_90d": -23.8,
+  "breadth_ma50": 3.6,
+  "label": "Neutre"
  }
 }
