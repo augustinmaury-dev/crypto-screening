@@ -1,11 +1,11 @@
 {
- "date": "20261123",
+ "date": "20261124",
  "horizon_days": 7,
  "target": "bat la médiane du marché",
  "model_used_today": "ml_blend",
  "method_label": "mélange modèle + règle",
- "train_rows": 75010,
- "train_days": 190,
+ "train_rows": 75401,
+ "train_days": 191,
  "alt_days_measured": 36,
  "alt_mode": "abandonné le 11/11/2026 (voir 06b_ml_score.py)",
  "coingecko_ranks_missing_today": false,
@@ -132,140 +132,145 @@
   "rule": "perf 30 j ≥ percentile 90% et ≤ 5% du plus haut 90 j",
   "tokens": [
    {
+    "symbol": "OPG",
+    "ret_30d_pct": 31.2,
+    "dist_high_90d_pct": 1.0
+   },
+   {
     "symbol": "JST",
-    "ret_30d_pct": 3.8,
-    "dist_high_90d_pct": 0.2
+    "ret_30d_pct": 4.3,
+    "dist_high_90d_pct": 0.0
    }
   ]
  },
  "walk_forward": {
   "days": 126,
   "window": [
-   "20260714",
-   "20261116"
+   "20260715",
+   "20261117"
   ],
   "model": {
-   "top20_beat": 0.609,
+   "top20_beat": 0.602,
    "top20_beat_btc": 0.431,
-   "top20_up": 0.412,
-   "basket_ret_pct": 0.49,
-   "ic": 0.087,
-   "bottom20_beat": 0.338,
+   "top20_up": 0.407,
+   "basket_ret_pct": 0.34,
+   "ic": 0.085,
+   "bottom20_beat": 0.342,
    "quintiles_beat": [
-    0.542,
+    0.544,
+    0.498,
+    0.518,
     0.501,
-    0.521,
-    0.497,
     0.435
    ]
   },
   "rule": {
    "top20_beat": 0.642,
-   "top20_beat_btc": 0.429,
-   "top20_up": 0.411,
-   "basket_ret_pct": 0.82,
-   "ic": 0.099,
-   "bottom20_beat": 0.433,
+   "top20_beat_btc": 0.432,
+   "top20_up": 0.406,
+   "basket_ret_pct": 0.74,
+   "ic": 0.098,
+   "bottom20_beat": 0.434,
    "quintiles_beat": [
-    0.57,
+    0.571,
     0.512,
-    0.488,
+    0.489,
     0.48,
     0.445
    ]
   },
   "blend": {
-   "top20_beat": 0.631,
-   "top20_beat_btc": 0.423,
-   "top20_up": 0.402,
-   "basket_ret_pct": 0.62,
-   "ic": 0.108,
-   "bottom20_beat": 0.363,
+   "top20_beat": 0.626,
+   "top20_beat_btc": 0.419,
+   "top20_up": 0.397,
+   "basket_ret_pct": 0.37,
+   "ic": 0.107,
+   "bottom20_beat": 0.367,
    "quintiles_beat": [
-    0.566,
-    0.518,
-    0.486,
-    0.494,
-    0.432
+    0.565,
+    0.521,
+    0.481,
+    0.5,
+    0.429
    ]
   },
   "universe": {
-   "median_ret_pct": -1.66,
-   "btc_ret_pct": 0.042,
-   "up_share": 0.397,
-   "alts_beat_btc": 0.403
+   "median_ret_pct": -1.73,
+   "btc_ret_pct": -0.049,
+   "up_share": 0.393,
+   "alts_beat_btc": 0.406
   }
  },
  "avoid_today": [
   "MARSCOIN",
-  "CFG",
+  "MANTRA",
   "MMT",
-  "LSK",
-  "MUBARAK",
-  "BLUR",
-  "INIT",
-  "MITO",
-  "KERNEL",
-  "ZIL",
-  "CYBER",
-  "YB",
-  "BMT",
-  "KAVA",
-  "SOPH",
-  "HUMA",
-  "BREV",
   "RARE",
-  "ACE",
-  "FOGO"
+  "KERNEL",
+  "LSK",
+  "CFG",
+  "MUBARAK",
+  "BMT",
+  "SHELL",
+  "SOPH",
+  "MITO",
+  "KAVA",
+  "BREV",
+  "INIT",
+  "ZIL",
+  "FOGO",
+  "AT",
+  "HUMA",
+  "ATM"
  ],
  "top_factors": [
   {
    "feature": "catalyst_score",
-   "effect": -0.704
+   "effect": -0.692
   },
   {
    "feature": "vol_30d_ann",
-   "effect": -0.557
+   "effect": -0.564
   },
   {
    "feature": "rsi_14",
-   "effect": 0.406
-  },
-  {
-   "feature": "p_ma50",
-   "effect": -0.346
-  },
-  {
-   "feature": "pat_double_bottom_90d",
-   "effect": 0.32
+   "effect": 0.382
   },
   {
    "feature": "pat_bear_flag",
-   "effect": -0.303
+   "effect": -0.333
   },
   {
-   "feature": "bear_signals",
-   "effect": -0.246
+   "feature": "pat_double_bottom_90d",
+   "effect": 0.321
   },
   {
-   "feature": "log_rank",
-   "effect": -0.24
+   "feature": "p_ma50",
+   "effect": -0.321
   },
   {
-   "feature": "score_signal",
-   "effect": -0.237
+   "feature": "pat_squeeze_breakout",
+   "effect": -0.254
   },
   {
    "feature": "pat_resistance_test",
-   "effect": -0.234
+   "effect": -0.248
+  },
+  {
+   "feature": "bear_signals",
+   "effect": -0.244
+  },
+  {
+   "feature": "score_signal",
+   "effect": -0.235
   }
  ],
  "regime": {
   "alt_index_30d": 32.3,
-  "btc_ret_30d": -23.9,
-  "alt_index_90d": 48.5,
-  "btc_ret_90d": -23.8,
-  "breadth_ma50": 3.6,
+  "btc_ret_30d": -25.3,
+  "alt_index_90d": 51.5,
+  "btc_ret_90d": -24.0,
+  "breadth_ma50": 4.1,
   "label": "Neutre"
  }
 }
